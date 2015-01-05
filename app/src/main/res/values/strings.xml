@@ -4,5 +4,13 @@
     <string name="app_name">Tasterly</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="welcome_title">Welcome!</string>
+    <string name="welcome_text">Welcome to the text!</string>
+    <string name="register">Please REGISTER!</string>
+    <string name="login">Please LOG IN!</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>
