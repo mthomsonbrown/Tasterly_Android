@@ -35,7 +35,7 @@ public class HomeActivity extends ActionBarActivity {
     private void loadTasksFromAPI(String url) {
         GetTasksTask getTasksTask = new GetTasksTask(HomeActivity.this);
         getTasksTask.setMessageLoading("Loading tasks...");
-        getTasksTask.execute(url);
+        getTasksTask.execute(url + "?auth_token=" + mPreferences.getString("AuthToken", ""));
     }
 
 

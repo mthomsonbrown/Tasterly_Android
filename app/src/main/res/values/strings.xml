@@ -14,5 +14,8 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="user_password">UR Password</string>
     <string name="user_email">UR Email</string>
+    <string name="user_name">UR Name</string>
+    <string name="user_password_confirmation">UR Password again</string>
+    <string name="register_disclaimer">I will sell your information</string>
 
 </resources>
