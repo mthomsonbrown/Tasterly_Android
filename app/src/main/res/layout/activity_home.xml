@@ -4,12 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <fragment
+        android:id="@+id/fragment_content"
+        android:name="com.slashandhyphen.tasterly.HomeFragment"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Expected Content"
-        android:id="@+id/textView" />
+        tools:layout="@layout/fragment_home">
+
+        <!-- Preview: layout=@layout/fragment_home -->
+    </fragment>
 
 
     <ListView android:layout_width="match_parent"

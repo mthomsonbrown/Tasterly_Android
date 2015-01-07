@@ -17,5 +17,6 @@
     <string name="user_name">UR Name</string>
     <string name="user_password_confirmation">UR Password again</string>
     <string name="register_disclaimer">I will sell your information</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
