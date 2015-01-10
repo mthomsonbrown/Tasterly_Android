@@ -77,7 +77,7 @@ public class HomeActivity extends ActionBarActivity {
         if (mPreferences.contains("AuthToken")) {
             loadTasksFromAPI(TASKS_URL);
         } else {
-            Intent intent = new Intent(HomeActivity.this, WelcomeActivity.class);
+            Intent intent = new Intent(HomeActivity.this,AuthenticationActivity.class);
             startActivityForResult(intent, 0);
         }
     }

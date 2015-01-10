@@ -1,15 +1,22 @@
 package com.slashandhyphen.tasterly;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.savagelook.android.UrlJsonAsyncTask;
@@ -26,34 +33,69 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 
-public class LoginActivity extends ActionBarActivity {
+public class LoginFragment extends Fragment {
 
     private final static String LOGIN_API_ENDPOINT_URL = "http://192.168.1.102:3000/api/v1/sessions.json";
     private SharedPreferences mPreferences;
     private String mUserEmail;
     private String mUserPassword;
+    Button mLoginButton;
+
+    LinearLayout ll;
+    FragmentActivity fa;
+
+    onLoginSuccessfulListener loginSuccessful;
+
+    public interface onLoginSuccessfulListener {
+        public void onLoginSuccessful();
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
+        fa = (FragmentActivity) super.getActivity();
+        ll = (LinearLayout) inflater.inflate(R.layout.fragment_login, container, false);
+
+        mPreferences = getActivity().getSharedPreferences("CurrentUser", getActivity().MODE_PRIVATE);
+
+        mLoginButton = (Button) ll.findViewById(R.id.loginButton);
+
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                login(mLoginButton);
+            }
+        });
+        return ll;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+           loginSuccessful = (onLoginSuccessfulListener) activity;
+
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement onRegisterSelectedListener");
+        }
     }
 
     public void login(View button) {
-        EditText userEmailField = (EditText) findViewById(R.id.userEmail);
+        EditText userEmailField = (EditText) ll.findViewById(R.id.userEmail);
         mUserEmail = userEmailField.getText().toString();
-        EditText userPasswordField = (EditText) findViewById(R.id.userPassword);
+        EditText userPasswordField = (EditText) ll.findViewById(R.id.userPassword);
         mUserPassword = userPasswordField.getText().toString();
 
         if (mUserEmail.length() == 0 || mUserPassword.length() == 0) {
             // input fields are empty
-            Toast.makeText(this, "Please complete all the fields",
-                    Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(getActivity(), "Please complete all the fields",
+                    Toast.LENGTH_LONG);
+            toast.show();
             return;
         } else {
-            LoginTask loginTask = new LoginTask(LoginActivity.this);
+            LoginTask loginTask = new LoginTask(getActivity());
             loginTask.setMessageLoading("Logging in...");
             loginTask.execute(LOGIN_API_ENDPOINT_URL);
         }
@@ -115,34 +157,28 @@ public class LoginActivity extends ActionBarActivity {
         protected void onPostExecute(JSONObject json) {
             try {
                 if (json.getBoolean("success")) {
+                    Log.d("Login ===D", "in if success");
                     // everything is ok
                     SharedPreferences.Editor editor = mPreferences.edit();
                     // save the returned auth_token into
                     // the SharedPreferences
                     editor.putString("AuthToken", json.getJSONObject("data").getString("auth_token"));
-                    editor.commit();
+                    editor.apply();
 
                     // launch the HomeActivity and close this one
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+                   loginSuccessful.onLoginSuccessful();
                 }
-                Toast.makeText(context, json.getString("info"), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), json.getString("info"), Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 // something went wrong: show a Toast
                 // with the exception message
-                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), e.getMessage() + "borked", Toast.LENGTH_LONG).show();
+                Log.d("Login ===D", "exception is: " + e);
             } finally {
-                super.onPostExecute(json);
+                Log.d("Login ===D", "in finally");
+                        super.onPostExecute(json);
             }
         }
-    }
-
-        @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
     }
 
     @Override

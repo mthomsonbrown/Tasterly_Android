@@ -19,19 +19,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WelcomeActivity"
-            android:label="@string/title_activity_welcome"
-            android:noHistory="true" >
-        </activity>
-        <activity
-            android:name=".RegisterActivity"
-            android:label="@string/title_activity_register"
-            android:noHistory="true" >
-        </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:noHistory="true" >
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".AuthenticationActivity"
+            android:label="@string/title_activity_authentication" >
         </activity>
     </application>
 
