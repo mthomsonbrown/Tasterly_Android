@@ -7,21 +7,44 @@
     <fragment
         android:id="@+id/fragment_content"
         android:name="com.slashandhyphen.tasterly.HomeFragment"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_home">
 
         <!-- Preview: layout=@layout/fragment_home -->
     </fragment>
 
+    <!-- Leaving this ListView in to avoid errors in Activity code.
+            take it out when i've moved ws fetches to another activity... -->
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tasks_list_view"
+        />
 
-    <ListView android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/tasks_list_view"></ListView>
 
-    <ListView android:layout_width="match_parent"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/menu_refresh"></ListView>
+        android:orientation="horizontal"
+        android:gravity="center|bottom">
+
+        <Button
+            android:id="@+id/viewBeerButton"
+            android:text="@string/view_ware"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/addBeerButton"
+            android:text="@string/add_ware"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
 
 
 </LinearLayout>

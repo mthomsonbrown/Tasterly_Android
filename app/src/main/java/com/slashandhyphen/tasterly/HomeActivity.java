@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,10 +21,12 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends ActionBarActivity implements View.OnClickListener {
 
     private static final String TASKS_URL = "http://192.168.1.102:3000/api/v1/tasks.json";
     private SharedPreferences mPreferences;
+    Button mAddBeerButton;
+    Button mViewBeerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,29 @@ public class HomeActivity extends ActionBarActivity {
         setContentView(R.layout.activity_home);
 
         mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
+
+        mAddBeerButton = (Button) this.findViewById(R.id.addBeerButton);
+        mViewBeerButton = (Button) this.findViewById(R.id.viewBeerButton);
+
+        mAddBeerButton.setOnClickListener(this);
+        mViewBeerButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (v == mAddBeerButton) {
+            Toast.makeText(this, "Cannot add Beers", Toast.LENGTH_SHORT)
+                    .show();
+
+            Intent intent = new Intent(getApplicationContext(), AddBeerActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        if (v == mViewBeerButton) {
+            Toast.makeText(this, "Cannot view Beers", Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 
     private void loadTasksFromAPI(String url) {
@@ -70,6 +97,7 @@ public class HomeActivity extends ActionBarActivity {
 
     }
 
+    // Authentication asserted before this activity can be viewed
     @Override
     public void onResume() {
         super.onResume();
@@ -89,16 +117,4 @@ public class HomeActivity extends ActionBarActivity {
         return true;
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.menu_refresh:
-                loadTasksFromAPI(TASKS_URL);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }

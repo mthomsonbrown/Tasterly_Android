@@ -19,9 +19,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:configChanges="keyboardHidden|orientation|screenSize"
             android:name=".AuthenticationActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_authentication" >
+        </activity>
+        <activity
+            android:name=".AddBeerActivity"
+            android:label="@string/title_activity_add_beer" >
         </activity>
     </application>
 
