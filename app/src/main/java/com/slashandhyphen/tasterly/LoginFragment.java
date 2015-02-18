@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.savagelook.android.UrlJsonAsyncTask;
 
+import retrofit.*;
+
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -78,7 +80,7 @@ public class LoginFragment extends Fragment {
 
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement onRegisterSelectedListener");
+                    + " must implement onLoginSelectedListener");
         }
     }
 
@@ -157,7 +159,7 @@ public class LoginFragment extends Fragment {
         protected void onPostExecute(JSONObject json) {
             try {
                 if (json.getBoolean("success")) {
-                    Log.d("Login ===D", "in if success");
+                    Log.d("Login", "in if success");
                     // everything is ok
                     SharedPreferences.Editor editor = mPreferences.edit();
                     // save the returned auth_token into
@@ -173,9 +175,9 @@ public class LoginFragment extends Fragment {
                 // something went wrong: show a Toast
                 // with the exception message
                 Toast.makeText(getActivity(), e.getMessage() + "borked", Toast.LENGTH_LONG).show();
-                Log.d("Login ===D", "exception is: " + e);
+                Log.d("Login", "exception is: " + e);
             } finally {
-                Log.d("Login ===D", "in finally");
+                Log.d("Login", "in finally");
                         super.onPostExecute(json);
             }
         }

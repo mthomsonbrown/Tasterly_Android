@@ -22,10 +22,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
-
     // Cardjunk
-  //  compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'
+    //  compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'
     //compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.0.1'
     //compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.0.1'
-
+    compile files('libs/retrofit-1.9.0.jar')
 }
