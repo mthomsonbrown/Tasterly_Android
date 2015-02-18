@@ -1,5 +1,7 @@
 package com.slashandhyphen.tasterly;
 
+import android.widget.Toast;
+
 import retrofit.*;
 
 public class AuthenticationService {
@@ -9,4 +11,7 @@ public class AuthenticationService {
 
     }
 
+    public boolean login() {
+        return true;
+    }
 }

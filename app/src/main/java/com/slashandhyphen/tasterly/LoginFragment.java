@@ -43,6 +43,7 @@ public class LoginFragment extends Fragment {
     private String mUserPassword;
     Button mLoginButton;
 
+    private AuthenticationService mAuthService;
     LinearLayout ll;
     FragmentActivity fa;
 
@@ -80,7 +81,7 @@ public class LoginFragment extends Fragment {
 
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement onLoginSelectedListener");
+                    + " must implement onLoginSuccessfulListener");
         }
     }
 
@@ -97,9 +98,14 @@ public class LoginFragment extends Fragment {
             toast.show();
             return;
         } else {
+            if (mAuthService.login())
+                Toast.makeText(getActivity(), "Login returned", Toast.LENGTH_SHORT).show();
+
+            /*
             LoginTask loginTask = new LoginTask(getActivity());
             loginTask.setMessageLoading("Logging in...");
             loginTask.execute(LOGIN_API_ENDPOINT_URL);
+            */
         }
     }
 
