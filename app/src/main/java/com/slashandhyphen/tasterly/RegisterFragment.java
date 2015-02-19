@@ -35,7 +35,7 @@ import java.io.IOException;
 
 public class RegisterFragment extends Fragment {
 
-    private final static String REGISTER_API_ENDPOINT_URL = "http://192.168.1.102:3000/api/v1/registrations";
+    private final static String REGISTER_API_ENDPOINT_URL = "http://192.168.1.100:3000/api/v1/registrations";
     private SharedPreferences mPreferences;
     private String mUserEmail;
     private String mUserName;

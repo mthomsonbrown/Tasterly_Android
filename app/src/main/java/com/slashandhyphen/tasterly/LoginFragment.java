@@ -37,13 +37,12 @@ import java.io.IOException;
 
 public class LoginFragment extends Fragment {
 
-    private final static String LOGIN_API_ENDPOINT_URL = "http://192.168.1.102:3000/api/v1/sessions.json";
+    private final static String LOGIN_API_ENDPOINT_URL = "http://192.168.1.100:3000/api/v1/sessions.json";
     private SharedPreferences mPreferences;
     private String mUserEmail;
     private String mUserPassword;
     Button mLoginButton;
 
-    private AuthenticationService mAuthService;
     LinearLayout ll;
     FragmentActivity fa;
 
@@ -98,14 +97,14 @@ public class LoginFragment extends Fragment {
             toast.show();
             return;
         } else {
-            if (mAuthService.login())
-                Toast.makeText(getActivity(), "Login returned", Toast.LENGTH_SHORT).show();
+           // if (mAuthService.login(mUserEmail, mUserPassword))
+             //   Toast.makeText(getActivity(), "Login returned", Toast.LENGTH_SHORT).show();
 
-            /*
+
             LoginTask loginTask = new LoginTask(getActivity());
             loginTask.setMessageLoading("Logging in...");
             loginTask.execute(LOGIN_API_ENDPOINT_URL);
-            */
+
         }
     }
 

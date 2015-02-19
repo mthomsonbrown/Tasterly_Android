@@ -27,4 +27,5 @@ dependencies {
     //compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.0.1'
     //compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.0.1'
     compile files('libs/retrofit-1.9.0.jar')
+    compile files('libs/gson-2.3.1.jar')
 }

@@ -21,12 +21,15 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.http.GET;
+
 public class HomeActivity extends ActionBarActivity implements View.OnClickListener {
 
-    private static final String TASKS_URL = "http://192.168.1.102:3000/api/v1/tasks.json";
+    private static final String TASKS_URL = "http://192.168.1.100:3000/api/v1/tasks.json";
     private SharedPreferences mPreferences;
     Button mAddBeerButton;
     Button mViewBeerButton;
+    AuthenticationService mAuthService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
 
         mAddBeerButton.setOnClickListener(this);
         mViewBeerButton.setOnClickListener(this);
+        mAuthService = new AuthenticationService();
     }
 
     @Override
@@ -54,8 +58,10 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
             finish();
         }
         if (v == mViewBeerButton) {
-            Toast.makeText(this, "Cannot view Beers", Toast.LENGTH_SHORT)
-                    .show();
+            //enter retrofit...
+            String response = "NOT DATA";
+            response = mAuthService.getTasks(mPreferences.getString("AuthToken", ""));
+            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -104,6 +110,7 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
 
         if (mPreferences.contains("AuthToken")) {
             loadTasksFromAPI(TASKS_URL);
+
         } else {
             Intent intent = new Intent(HomeActivity.this,AuthenticationActivity.class);
             startActivityForResult(intent, 0);
