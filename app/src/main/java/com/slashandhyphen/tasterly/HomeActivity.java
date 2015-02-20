@@ -54,7 +54,8 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
             finish();
         }
         if (v == mViewBeerButton) {
-            Toast.makeText(getApplicationContext(), "Cannot view Beers", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),
+                    "Cannot view Beers", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -84,7 +85,8 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
             }
             @Override
             public void failure(RetrofitError retrofitError) {
-                Toast.makeText(getApplicationContext(), "Failure Getting Data", Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(),
+                        "Failure Getting Data", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -98,7 +100,7 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
             loadTasksFromAPI();
 
         } else {
-            Intent intent = new Intent(HomeActivity.this,AuthenticationActivity.class);
+            Intent intent = new Intent(HomeActivity.this, AuthenticationActivity.class);
             startActivityForResult(intent, 0);
         }
     }
