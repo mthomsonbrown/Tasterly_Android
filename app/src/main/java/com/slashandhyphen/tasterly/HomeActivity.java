@@ -2,12 +2,10 @@ package com.slashandhyphen.tasterly;
 
 import com.savagelook.android.*;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,17 +13,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.json.JSONObject;
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.http.GET;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class HomeActivity extends ActionBarActivity implements View.OnClickListener {
 
-    private static final String TASKS_URL = "http://192.168.1.100:3000/api/v1/tasks.json";
     private SharedPreferences mPreferences;
     Button mAddBeerButton;
     Button mViewBeerButton;
@@ -43,7 +40,6 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
 
         mAddBeerButton.setOnClickListener(this);
         mViewBeerButton.setOnClickListener(this);
-        mAuthService = new AuthenticationService();
     }
 
     @Override
@@ -58,49 +54,39 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
             finish();
         }
         if (v == mViewBeerButton) {
-            //enter retrofit...
-            String response = "NOT DATA";
-            response = mAuthService.getTasks(mPreferences.getString("AuthToken", ""));
-            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Cannot view Beers", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void loadTasksFromAPI(String url) {
-        GetTasksTask getTasksTask = new GetTasksTask(HomeActivity.this);
-        getTasksTask.setMessageLoading("Loading tasks...");
-        getTasksTask.execute(url + "?auth_token=" + mPreferences.getString("AuthToken", ""));
-    }
+    private void loadTasksFromAPI() {
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://192.168.1.100:3000")
+                .build();
+        AuthenticationService service =
+                restAdapter.create(AuthenticationService.class);
 
+        String authToken = mPreferences.getString("AuthToken", "");
 
-    private class GetTasksTask extends UrlJsonAsyncTask {
-        public GetTasksTask(Context context) {
-            super(context);
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject json) {
-            try {
-                JSONArray jsonTasks = json.getJSONObject("data").getJSONArray("tasks");
-                int length = jsonTasks.length();
+        service.getAStringList(authToken, new Callback<Trial>() {
+            @Override
+            public void success(Trial result, Response response) {
+                int length = result.getData().getTasks().length;
                 List<String> tasksTitles = new ArrayList<String>(length);
 
                 for (int i = 0; i < length; i++) {
-                    tasksTitles.add(jsonTasks.getJSONObject(i).getString("title"));
+                    tasksTitles.add(result.getData().getTasks()[i].getTitle());
                 }
-
                 ListView tasksListView = (ListView) findViewById(R.id.tasks_list_view);
                 if (tasksListView != null) {
                     tasksListView.setAdapter(new ArrayAdapter<String>(HomeActivity.this,
                             android.R.layout.simple_list_item_1, tasksTitles));
                 }
-            } catch (Exception e) {
-                Toast.makeText(context, e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            } finally {
-                super.onPostExecute(json);
             }
-        }
-
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Toast.makeText(getApplicationContext(), "Failure Getting Data", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     // Authentication asserted before this activity can be viewed
@@ -109,7 +95,7 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
         super.onResume();
 
         if (mPreferences.contains("AuthToken")) {
-            loadTasksFromAPI(TASKS_URL);
+            loadTasksFromAPI();
 
         } else {
             Intent intent = new Intent(HomeActivity.this,AuthenticationActivity.class);
