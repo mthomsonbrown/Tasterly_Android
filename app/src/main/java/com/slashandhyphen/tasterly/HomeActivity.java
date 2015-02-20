@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.slashandhyphen.tasterly.Pojo.Trial;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,6 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
     private SharedPreferences mPreferences;
     Button mAddBeerButton;
     Button mViewBeerButton;
-    AuthenticationService mAuthService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

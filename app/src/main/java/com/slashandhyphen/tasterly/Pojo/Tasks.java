@@ -1,4 +1,4 @@
-package com.slashandhyphen.tasterly;
+package com.slashandhyphen.tasterly.Pojo;
 
 public class Tasks
 {

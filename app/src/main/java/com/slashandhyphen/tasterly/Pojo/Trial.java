@@ -1,4 +1,6 @@
-package com.slashandhyphen.tasterly;
+package com.slashandhyphen.tasterly.Pojo;
+
+import com.slashandhyphen.tasterly.Pojo.Data;
 
 public class Trial
 {
@@ -37,4 +39,5 @@ public class Trial
     {
         this.info = info;
     }
+
 }
