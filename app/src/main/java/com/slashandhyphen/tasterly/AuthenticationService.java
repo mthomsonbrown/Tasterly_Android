@@ -17,4 +17,7 @@ public interface AuthenticationService {
 
     @POST("/api/v1/sessions.json")
     void loginUser(@Body User user, Callback<SessionResponse> result);
+
+    @POST("/api/v1/registrations")
+    void registerUser(@Body User user, Callback<SessionResponse> result);
 }
