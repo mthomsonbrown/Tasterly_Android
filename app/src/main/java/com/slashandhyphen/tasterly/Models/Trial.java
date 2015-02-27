@@ -1,6 +1,4 @@
-package com.slashandhyphen.tasterly.Pojo;
-
-import com.slashandhyphen.tasterly.Pojo.Data;
+package com.slashandhyphen.tasterly.Models;
 
 public class Trial
 {

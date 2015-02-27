@@ -1,4 +1,4 @@
-package com.slashandhyphen.tasterly.Pojo;
+package com.slashandhyphen.tasterly.Models;
 
 /**
  * Created by ookamijin on 2/20/15.

@@ -1,4 +1,4 @@
-package com.slashandhyphen.tasterly.Pojo;
+package com.slashandhyphen.tasterly.Models;
 
 //TODO: omg change user model.  the name "user" for the UserData is currently required by the api,
 // as well as the two layer class model...

@@ -14,9 +14,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.slashandhyphen.tasterly.Pojo.SessionResponse;
-import com.slashandhyphen.tasterly.Pojo.User;
-import com.slashandhyphen.tasterly.Pojo.UserData;
+import com.slashandhyphen.tasterly.Models.SessionResponse;
+import com.slashandhyphen.tasterly.Models.User;
+import com.slashandhyphen.tasterly.Models.UserData;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;

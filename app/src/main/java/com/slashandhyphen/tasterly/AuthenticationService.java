@@ -1,8 +1,8 @@
 package com.slashandhyphen.tasterly;
 
-import com.slashandhyphen.tasterly.Pojo.SessionResponse;
-import com.slashandhyphen.tasterly.Pojo.Trial;
-import com.slashandhyphen.tasterly.Pojo.User;
+import com.slashandhyphen.tasterly.Models.SessionResponse;
+import com.slashandhyphen.tasterly.Models.Trial;
+import com.slashandhyphen.tasterly.Models.User;
 
 import retrofit.Callback;
 import retrofit.http.Body;
