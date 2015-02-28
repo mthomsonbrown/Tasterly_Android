@@ -21,7 +21,6 @@ import com.slashandhyphen.tasterly.Models.UserData;
 import retrofit.*;
 import retrofit.client.Response;
 
-
 public class LoginFragment extends Fragment {
 
     private SharedPreferences mPreferences;

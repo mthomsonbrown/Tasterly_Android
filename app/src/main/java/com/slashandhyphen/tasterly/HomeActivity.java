@@ -1,5 +1,6 @@
 package com.slashandhyphen.tasterly;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
@@ -21,7 +22,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class HomeActivity extends ActionBarActivity implements View.OnClickListener {
+public class HomeActivity extends Activity implements View.OnClickListener {
 
     private SharedPreferences mPreferences;
     Button mAddBeerButton;
