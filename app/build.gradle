@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.slashandhyphen.tasterly"
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -27,21 +27,21 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:21.0.3'
-    // Cardjunk
-    //  compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'
-    //compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.0.1'
-    //compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.0.1'
+
+    //Card Junk
+    compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'
+    compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.0.1'
+    compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.0.1'
+
+    //Async Junk
     compile files('libs/retrofit-1.9.0.jar')
     compile files('libs/gson-2.3.1.jar')
+
     //Test Junk
+    testCompile 'org.robolectric:robolectric:3.0-SNAPSHOT'
     compile('com.squareup.assertj:assertj-android:1.0.0') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    testCompile 'org.robolectric:robolectric:2.4'
-    compile 'junit:junit:4.11'
-    //compile files('libs/robolectric-resources-3.0-20150213.174143-192-javadoc.jar')
-    //compile files('libs/robolectric-resources-3.0-20150213.174143-192.jar')
-    //compile files('libs/robolectric-resources-3.0-20150213.174143-192-sources.jar')
 }
 
 apply plugin: 'org.robolectric'
