@@ -17,7 +17,6 @@ import java.lang.String;
 
 import static org.assertj.android.api.Assertions.assertThat;
 
-    @Config(emulateSdk = 18)
     @RunWith(RobolectricTestRunner.class)
     public class BasicTest {
 
