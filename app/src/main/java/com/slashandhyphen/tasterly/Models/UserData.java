@@ -1,7 +1,9 @@
 package com.slashandhyphen.tasterly.Models;
 
 
-public class UserData {
+import com.orm.SugarRecord;
+
+public class UserData extends SugarRecord<UserData> {
 
     private String email;
 
@@ -10,6 +12,8 @@ public class UserData {
     private String password_confirmation;
 
     private String name;
+
+    public UserData() {}
 
     public String getEmail ()
     {

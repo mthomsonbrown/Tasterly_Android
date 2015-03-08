@@ -25,7 +25,7 @@ public class AddBeerActivity extends ActionBarActivity {
 
         FragmentTransaction ft = fm.beginTransaction();
         if (fragment1 == null) {
-            ft.add(R.id.fragment_content_1, new AddBeerAFragment());
+            ft.add(R.id.fragment_content_1, new AddBeerFragment());
         }
         if (fragment2 == null) {
            ft.add(R.id.fragment_content_2, new AddBeerBFragment());
