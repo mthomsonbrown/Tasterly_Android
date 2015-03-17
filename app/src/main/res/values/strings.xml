@@ -19,8 +19,8 @@
     <string name="register_disclaimer">I will sell your information</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_authentication">AuthenticationActivity</string>
-    <string name="view_ware">View Beers</string>
-    <string name="add_ware">Add a Beer</string>
+    <string name="view_beer">View Beers</string>
+    <string name="add_beer">Add a Beer</string>
     <string name="title_activity_add_beer">AddBeerActivity</string>
 
 </resources>
