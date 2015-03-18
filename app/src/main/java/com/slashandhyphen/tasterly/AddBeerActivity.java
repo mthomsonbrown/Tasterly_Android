@@ -8,31 +8,36 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class AddBeerActivity extends ActionBarActivity {
 
     FragmentManager fm = getFragmentManager();
     Fragment fragment1 = fm.findFragmentById(R.id.fragment_content_1);
-    Fragment fragment2 = fm.findFragmentById(R.id.fragment_content_2);
+    //Fragment fragment2 = fm.findFragmentById(R.id.fragment_content_2);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_beer);
 
-        Log.d("breakpoint", "thefuck");
+        // Make Activity fullscreen
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         FragmentTransaction ft = fm.beginTransaction();
         if (fragment1 == null) {
             ft.add(R.id.fragment_content_1, new AddBeerFragment());
         }
-        if (fragment2 == null) {
-           ft.add(R.id.fragment_content_2, new AddBeerBFragment());
-        }
+
         ft.commit();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

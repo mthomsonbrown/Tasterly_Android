@@ -1,65 +1,74 @@
 package com.slashandhyphen.tasterly;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import com.slashandhyphen.tasterly.Models.Beer;
-
-import java.util.List;
 
 
 public class AddBeerFragment extends Fragment {
-
-    Button saveBeerButton;
-    TextView trialView;
-    SeekBar mSeekBar;
-
-    LinearLayout ll;
+    Button testButton;
+    RelativeLayout rl;
     FragmentActivity fa;
+    String TAG = "AddBeer";
+    float origin;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         fa = (FragmentActivity) super.getActivity();
-        ll = (LinearLayout) inflater.inflate(R.layout.fragment_add_beer, container, false);
-        mSeekBar = (SeekBar) ll.findViewById(R.id.seekBar);
-        trialView = (TextView) ll.findViewById(R.id.trialContent);
-        saveBeerButton = (Button) ll.findViewById(R.id.saveBeerButton);
+        rl = (RelativeLayout) inflater.inflate(R.layout.fragment_add_beer, container, false);
 
-        saveBeerButton.setOnClickListener(new View.OnClickListener() {
+        // TODO Make this not return 0.0
+        origin = rl.getHeight();
 
-            @Override
-            public void onClick(View v) {
-                saveBeer(saveBeerButton);
+        Toast.makeText(getActivity(), "RL Height is " + origin, Toast.LENGTH_SHORT).show();
+        testButton = (Button) rl.findViewById(R.id.test_button);
+        testButton.setOnClickListener(new mClickListener());
+        testButton.setOnTouchListener(new mTouchListener());
+        testButton.setOnDragListener(new mDragListener());
+
+        return rl;
+    }
+
+    class mClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getActivity(), "Click Beer", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    class mTouchListener implements View.OnTouchListener {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_MOVE) {
+
+                // TODO Make not spastic
+                testButton.setY(event.getY());
+                testButton.setX(event.getX());
+
             }
-        });
 
-        return ll;
+            return false;
+        }
     }
-
-    private void saveBeer(View saveBeerButton) {
-        Beer mBeer = new Beer();
-        mBeer.setName(trialView.getText().toString());
-        mBeer.setGoodness((long)mSeekBar.getProgress());
-        mBeer.save();
-
-        Beer nBeer = Beer.findById(Beer.class, (long)1);
-
-        Toast.makeText(getActivity(),
-                "Beer name is " + nBeer.getName(), Toast.LENGTH_SHORT).show();
-
-        Toast.makeText(getActivity(),
-                "Goodness is " + nBeer.getGoodness(), Toast.LENGTH_SHORT).show();
-
+    class mDragListener implements View.OnDragListener {
+        @Override
+        public boolean onDrag(View v, DragEvent event) {
+            Toast.makeText(getActivity(), "Drag Beer", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
-
 }

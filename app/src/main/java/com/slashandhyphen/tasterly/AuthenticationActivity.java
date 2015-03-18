@@ -26,7 +26,7 @@ public class AuthenticationActivity extends ActionBarActivity
 
         if (fragment == null) {
 
-            Log.d("Authentication Acctivity", "fragment was null");
+            Log.d("Authentication Acctiviy", "fragment was null");
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.fragment_content, new WelcomeFragment());
             ft.commit();

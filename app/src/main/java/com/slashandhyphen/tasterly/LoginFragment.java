@@ -87,7 +87,6 @@ public class LoginFragment extends Fragment {
             Toast toast = Toast.makeText(getActivity(), "Please complete all the fields",
                     Toast.LENGTH_LONG);
             toast.show();
-            return;
         } else {
             mUser.setmData(mData);
 
