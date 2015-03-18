@@ -3,15 +3,27 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_0">
+    android:background="@color/primary_0"
+    android:clickable="true">
 
     <Button
-        android:id="@+id/test_button"
+        android:id="@+id/test_button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_beer"
         android:layout_gravity="center_vertical"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/test_button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/view_beer"
+        android:layout_below="@+id/test_button1"
+        android:layout_alignEnd="@+id/test_button1"
+        android:layout_marginEnd="51dp"
+        android:layout_marginTop="88dp" />
+
 
 </RelativeLayout>
