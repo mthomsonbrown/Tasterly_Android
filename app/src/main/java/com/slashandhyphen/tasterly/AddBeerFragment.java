@@ -63,7 +63,6 @@ public class AddBeerFragment extends Fragment {
             mSeekBar.setVisibility(View.VISIBLE);
         }
 
-        // TODO switch onlongclick functionality with onclick
         @Override
         public boolean onLongClick(View mButton) {
             // TODO Make this produce detail view
