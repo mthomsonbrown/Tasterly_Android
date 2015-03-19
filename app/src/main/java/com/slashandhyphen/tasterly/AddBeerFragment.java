@@ -21,7 +21,6 @@ public class AddBeerFragment extends Fragment {
     SeekBar mSeekBar;
 
     RelativeLayout rl;
-    FragmentActivity fa;
     String TAG = "AddBeerFragment";
     float origin;
 
@@ -29,7 +28,6 @@ public class AddBeerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        fa = (FragmentActivity) super.getActivity();
         rl = (RelativeLayout) inflater.inflate(R.layout.fragment_add_beer, container, false);
         ButtonHandler mButtonHandler = new ButtonHandler();
 
