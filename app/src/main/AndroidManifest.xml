@@ -3,6 +3,7 @@
     package="com.slashandhyphen.tasterly" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name="com.orm.SugarApp"

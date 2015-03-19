@@ -3,12 +3,14 @@ package com.slashandhyphen.tasterly;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 
@@ -16,10 +18,11 @@ public class AddBeerFragment extends Fragment {
 
     // TODO Dynamasize
     Button testButtons[] = new Button[2];
+    SeekBar mSeekBar;
 
     RelativeLayout rl;
     FragmentActivity fa;
-    String TAG = "AddBeer";
+    String TAG = "AddBeerFragment";
     float origin;
 
     @Override
@@ -28,20 +31,72 @@ public class AddBeerFragment extends Fragment {
 
         fa = (FragmentActivity) super.getActivity();
         rl = (RelativeLayout) inflater.inflate(R.layout.fragment_add_beer, container, false);
+        ButtonHandler mButtonHandler = new ButtonHandler();
 
         // TODO Make this not return 0.0
         origin = rl.getHeight();
-        Toast.makeText(getActivity(), "RL Height is " + origin, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "RL Height is " + origin);
 
         // TODO Iterate!
         testButtons[0] = (Button) rl.findViewById(R.id.test_button1);
-        testButtons[0].setOnTouchListener(new mTouchListener());
+        testButtons[0].setOnClickListener(mButtonHandler);
+        testButtons[0].setOnLongClickListener(mButtonHandler);
         testButtons[1] = (Button) rl.findViewById(R.id.test_button2);
-        testButtons[1].setOnTouchListener(new mTouchListener());
+        testButtons[1].setOnClickListener(mButtonHandler);
+        testButtons[1].setOnLongClickListener(mButtonHandler);
 
         rl.setOnTouchListener(new mTouchListener());
+        mSeekBar = (SeekBar) rl.findViewById((R.id.addBeerSeekBar));
 
         return rl;
+    }
+
+    class ButtonHandler implements View.OnLongClickListener, View.OnClickListener {
+
+        //TODO Add to config
+        int initialSeekProgress = 0;
+
+        @Override
+        public void onClick(View v) {
+            // TODO Make this produce detail view
+            Toast.makeText(getActivity(), "Button Clicked", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public boolean onLongClick(View mButton) {
+            SeekBarListener mListener = new SeekBarListener(mButton);
+            mSeekBar.setOnSeekBarChangeListener(mListener);
+            mSeekBar.setProgress(initialSeekProgress);
+            mSeekBar.setX(mButton.getX() + mButton.getWidth());
+            mSeekBar.setY(mButton.getY());
+            mSeekBar.setVisibility(View.VISIBLE);
+            return true;
+        }
+    }
+
+    class SeekBarListener implements SeekBar.OnSeekBarChangeListener {
+
+        View v;
+
+        SeekBarListener(View v) {
+            this.v = v;
+        }
+
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            Log.d(TAG, "Seek Bar Changed to " + seekBar.getProgress());
+            Log.d(TAG, "View was " + v.getId());
+        }
     }
 
     class mTouchListener implements View.OnTouchListener {
@@ -51,9 +106,6 @@ public class AddBeerFragment extends Fragment {
         float testOriginY[] = new float[2];
 
         float touchOriginX, touchOriginY, dY, dX = 0;
-
-        // TODO Add to a config file...
-        float clickThreshold = 5;
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -78,17 +130,6 @@ public class AddBeerFragment extends Fragment {
                 testButtons[0].setX(testOriginX[0] - dX);
                 testButtons[1].setY(testOriginY[1] - dY);
                 testButtons[1].setX(testOriginX[1] - dX);
-                return true;
-            }
-
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                if (dX < clickThreshold && dY < clickThreshold &&   // Handle Click Events
-                        dX > -clickThreshold && dY > -clickThreshold &&
-                        v.getId() != R.id.add_beer_layout) {
-
-
-                    Toast.makeText(getActivity(), "Didn't move " + dY, Toast.LENGTH_SHORT).show();
-                }
                 return true;
             }
 
