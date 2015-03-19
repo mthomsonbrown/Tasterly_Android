@@ -54,19 +54,20 @@ public class AddBeerFragment extends Fragment {
         int initialSeekProgress = 0;
 
         @Override
-        public void onClick(View v) {
-            // TODO Make this produce detail view
-            Toast.makeText(getActivity(), "Button Clicked", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public boolean onLongClick(View mButton) {
+        public void onClick(View mButton) {
             SeekBarListener mListener = new SeekBarListener(mButton);
             mSeekBar.setOnSeekBarChangeListener(mListener);
             mSeekBar.setProgress(initialSeekProgress);
             mSeekBar.setX(mButton.getX() + mButton.getWidth());
             mSeekBar.setY(mButton.getY());
             mSeekBar.setVisibility(View.VISIBLE);
+        }
+
+        // TODO switch onlongclick functionality with onclick
+        @Override
+        public boolean onLongClick(View mButton) {
+            // TODO Make this produce detail view
+            Toast.makeText(getActivity(), "Button Really Clicked", Toast.LENGTH_SHORT).show();
             return true;
         }
     }
