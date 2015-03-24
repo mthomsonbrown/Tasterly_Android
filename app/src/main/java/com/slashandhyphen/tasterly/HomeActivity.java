@@ -54,6 +54,7 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
         if (mPreferences.contains("AuthToken")) {
 
         } else {
+
             Intent intent = new Intent(HomeActivity.this, AuthenticationActivity.class);
             startActivityForResult(intent, 0);
         }

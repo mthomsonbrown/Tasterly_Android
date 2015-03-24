@@ -104,6 +104,11 @@ public class RegisterFragment extends Fragment {
             }
         }
 
+        // TODO remove Test Params
+        mData.setName("Mike");
+        mData.setEmail("mikeTest@brown.com");
+        mData.setPassword("qwertyui");
+        mData.setPasswordConfirmation("qwertyui");
 
         // User input error checking junk
         if (mData.getEmail().length() == 0 || mData.getName().length() == 0 ||

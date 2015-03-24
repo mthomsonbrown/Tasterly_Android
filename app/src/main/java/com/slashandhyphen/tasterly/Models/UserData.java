@@ -1,9 +1,6 @@
 package com.slashandhyphen.tasterly.Models;
 
-
-import com.orm.SugarRecord;
-
-public class UserData extends SugarRecord<UserData> {
+public class UserData {
 
     private String email;
 
@@ -42,7 +39,7 @@ public class UserData extends SugarRecord<UserData> {
 
     public void setPasswordConfirmation (String password_confirmation)
     {
-        this.password_confirmation = password;
+        this.password_confirmation = password_confirmation;
     }
 
     public String getName ()

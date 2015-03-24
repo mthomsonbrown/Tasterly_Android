@@ -78,8 +78,10 @@ public class LoginFragment extends Fragment {
         mData.setPassword(userPasswordField.getText().toString());
 
         //Test data...
-        mData.setEmail("mike@brown.com");
-        mData.setPassword("qwertyui");
+        if(mData.getEmail().length() == 0) {
+            mData.setEmail("mikeTest@brown.com");
+            mData.setPassword("qwertyui");
+        }
 
         //TODO: Put this check in the User class
         if (mData.getEmail().length() == 0 || mData.getPassword().length() == 0) {
