@@ -17,8 +17,11 @@ public class AddBeerFragment extends Fragment {
 
     // TODO Dynamasize
     Button testButtons[] = new Button[2];
-    SeekBar mSeekBar;
 
+    //TODO add to config file
+    int moveVanishThreshold = 10;
+
+    SeekBar mSeekBar;
     RelativeLayout rl;
     String TAG = "AddBeerFragment";
     float origin;
@@ -128,6 +131,12 @@ public class AddBeerFragment extends Fragment {
                 testButtons[1].setY(testOriginY[1] - dY);
                 testButtons[1].setX(testOriginX[1] - dX);
                 return true;
+            }
+
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                // TODO Maybe a better way to implement
+                mSeekBar.setVisibility(View.GONE);
             }
 
             return false;
