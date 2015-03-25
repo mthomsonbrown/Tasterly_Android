@@ -2,11 +2,13 @@ package com.slashandhyphen.tasterly;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -17,14 +19,13 @@ public class AddBeerFragment extends Fragment {
 
     // TODO Dynamasize
     Button testButtons[] = new Button[2];
-
-    //TODO add to config file
-    int moveVanishThreshold = 10;
+    Button testButton;
 
     SeekBar mSeekBar;
     RelativeLayout rl;
     String TAG = "AddBeerFragment";
-    float origin;
+    int origin[] = new int[2];
+    int rlHeight, rlWidth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,10 +33,7 @@ public class AddBeerFragment extends Fragment {
 
         rl = (RelativeLayout) inflater.inflate(R.layout.fragment_add_beer, container, false);
         ButtonHandler mButtonHandler = new ButtonHandler();
-
-        // TODO Make this not return 0.0
-        origin = rl.getHeight();
-        Log.d(TAG, "RL Height is " + origin);
+        LayoutListener mLayoutListener = new LayoutListener();
 
         // TODO Iterate!
         testButtons[0] = (Button) rl.findViewById(R.id.test_button1);
@@ -45,10 +43,40 @@ public class AddBeerFragment extends Fragment {
         testButtons[1].setOnClickListener(mButtonHandler);
         testButtons[1].setOnLongClickListener(mButtonHandler);
 
+        //TODO Test button
+        /* Apparently all views need to be instantiated here, and then their coordinates set in
+         * the LayoutListener */
+        testButton = new Button(getActivity());
+        testButton.setLayoutParams(new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT));
+        testButton.setText("Holy crap a button!!!");
+
+        rl.addView(testButton);
+
         rl.setOnTouchListener(new mTouchListener());
+        rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
         mSeekBar = (SeekBar) rl.findViewById((R.id.addBeerSeekBar));
 
         return rl;
+    }
+
+    class LayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
+
+        //TODO Make this not be called n+1 for every screen change
+        @Override
+        public void onGlobalLayout() {
+            rl.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+            rlHeight = rl.getHeight();
+            rlWidth = rl.getWidth();
+            origin[0] = rlWidth / 2;
+            origin[1] = rlHeight / 2;
+
+            testButton.setX(origin[0] - testButton.getWidth() / 2);
+            testButton.setY(origin[1] - testButton.getHeight() / 2);
+
+        }
     }
 
     class ButtonHandler implements View.OnLongClickListener, View.OnClickListener {

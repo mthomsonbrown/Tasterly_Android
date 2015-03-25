@@ -6,13 +6,9 @@
     android:background="@color/primary_1"
     android:weightSum="1">
 
+    <FrameLayout
+        android:id="@+id/fragment_content_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <TextView
-        android:layout_width="204dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView4"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.71" />
 </LinearLayout>
