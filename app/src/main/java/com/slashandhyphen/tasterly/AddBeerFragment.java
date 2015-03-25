@@ -23,6 +23,8 @@ public class AddBeerFragment extends Fragment {
 
     SeekBar mSeekBar;
     RelativeLayout rl;
+    ButtonHandler mButtonHandler;
+
     String TAG = "AddBeerFragment";
     int origin[] = new int[2];
     int rlHeight, rlWidth;
@@ -32,7 +34,7 @@ public class AddBeerFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         rl = (RelativeLayout) inflater.inflate(R.layout.fragment_add_beer, container, false);
-        ButtonHandler mButtonHandler = new ButtonHandler();
+        mButtonHandler = new ButtonHandler();
         LayoutListener mLayoutListener = new LayoutListener();
 
         // TODO Iterate!
@@ -73,8 +75,9 @@ public class AddBeerFragment extends Fragment {
             origin[0] = rlWidth / 2;
             origin[1] = rlHeight / 2;
 
-            testButton.setX(origin[0] - testButton.getWidth() / 2);
+            testButton.setX(origin[0] - testButton.getWidth() / 2 + origin[0] / 4 * 3);
             testButton.setY(origin[1] - testButton.getHeight() / 2);
+            testButton.setOnClickListener(mButtonHandler);
 
         }
     }
@@ -130,8 +133,8 @@ public class AddBeerFragment extends Fragment {
     class mTouchListener implements View.OnTouchListener {
 
         // TODO Dynamasize
-        float testOriginX[] = new float[2];
-        float testOriginY[] = new float[2];
+        float testOriginX[] = new float[3];
+        float testOriginY[] = new float[3];
 
         float touchOriginX, touchOriginY, dY, dX = 0;
 
@@ -144,6 +147,8 @@ public class AddBeerFragment extends Fragment {
                 testOriginY[0] = testButtons[0].getY();
                 testOriginX[1] = testButtons[1].getX();
                 testOriginY[1] = testButtons[1].getY();
+                testOriginX[2] = testButton.getX();
+                testOriginY[2] = testButton.getY();
                 touchOriginX = event.getRawX();
                 touchOriginY = event.getRawY();
                 return true;
@@ -154,10 +159,12 @@ public class AddBeerFragment extends Fragment {
                 dX = touchOriginX - event.getRawX();
 
                 // TODO Iterate!
-                testButtons[0].setY(testOriginY[0] - dY);
                 testButtons[0].setX(testOriginX[0] - dX);
-                testButtons[1].setY(testOriginY[1] - dY);
+                testButtons[0].setY(testOriginY[0] - dY);
                 testButtons[1].setX(testOriginX[1] - dX);
+                testButtons[1].setY(testOriginY[1] - dY);
+                testButton.setX(testOriginX[2] - dX);
+                testButton.setY(testOriginY[2] - dY);
                 return true;
             }
 
