@@ -2,7 +2,6 @@ package com.slashandhyphen.tasterly;
 
 import android.os.Bundle;
 import android.app.Fragment;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,17 +16,17 @@ import android.widget.Toast;
 
 public class AddBeerFragment extends Fragment {
 
-    // TODO Dynamasize
-    Button testButtons[] = new Button[2];
-    Button testButton;
+    // TODO Probably dynamasize
+    Button flavorButtons[] = new Button[6];
 
     SeekBar mSeekBar;
     RelativeLayout rl;
     ButtonHandler mButtonHandler;
 
     String TAG = "AddBeerFragment";
-    int origin[] = new int[2];
+    int originX, originY;
     int rlHeight, rlWidth;
+    int viewDiameter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,24 +36,21 @@ public class AddBeerFragment extends Fragment {
         mButtonHandler = new ButtonHandler();
         LayoutListener mLayoutListener = new LayoutListener();
 
-        // TODO Iterate!
-        testButtons[0] = (Button) rl.findViewById(R.id.test_button1);
-        testButtons[0].setOnClickListener(mButtonHandler);
-        testButtons[0].setOnLongClickListener(mButtonHandler);
-        testButtons[1] = (Button) rl.findViewById(R.id.test_button2);
-        testButtons[1].setOnClickListener(mButtonHandler);
-        testButtons[1].setOnLongClickListener(mButtonHandler);
+        //Add button arrays to view
+        for (int i = 0; i < flavorButtons.length; ++i) {
+            flavorButtons[i] = new Button(getActivity());
+            flavorButtons[i].setLayoutParams(new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT));
+            flavorButtons[i].setId(View.generateViewId());
 
-        //TODO Test button
-        /* Apparently all views need to be instantiated here, and then their coordinates set in
-         * the LayoutListener */
-        testButton = new Button(getActivity());
-        testButton.setLayoutParams(new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT));
-        testButton.setText("Holy crap a button!!!");
+            //TODO come up with better names, also pictures and other item-specific junk
+            flavorButtons[i].setText("BTN" + i);
 
-        rl.addView(testButton);
+            flavorButtons[i].setOnClickListener(mButtonHandler);
+            flavorButtons[i].setOnLongClickListener(mButtonHandler);
+            rl.addView(flavorButtons[i]);
+        }
 
         rl.setOnTouchListener(new mTouchListener());
         rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
@@ -69,15 +65,33 @@ public class AddBeerFragment extends Fragment {
         @Override
         public void onGlobalLayout() {
             rl.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            int buttonRadius;
+            int drawRadius;
 
+            //Getting view measurements
             rlHeight = rl.getHeight();
             rlWidth = rl.getWidth();
-            origin[0] = rlWidth / 2;
-            origin[1] = rlHeight / 2;
+            originX = rlWidth / 2;
+            originY = rlHeight / 2;
 
-            testButton.setX(origin[0] - testButton.getWidth() / 2 + origin[0] / 4 * 3);
-            testButton.setY(origin[1] - testButton.getHeight() / 2);
-            testButton.setOnClickListener(mButtonHandler);
+            if(rlHeight < rlWidth)
+                viewDiameter = rlHeight;
+            else
+                viewDiameter = rlWidth;
+
+            // Setting max distance a button can be placed from origin, assuming all buttons
+            // are the same size
+            buttonRadius = viewDiameter / 2 - flavorButtons[0].getHeight() / 2;
+
+            // TODO Subjective subset of maximum, should be static in config file
+            drawRadius = buttonRadius / 2;
+
+            // arrange in circle
+            for(int i = 0; i < flavorButtons.length; ++i) {
+                double theta = ((2 * Math.PI) / flavorButtons.length) * i;
+                flavorButtons[i].setX(originX + drawRadius * (float)Math.cos(theta));
+                flavorButtons[i].setY(originY + drawRadius * (float)Math.sin(theta));
+            }
 
         }
     }
@@ -132,9 +146,8 @@ public class AddBeerFragment extends Fragment {
 
     class mTouchListener implements View.OnTouchListener {
 
-        // TODO Dynamasize
-        float testOriginX[] = new float[3];
-        float testOriginY[] = new float[3];
+        float testOriginX[] = new float[flavorButtons.length];
+        float testOriginY[] = new float[flavorButtons.length];
 
         float touchOriginX, touchOriginY, dY, dX = 0;
 
@@ -142,13 +155,11 @@ public class AddBeerFragment extends Fragment {
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                // TODO Iterate!
-                testOriginX[0] = testButtons[0].getX();
-                testOriginY[0] = testButtons[0].getY();
-                testOriginX[1] = testButtons[1].getX();
-                testOriginY[1] = testButtons[1].getY();
-                testOriginX[2] = testButton.getX();
-                testOriginY[2] = testButton.getY();
+                for(int i = 0; i < flavorButtons.length; ++i) {
+                    testOriginX[i] = flavorButtons[i].getX();
+                    testOriginY[i] = flavorButtons[i].getY();
+                }
+
                 touchOriginX = event.getRawX();
                 touchOriginY = event.getRawY();
                 return true;
@@ -158,19 +169,17 @@ public class AddBeerFragment extends Fragment {
                 dY = touchOriginY - event.getRawY();
                 dX = touchOriginX - event.getRawX();
 
-                // TODO Iterate!
-                testButtons[0].setX(testOriginX[0] - dX);
-                testButtons[0].setY(testOriginY[0] - dY);
-                testButtons[1].setX(testOriginX[1] - dX);
-                testButtons[1].setY(testOriginY[1] - dY);
-                testButton.setX(testOriginX[2] - dX);
-                testButton.setY(testOriginY[2] - dY);
+                for(int i = 0; i < flavorButtons.length; ++i) {
+                    flavorButtons[i].setX(testOriginX[i] - dX);
+                    flavorButtons[i].setY(testOriginY[i] - dY);
+                }
+
                 return true;
             }
 
             if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                // TODO Maybe a better way to implement
+                // TODO Maybe a better way to implement...yeah, probably put this in ACTION_MOVE
                 mSeekBar.setVisibility(View.GONE);
             }
 
