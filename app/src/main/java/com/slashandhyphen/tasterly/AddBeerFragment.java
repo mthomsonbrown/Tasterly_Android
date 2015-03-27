@@ -1,5 +1,6 @@
 package com.slashandhyphen.tasterly;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -17,13 +18,17 @@ import android.widget.Toast;
 public class AddBeerFragment extends Fragment {
 
     // TODO Probably dynamasize
-    Button flavorButtons[] = new Button[6];
+    Button flavorButtons[];
+    String flavorButtonNames[];
 
     SeekBar mSeekBar;
     RelativeLayout rl;
-    ButtonHandler mButtonHandler;
+    Resources res;
 
-    String TAG = "AddBeerFragment";
+    ButtonHandler mButtonHandler;
+    LayoutListener mLayoutListener;
+
+    String TAG = "AddBeerFragmentZAZZ";
     int originX, originY;
     int rlHeight, rlWidth;
     int viewDiameter;
@@ -31,12 +36,17 @@ public class AddBeerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        // Declare Variables!
+        res = getResources();
         rl = (RelativeLayout) inflater.inflate(R.layout.fragment_add_beer, container, false);
         mButtonHandler = new ButtonHandler();
-        LayoutListener mLayoutListener = new LayoutListener();
+        mLayoutListener = new LayoutListener();
 
-        //Add button arrays to view
+        // Declare Button Junk!
+        flavorButtonNames = res.getStringArray(R.array.primary_flavors);
+        flavorButtons = new Button[flavorButtonNames.length];
+
+        // Add button arrays to view
         for (int i = 0; i < flavorButtons.length; ++i) {
             flavorButtons[i] = new Button(getActivity());
             flavorButtons[i].setLayoutParams(new RelativeLayout.LayoutParams(
@@ -44,8 +54,9 @@ public class AddBeerFragment extends Fragment {
                     RelativeLayout.LayoutParams.WRAP_CONTENT));
             flavorButtons[i].setId(View.generateViewId());
 
-            //TODO come up with better names, also pictures and other item-specific junk
-            flavorButtons[i].setText("BTN" + i);
+            // TODO come up with better names, also pictures and other item-specific junk
+            flavorButtons[i].setText(flavorButtonNames[i]);
+            flavorButtons[i].setBackgroundResource(R.drawable.test_icon);
 
             flavorButtons[i].setOnClickListener(mButtonHandler);
             flavorButtons[i].setOnLongClickListener(mButtonHandler);
@@ -54,6 +65,8 @@ public class AddBeerFragment extends Fragment {
 
         rl.setOnTouchListener(new mTouchListener());
         rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
+
+        // TODO Not sure what to do with this...
         mSeekBar = (SeekBar) rl.findViewById((R.id.addBeerSeekBar));
 
         return rl;
@@ -66,7 +79,7 @@ public class AddBeerFragment extends Fragment {
         public void onGlobalLayout() {
             rl.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             int buttonRadius;
-            int drawRadius;
+            double drawRadius;
 
             //Getting view measurements
             rlHeight = rl.getHeight();
@@ -81,16 +94,16 @@ public class AddBeerFragment extends Fragment {
 
             // Setting max distance a button can be placed from origin, assuming all buttons
             // are the same size
-            buttonRadius = viewDiameter / 2 - flavorButtons[0].getHeight() / 2;
+            buttonRadius = viewDiameter / 2  - flavorButtons[0].getHeight();
 
             // TODO Subjective subset of maximum, should be static in config file
-            drawRadius = buttonRadius / 2;
+            drawRadius = buttonRadius / 1.5;
 
             // arrange in circle
             for(int i = 0; i < flavorButtons.length; ++i) {
                 double theta = ((2 * Math.PI) / flavorButtons.length) * i;
-                flavorButtons[i].setX(originX + drawRadius * (float)Math.cos(theta));
-                flavorButtons[i].setY(originY + drawRadius * (float)Math.sin(theta));
+                flavorButtons[i].setX((float)((originX + drawRadius * Math.cos(theta + Math.PI)) - flavorButtons[i].getHeight() / 2));
+                flavorButtons[i].setY((float)((originY + drawRadius * (float)Math.sin(theta + Math.PI)) - flavorButtons[i].getHeight() / 2));
             }
 
         }

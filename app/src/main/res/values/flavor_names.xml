@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Primary Flavors -->
+    <string-array name="primary_flavors">
+        <item>Water</item>
+        <item>Yeast</item>
+        <item>Malt</item>
+        <item>Mouthfeel</item>
+        <item>Faults</item>
+        <item>Sugar</item>
+        <item>Hops</item>
+        <item>Alcohol</item>
+    </string-array>
+
+
+</resources>
