@@ -67,9 +67,10 @@ public class AddBeerFragment extends Fragment {
                     RelativeLayout.LayoutParams.WRAP_CONTENT));
             flavorButtons[i].setId(View.generateViewId());
 
-            // Add resources to buttons
+            // Add resources to flavor buttons
             flavorButtons[i].setText(flavorButtonNames[i]);
             flavorButtons[i].setBackgroundResource(R.drawable.test_icon);
+            //flavorButtons[i].setBackgroundColor(getResources().getColor(R.color.primary_1));
 
             flavorButtons[i].setOnClickListener(mFlavorButtonHandler);
             flavorButtons[i].setOnLongClickListener(mFlavorButtonHandler);
@@ -136,7 +137,8 @@ public class AddBeerFragment extends Fragment {
             mSeekBar.setOnSeekBarChangeListener(mListener);
             mSeekBar.setProgress(initialSeekProgress);
             mSeekBar.setX(mButton.getX() + mButton.getWidth());
-            mSeekBar.setY(mButton.getY());
+            // TODO Make center on height...or write new view to better encapsulate needed behavior
+            mSeekBar.setY(mButton.getY() + mButton.getHeight() / 3);
             mSeekBar.setVisibility(View.VISIBLE);
         }
 
@@ -183,8 +185,9 @@ public class AddBeerFragment extends Fragment {
     class mTouchListener implements View.OnTouchListener {
 
         // TODO There's got to be a better way to do this...
-        float testOriginX[] = new float[flavorButtons.length + 1]; // one for beerButton...
-        float testOriginY[] = new float[flavorButtons.length + 1]; // one for beerButton...];
+        float beerButtonOriginX, beerButtonOriginY;
+        float testOriginX[] = new float[flavorButtons.length];
+        float testOriginY[] = new float[flavorButtons.length];
 
         float touchOriginX, touchOriginY, dY, dX = 0;
 
@@ -192,11 +195,11 @@ public class AddBeerFragment extends Fragment {
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                testOriginX[0] = beerButton.getX();
-                testOriginX[0] = beerButton.getY();
+                beerButtonOriginX = beerButton.getX();
+                beerButtonOriginY = beerButton.getY();
                 for(int i = 0; i < flavorButtons.length; ++i) {
-                    testOriginX[i + 1] = flavorButtons[i].getX();
-                    testOriginY[i + 1] = flavorButtons[i].getY();
+                    testOriginX[i] = flavorButtons[i].getX();
+                    testOriginY[i] = flavorButtons[i].getY();
                 }
 
                 touchOriginX = event.getRawX();
@@ -208,8 +211,8 @@ public class AddBeerFragment extends Fragment {
                 dY = touchOriginY - event.getRawY();
                 dX = touchOriginX - event.getRawX();
 
-                beerButton.setX(testOriginX[0] - dX);
-                beerButton.setY(testOriginY[0] - dY);
+                beerButton.setX(beerButtonOriginX - dX);
+                beerButton.setY(beerButtonOriginY - dY);
                 for(int i = 0; i < flavorButtons.length; ++i) {
                     flavorButtons[i].setX(testOriginX[i] - dX);
                     flavorButtons[i].setY(testOriginY[i] - dY);
