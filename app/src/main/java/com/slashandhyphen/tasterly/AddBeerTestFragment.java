@@ -47,7 +47,7 @@ public class AddBeerTestFragment extends Fragment {
     private void saveBeer(View saveBeerButton) {
         Beer mBeer = new Beer();
         mBeer.setName(trialView.getText().toString());
-        mBeer.setGoodness((long)mSeekBar.getProgress());
+       // mBeer.setGoodness((long)mSeekBar.getProgress());
         mBeer.save();
 
         Beer nBeer = Beer.findById(Beer.class, (long)1);
@@ -55,8 +55,8 @@ public class AddBeerTestFragment extends Fragment {
         Toast.makeText(getActivity(),
                 "Beer name is " + nBeer.getName(), Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(getActivity(),
-                "Goodness is " + nBeer.getGoodness(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getActivity(),
+              //  "Goodness is " + nBeer.getGoodness(), Toast.LENGTH_SHORT).show();
 
     }
 

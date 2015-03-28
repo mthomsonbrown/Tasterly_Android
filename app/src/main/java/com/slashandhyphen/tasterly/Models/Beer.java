@@ -7,9 +7,11 @@ import com.orm.SugarRecord;
  */
 public class Beer  extends SugarRecord<Beer> {
     private String name;
-    private long goodness;
+    private String flavorNames[];
 
-    public Beer() {}
+    public Beer() {
+        flavorNames = new String[51];
+    }
 
     public String getName() {
         return name;
@@ -19,14 +21,11 @@ public class Beer  extends SugarRecord<Beer> {
         this.name = name;
     }
 
-    public long getGoodness() {
-        return goodness;
+    public String[] getFlavorNames() {
+        return flavorNames;
     }
 
-    public void setGoodness(long goodness) {
-        this.goodness = goodness;
+    public void setFlavorNames(String[] flavorNames) {
+        this.flavorNames = flavorNames;
     }
-
-
-
 }

@@ -18,6 +18,7 @@ import android.widget.Toast;
 public class AddBeerFragment extends Fragment {
 
     // TODO Probably dynamasize
+    Button beerButton;
     Button flavorButtons[];
     String flavorButtonNames[];
 
@@ -25,6 +26,7 @@ public class AddBeerFragment extends Fragment {
     RelativeLayout rl;
     Resources res;
 
+    FlavorButtonHandler mFlavorButtonHandler;
     ButtonHandler mButtonHandler;
     LayoutListener mLayoutListener;
 
@@ -40,9 +42,20 @@ public class AddBeerFragment extends Fragment {
         res = getResources();
         rl = (RelativeLayout) inflater.inflate(R.layout.fragment_add_beer, container, false);
         mButtonHandler = new ButtonHandler();
+        mFlavorButtonHandler = new FlavorButtonHandler();
         mLayoutListener = new LayoutListener();
 
         // Declare Button Junk!
+        beerButton = new Button(getActivity());
+        beerButton.setLayoutParams(new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT));
+        beerButton.setId(View.generateViewId());
+        beerButton.setBackgroundResource(R.drawable.beer_icon);
+
+        beerButton.setOnClickListener(mButtonHandler);
+        rl.addView(beerButton);
+
         flavorButtonNames = res.getStringArray(R.array.primary_flavors);
         flavorButtons = new Button[flavorButtonNames.length];
 
@@ -54,12 +67,12 @@ public class AddBeerFragment extends Fragment {
                     RelativeLayout.LayoutParams.WRAP_CONTENT));
             flavorButtons[i].setId(View.generateViewId());
 
-            // TODO come up with better names, also pictures and other item-specific junk
+            // Add resources to buttons
             flavorButtons[i].setText(flavorButtonNames[i]);
             flavorButtons[i].setBackgroundResource(R.drawable.test_icon);
 
-            flavorButtons[i].setOnClickListener(mButtonHandler);
-            flavorButtons[i].setOnLongClickListener(mButtonHandler);
+            flavorButtons[i].setOnClickListener(mFlavorButtonHandler);
+            flavorButtons[i].setOnLongClickListener(mFlavorButtonHandler);
             rl.addView(flavorButtons[i]);
         }
 
@@ -87,6 +100,10 @@ public class AddBeerFragment extends Fragment {
             originX = rlWidth / 2;
             originY = rlHeight / 2;
 
+            beerButton.setX(originX - beerButton.getWidth() / 2);
+            beerButton.setY(originY - beerButton.getHeight() / 2);
+
+            // Geomancy begins here.
             if(rlHeight < rlWidth)
                 viewDiameter = rlHeight;
             else
@@ -105,11 +122,10 @@ public class AddBeerFragment extends Fragment {
                 flavorButtons[i].setX((float)((originX + drawRadius * Math.cos(theta + Math.PI)) - flavorButtons[i].getHeight() / 2));
                 flavorButtons[i].setY((float)((originY + drawRadius * (float)Math.sin(theta + Math.PI)) - flavorButtons[i].getHeight() / 2));
             }
-
         }
     }
 
-    class ButtonHandler implements View.OnLongClickListener, View.OnClickListener {
+    class FlavorButtonHandler implements View.OnLongClickListener, View.OnClickListener {
 
         //TODO Add to config
         int initialSeekProgress = 0;
@@ -129,6 +145,13 @@ public class AddBeerFragment extends Fragment {
             // TODO Make this produce detail view
             Toast.makeText(getActivity(), "Button Really Clicked", Toast.LENGTH_SHORT).show();
             return true;
+        }
+    }
+
+    class ButtonHandler implements  View.OnClickListener {
+        @Override
+        public void onClick(View mButton) {
+            Toast.makeText(getActivity(), "CANNOT ADD BEERS!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -159,8 +182,9 @@ public class AddBeerFragment extends Fragment {
 
     class mTouchListener implements View.OnTouchListener {
 
-        float testOriginX[] = new float[flavorButtons.length];
-        float testOriginY[] = new float[flavorButtons.length];
+        // TODO There's got to be a better way to do this...
+        float testOriginX[] = new float[flavorButtons.length + 1]; // one for beerButton...
+        float testOriginY[] = new float[flavorButtons.length + 1]; // one for beerButton...];
 
         float touchOriginX, touchOriginY, dY, dX = 0;
 
@@ -168,9 +192,11 @@ public class AddBeerFragment extends Fragment {
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
+                testOriginX[0] = beerButton.getX();
+                testOriginX[0] = beerButton.getY();
                 for(int i = 0; i < flavorButtons.length; ++i) {
-                    testOriginX[i] = flavorButtons[i].getX();
-                    testOriginY[i] = flavorButtons[i].getY();
+                    testOriginX[i + 1] = flavorButtons[i].getX();
+                    testOriginY[i + 1] = flavorButtons[i].getY();
                 }
 
                 touchOriginX = event.getRawX();
@@ -182,6 +208,8 @@ public class AddBeerFragment extends Fragment {
                 dY = touchOriginY - event.getRawY();
                 dX = touchOriginX - event.getRawX();
 
+                beerButton.setX(testOriginX[0] - dX);
+                beerButton.setY(testOriginY[0] - dY);
                 for(int i = 0; i < flavorButtons.length; ++i) {
                     flavorButtons[i].setX(testOriginX[i] - dX);
                     flavorButtons[i].setY(testOriginY[i] - dY);
