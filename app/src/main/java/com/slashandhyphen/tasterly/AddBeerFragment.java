@@ -10,15 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
+
+import com.slashandhyphen.tasterly.Database.BeerDB;
+import com.slashandhyphen.tasterly.Models.Beer;
 
 
 public class AddBeerFragment extends Fragment {
 
     // TODO Probably dynamasize
     Button beerButton;
+    Button addBeerButton;
+    Button seeBeerButton;
+    EditText beerNameText;
     Button flavorButtons[];
     String flavorButtonNames[];
 
@@ -29,6 +36,8 @@ public class AddBeerFragment extends Fragment {
     FlavorButtonHandler mFlavorButtonHandler;
     ButtonHandler mButtonHandler;
     LayoutListener mLayoutListener;
+    Beer mBeer;
+    BeerDB beerDB;
 
     String TAG = "AddBeerFragmentZAZZ";
     int originX, originY;
@@ -44,6 +53,10 @@ public class AddBeerFragment extends Fragment {
         mButtonHandler = new ButtonHandler();
         mFlavorButtonHandler = new FlavorButtonHandler();
         mLayoutListener = new LayoutListener();
+        mBeer = new Beer();
+
+        // Declare Database
+        beerDB = new BeerDB(getActivity());
 
         // Declare Button Junk!
         beerButton = new Button(getActivity());
@@ -52,9 +65,14 @@ public class AddBeerFragment extends Fragment {
                 RelativeLayout.LayoutParams.WRAP_CONTENT));
         beerButton.setId(View.generateViewId());
         beerButton.setBackgroundResource(R.drawable.beer_icon);
-
         beerButton.setOnClickListener(mButtonHandler);
         rl.addView(beerButton);
+
+        addBeerButton = (Button) rl.findViewById(R.id.add_beer_test);
+        addBeerButton.setOnClickListener(mButtonHandler);
+        seeBeerButton = (Button) rl.findViewById(R.id.see_beer_test);
+        seeBeerButton.setOnClickListener((mButtonHandler));
+        beerNameText = (EditText) rl.findViewById(R.id.edit_text_test);
 
         flavorButtonNames = res.getStringArray(R.array.primary_flavors);
         flavorButtons = new Button[flavorButtonNames.length];
@@ -153,7 +171,23 @@ public class AddBeerFragment extends Fragment {
     class ButtonHandler implements  View.OnClickListener {
         @Override
         public void onClick(View mButton) {
-            Toast.makeText(getActivity(), "CANNOT ADD BEERS!", Toast.LENGTH_SHORT).show();
+            if(mButton.getId() == beerButton.getId()) {
+                Toast.makeText(getActivity(), "You've added Rainier...hope you're happy", Toast.LENGTH_SHORT).show();
+                mBeer.setName("Rainier");
+            }
+            if(mButton.getId() == addBeerButton.getId()) {
+                if(beerNameText.getText().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "Need to enter a name", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    mBeer.setName(beerNameText.getText().toString());
+
+                    beerDB.add(mBeer);
+                }
+            }
+            if(mButton.getId() == seeBeerButton.getId()) {
+                beerDB.expose();
+            }
         }
     }
 
@@ -179,6 +213,10 @@ public class AddBeerFragment extends Fragment {
         public void onStopTrackingTouch(SeekBar seekBar) {
             Log.d(TAG, "Seek Bar Changed to " + seekBar.getProgress());
             Log.d(TAG, "View was " + v.getId());
+
+            Button button = (Button) v;
+            mBeer.addFlavor(button.getText().toString(), seekBar.getProgress());
+            Log.d(TAG, "HASHMAP: " + mBeer.listFlavors());
         }
     }
 

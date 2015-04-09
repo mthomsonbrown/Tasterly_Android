@@ -13,4 +13,30 @@
         android:minWidth="300dp"
         android:visibility="gone"/>
 
+    <Button
+        android:id="@+id/add_beer_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_beer"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="35dp" />
+
+    <EditText
+        android:id="@+id/edit_text_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/add_beer_test"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/add_beer_test" />
+
+    <Button
+        android:id="@+id/see_beer_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See Button"
+        android:layout_marginTop="115dp"
+        android:layout_below="@+id/addBeerSeekBar"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

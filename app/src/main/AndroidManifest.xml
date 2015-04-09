@@ -27,6 +27,7 @@
         </activity>
         <activity
             android:name=".AddBeerActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_add_beer" >
         </activity>
     </application>
