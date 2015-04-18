@@ -83,7 +83,6 @@ public class LoginFragment extends Fragment {
             mData.setPassword("qwertyui");
         }
 
-        //TODO: Put this check in the User class
         if (mData.getEmail().length() == 0 || mData.getPassword().length() == 0) {
             // input fields are empty
             Toast toast = Toast.makeText(getActivity(), "Please complete all the fields",

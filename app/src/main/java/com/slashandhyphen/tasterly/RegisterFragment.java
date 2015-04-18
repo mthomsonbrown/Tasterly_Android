@@ -83,7 +83,6 @@ public class RegisterFragment extends Fragment {
         EditText userPasswordConfirmationField = (EditText) ll.findViewById(R.id.userPasswordConfirmation);
         mData.setPasswordConfirmation(userPasswordConfirmationField.getText().toString());
 
-        //TODO: put error checking in pojo
         boolean freaky = false;
 
         for (int i = 0; i < mData.getEmail().length(); ++i) {
@@ -104,7 +103,7 @@ public class RegisterFragment extends Fragment {
             }
         }
 
-        // TODO remove Test Params
+        //remove Test Params
         mData.setName("Mike");
         mData.setEmail("mikeTest@brown.com");
         mData.setPassword("qwertyui");

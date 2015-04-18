@@ -3,12 +3,14 @@ package com.slashandhyphen.tasterly;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
 public class AddBeerActivity extends ActionBarActivity {
@@ -59,5 +61,12 @@ public class AddBeerActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Back wer pressed", Toast.LENGTH_SHORT).show();
+        Intent goHome = new Intent(this, HomeActivity.class);
+        startActivity(goHome);
     }
 }

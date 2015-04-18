@@ -21,7 +21,6 @@ import com.slashandhyphen.tasterly.Models.Beer;
 
 public class AddBeerFragment extends Fragment {
 
-    // TODO Probably dynamasize
     Button beerButton;
     Button addBeerButton;
     Button seeBeerButton;
@@ -98,7 +97,6 @@ public class AddBeerFragment extends Fragment {
         rl.setOnTouchListener(new mTouchListener());
         rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
 
-        // TODO Not sure what to do with this...
         mSeekBar = (SeekBar) rl.findViewById((R.id.addBeerSeekBar));
 
         return rl;
@@ -106,7 +104,6 @@ public class AddBeerFragment extends Fragment {
 
     class LayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
 
-        //TODO Make this not be called n+1 for every screen change
         @Override
         public void onGlobalLayout() {
             rl.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -132,7 +129,6 @@ public class AddBeerFragment extends Fragment {
             // are the same size
             buttonRadius = viewDiameter / 2  - flavorButtons[0].getHeight();
 
-            // TODO Subjective subset of maximum, should be static in config file
             drawRadius = buttonRadius / 1.5;
 
             // arrange in circle
@@ -146,7 +142,6 @@ public class AddBeerFragment extends Fragment {
 
     class FlavorButtonHandler implements View.OnLongClickListener, View.OnClickListener {
 
-        //TODO Add to config
         int initialSeekProgress = 0;
 
         @Override
@@ -155,14 +150,12 @@ public class AddBeerFragment extends Fragment {
             mSeekBar.setOnSeekBarChangeListener(mListener);
             mSeekBar.setProgress(initialSeekProgress);
             mSeekBar.setX(mButton.getX() + mButton.getWidth());
-            // TODO Make center on height...or write new view to better encapsulate needed behavior
             mSeekBar.setY(mButton.getY() + mButton.getHeight() / 3);
             mSeekBar.setVisibility(View.VISIBLE);
         }
 
         @Override
         public boolean onLongClick(View mButton) {
-            // TODO Make this produce detail view
             Toast.makeText(getActivity(), "Button Really Clicked", Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -186,7 +179,7 @@ public class AddBeerFragment extends Fragment {
                 }
             }
             if(mButton.getId() == seeBeerButton.getId()) {
-                beerDB.expose();
+                Toast.makeText(getActivity(), beerDB.expose(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -222,7 +215,6 @@ public class AddBeerFragment extends Fragment {
 
     class mTouchListener implements View.OnTouchListener {
 
-        // TODO There's got to be a better way to do this...
         float beerButtonOriginX, beerButtonOriginY;
         float testOriginX[] = new float[flavorButtons.length];
         float testOriginY[] = new float[flavorButtons.length];
@@ -261,7 +253,6 @@ public class AddBeerFragment extends Fragment {
 
             if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                // TODO Maybe a better way to implement...yeah, probably put this in ACTION_MOVE
                 mSeekBar.setVisibility(View.GONE);
             }
 

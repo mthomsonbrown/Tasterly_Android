@@ -9,11 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.slashandhyphen.tasterly.Database.BeerDB;
+
 public class HomeActivity extends ActionBarActivity implements View.OnClickListener {
 
     private SharedPreferences mPreferences;
     Button mAddBeerButton;
     Button mViewBeerButton;
+    BeerDB dbTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,8 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
 
         mAddBeerButton.setOnClickListener(this);
         mViewBeerButton.setOnClickListener(this);
+
+        dbTest = new BeerDB(this);
     }
 
     @Override
@@ -43,6 +48,12 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
         if (v == mViewBeerButton) {
             Toast.makeText(getApplicationContext(),
                     "Cannot view Beers", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, dbTest.expose(), Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getApplicationContext(), ViewBeersActivity.class);
+            startActivity(intent);
+            finish();
+
         }
     }
 
@@ -55,7 +66,6 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
 
         } else {
 
-            // TODO REmoved for development
            // Intent intent = new Intent(HomeActivity.this, AuthenticationActivity.class);
           //  startActivityForResult(intent, 0);
         }
