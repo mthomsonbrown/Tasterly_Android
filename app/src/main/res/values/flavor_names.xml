@@ -3,7 +3,7 @@
 
     <!-- Primary Flavors -->
     <string-array name="primary_flavors">
-        <item>Water</item>
+        <item>W</item>
         <item>Yeast</item>
         <item>Malt</item>
         <item>Mouthfeel</item>
@@ -11,6 +11,16 @@
         <item>Sugar</item>
         <item>Hops</item>
         <item>Alcohol</item>
+    </string-array>
+
+    <!-- Water Flavors -->
+    <string-array name="water_flavors">
+        <item>W</item>
+        <item>W</item>
+        <item>W</item>
+        <item>W</item>
+        <item>W</item>
+        <item>W</item>
     </string-array>
 
 
