@@ -16,6 +16,8 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.slashandhyphen.tasterly.Database.BeerDB;
+import com.slashandhyphen.tasterly.Flavors.BeerFlavorHandler;
+import com.slashandhyphen.tasterly.Flavors.FlavorHandler;
 import com.slashandhyphen.tasterly.Models.Beer;
 
 
@@ -29,8 +31,6 @@ public class AddBeerFragment extends Fragment {
     // Flavor Buttons
     Button flavorButtonsPrimary[];
     String flavorButtonNamesPrimary[];
-    Button flavorButtonsWater[];
-    String flavorButtonNamesWater[];
 
     SeekBar mSeekBar;
     RelativeLayout rl;
@@ -44,9 +44,10 @@ public class AddBeerFragment extends Fragment {
 
     String TAG = "AddBeerFragmentZAZZ";
     float originX, originY;
-    float waterOriginX, waterOriginY;
     int rlHeight, rlWidth;
     int viewDiameter;
+
+    FlavorHandler flavors;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,10 +80,10 @@ public class AddBeerFragment extends Fragment {
         beerNameText = (EditText) rl.findViewById(R.id.edit_text_test);
 
         // Declare Flavor Button Junk!
+        flavors = new BeerFlavorHandler(getActivity(), rl);
+
         flavorButtonNamesPrimary = res.getStringArray(R.array.primary_flavors);
         flavorButtonsPrimary = new Button[flavorButtonNamesPrimary.length];
-        flavorButtonNamesWater = res.getStringArray((R.array.water_flavors));
-        flavorButtonsWater = new Button[flavorButtonNamesWater.length];
 
         for (int i = 0; i < flavorButtonsPrimary.length; ++i) {
             flavorButtonsPrimary[i] = new Button(getActivity());
@@ -101,24 +102,6 @@ public class AddBeerFragment extends Fragment {
             rl.addView(flavorButtonsPrimary[i]);
         }
 
-        for (int i = 0; i < flavorButtonsWater.length; ++i) {
-            flavorButtonsWater[i] = new Button(getActivity());
-            flavorButtonsWater[i].setLayoutParams(new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT));
-            flavorButtonsWater[i].setId(View.generateViewId());
-
-            // Add resources to flavor buttons
-            flavorButtonsWater[i].setText(flavorButtonNamesWater[i]);
-            flavorButtonsWater[i].setBackgroundResource(R.drawable.test_icon);
-            //flavorButtonsWater[i].setBackgroundColor(getResources().getColor(R.color.primary_1));
-
-            flavorButtonsWater[i].setOnClickListener(mFlavorButtonHandler);
-            flavorButtonsWater[i].setOnLongClickListener(mFlavorButtonHandler);
-            rl.addView(flavorButtonsWater[i]);
-
-        }
-
         rl.setOnTouchListener(new mTouchListener());
         rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
 
@@ -134,6 +117,8 @@ public class AddBeerFragment extends Fragment {
             rl.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             int buttonRadius;
             double drawRadius;
+
+            flavors.showButtons();
 
             //Getting view measurements
             rlHeight = rl.getHeight();
@@ -167,24 +152,6 @@ public class AddBeerFragment extends Fragment {
                                 (float)Math.sin(theta + Math.PI)) - flavorButtonsPrimary[i].getHeight() / 2));
             }
 
-            // Find water button... this is a terrible design...
-            for (int i = 0; i < flavorButtonNamesPrimary.length; ++i) {
-                if(flavorButtonsPrimary[i].getText().toString().equals("W")) {
-                    waterOriginX = flavorButtonsPrimary[i].getX() + flavorButtonsPrimary[i].getWidth() - flavorButtonsPrimary[i].getWidth() / 2;
-                    waterOriginY = flavorButtonsPrimary[i].getY() + flavorButtonsPrimary[i].getHeight() - flavorButtonsPrimary[i].getHeight() / 2;
-
-                }
-            }
-
-            for(int i = 0; i < flavorButtonsWater.length; ++i) {
-                double theta = ((2 * Math.PI) / flavorButtonsWater.length) * i;
-                flavorButtonsWater[i].
-                        setX((float)((waterOriginX + drawRadius / 2 * Math.cos(theta + Math.PI)) -
-                                flavorButtonsWater[i].getHeight() / 2));
-                flavorButtonsWater[i].
-                        setY((float)((waterOriginY + drawRadius / 2 *
-                                (float)Math.sin(theta + Math.PI)) - flavorButtonsWater[i].getHeight() / 2));
-            }
         }
     }
 

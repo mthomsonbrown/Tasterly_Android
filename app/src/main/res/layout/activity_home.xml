@@ -9,9 +9,9 @@
         android:name="com.slashandhyphen.tasterly.HomeFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_home">
+        tools:pLayout="@pLayout/fragment_home">
 
-        <!-- Preview: layout=@layout/fragment_home -->
+        <!-- Preview: pLayout=@pLayout/fragment_home -->
     </fragment>
 
     <LinearLayout
