@@ -1,8 +1,9 @@
-package com.slashandhyphen.tasterly.Flavors;
+package com.slashandhyphen.tasterly.FlavorControl.Flavors;
 
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ public abstract class Flavor {
     Context context;
     RelativeLayout pLayout, mLayout;
     FlavorButtonHandler mFlavorButtonHandler;
+    Button flavorButton;
 
     public Flavor(Context context, RelativeLayout pLayout) {
 
@@ -21,16 +23,43 @@ public abstract class Flavor {
         this.pLayout = pLayout;
         mFlavorButtonHandler = new FlavorButtonHandler();
 
+        initializeLayout();
+        initializeView();
+    }
 
+    protected void initializeLayout() {
         mLayout = new RelativeLayout(context);
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        pLayout.addView(mLayout);
-
     }
 
-    public abstract void showButton();
+    protected void initializeView() {
+        flavorButton = new Button(context);
+        flavorButton.setLayoutParams(new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT));
+        flavorButton.setId(View.generateViewId());
+        flavorButton.setText("DEFAULT FLAVOR TEXT");
+        flavorButton.setOnClickListener(mFlavorButtonHandler);
+    }
+
+    public void showContent() {
+        pLayout.addView(mLayout);
+        mLayout.addView(flavorButton);
+    }
+
+    public int getHeight() {
+        return mLayout.getHeight();
+    }
+
+    public void setX(float x) {
+        mLayout.setX(x);
+    }
+
+    public void setY(float y) {
+        mLayout.setY(y);
+    }
 
     class FlavorButtonHandler implements View.OnLongClickListener, View.OnClickListener {
         @Override

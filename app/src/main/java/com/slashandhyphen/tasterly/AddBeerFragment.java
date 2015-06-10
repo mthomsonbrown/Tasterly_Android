@@ -16,8 +16,8 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.slashandhyphen.tasterly.Database.BeerDB;
-import com.slashandhyphen.tasterly.Flavors.BeerFlavorHandler;
-import com.slashandhyphen.tasterly.Flavors.FlavorHandler;
+import com.slashandhyphen.tasterly.FlavorControl.BeerFlavorHandler;
+import com.slashandhyphen.tasterly.FlavorControl.FlavorHandler;
 import com.slashandhyphen.tasterly.Models.Beer;
 
 
@@ -118,7 +118,7 @@ public class AddBeerFragment extends Fragment {
             int buttonRadius;
             double drawRadius;
 
-            flavors.showButtons();
+            flavors.showContent();
 
             //Getting view measurements
             rlHeight = rl.getHeight();

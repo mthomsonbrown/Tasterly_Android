@@ -1,4 +1,4 @@
-package com.slashandhyphen.tasterly.Flavors;
+package com.slashandhyphen.tasterly.FlavorControl;
 
 import android.content.Context;
 import android.widget.RelativeLayout;
@@ -17,5 +17,5 @@ public abstract class FlavorHandler {
         this.layout = layout;
     }
 
-    public abstract void showButtons();
+    public abstract void showContent();
 }
