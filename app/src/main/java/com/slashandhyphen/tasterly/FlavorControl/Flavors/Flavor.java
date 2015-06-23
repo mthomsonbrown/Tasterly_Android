@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.slashandhyphen.tasterly.R;
+
 /**
  * This class contains all the information and views, buttons, etc. associated with each flavor.
  */
@@ -16,6 +18,7 @@ public abstract class Flavor {
     RelativeLayout pLayout, mLayout;
     FlavorButtonHandler mFlavorButtonHandler;
     Button flavorButton;
+    float savedX, savedY;
 
     public Flavor(Context context, RelativeLayout pLayout) {
 
@@ -29,9 +32,6 @@ public abstract class Flavor {
 
     protected void initializeLayout() {
         mLayout = new RelativeLayout(context);
-        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
     }
 
     protected void initializeView() {
@@ -40,8 +40,11 @@ public abstract class Flavor {
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT));
         flavorButton.setId(View.generateViewId());
-        flavorButton.setText("DEFAULT FLAVOR TEXT");
         flavorButton.setOnClickListener(mFlavorButtonHandler);
+
+        // prototype values
+        flavorButton.setText("D");
+        flavorButton.setBackgroundResource(R.drawable.test_icon);
     }
 
     public void showContent() {
@@ -53,12 +56,22 @@ public abstract class Flavor {
         return mLayout.getHeight();
     }
 
-    public void setX(float x) {
-        mLayout.setX(x);
+    public void setX(float value) {
+        mLayout.setX(value);
     }
 
-    public void setY(float y) {
-        mLayout.setY(y);
+    public void setY(float value) {
+        mLayout.setY(value);
+    }
+
+    public void saveOrigin() {
+        savedX = mLayout.getX();
+        savedY = mLayout.getY();
+    }
+
+    public void moveOrigin(float dX, float dY) {
+        mLayout.setX(savedX - dX);
+        mLayout.setY(savedY - dY);
     }
 
     class FlavorButtonHandler implements View.OnLongClickListener, View.OnClickListener {
@@ -73,4 +86,6 @@ public abstract class Flavor {
             return false;
         }
     }
+
+
 }

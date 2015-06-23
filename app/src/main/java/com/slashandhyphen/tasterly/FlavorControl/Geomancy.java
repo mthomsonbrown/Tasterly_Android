@@ -19,4 +19,5 @@ public abstract class Geomancy {
         this.flavors = flavors;
 
     }
+
 }

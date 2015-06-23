@@ -5,6 +5,8 @@ import android.widget.RelativeLayout;
 
 import com.slashandhyphen.tasterly.FlavorControl.Flavors.*;
 
+import java.util.Iterator;
+
 
 /**
  * Created by ookamijin on 6/9/2015.
@@ -33,12 +35,28 @@ public class BeerFlavorHandler extends FlavorHandler {
 
     }
 
+    @Override
     public void showContent() {
 
-        for (int i = 0; i < primaryFlavors.length; ++i) {
-            primaryFlavors[i].showContent();
+        for(Flavor flav : primaryFlavors) {
+            flav.showContent();
         }
 
         geomancy = new OneRingGeomancy(context, layout, primaryFlavors);
     }
+
+    @Override
+    public void saveOrigin() {
+        for(Flavor flav : primaryFlavors) {
+            flav.saveOrigin();
+        }
+    }
+
+    @Override
+    public void moveOrigin(float dX, float dY) {
+        for(Flavor flav : primaryFlavors) {
+            flav.moveOrigin(dX, dY);
+        }
+    }
+
 }

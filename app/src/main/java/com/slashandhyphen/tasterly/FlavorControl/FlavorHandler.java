@@ -18,4 +18,8 @@ public abstract class FlavorHandler {
     }
 
     public abstract void showContent();
+
+    public abstract void saveOrigin();
+
+    public abstract void moveOrigin(float dX, float dY);
 }

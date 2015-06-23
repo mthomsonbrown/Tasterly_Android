@@ -7,7 +7,7 @@ import com.slashandhyphen.tasterly.FlavorControl.Flavors.Flavor;
 
 /**
  * This is a basic test to try to emulate what I have in the AddBeerFragment at the moment.  At some
- * point, one geomancy class will probably be needed for each node, and then they call all be
+ * point, one geomancy class will probably be needed for each node, and then they can all be
  * controlled by some central "Geomancer" in order to determine space available, collisions...
  */
 public class OneRingGeomancy extends Geomancy {
@@ -42,9 +42,5 @@ public class OneRingGeomancy extends Geomancy {
                     setY((float) ((originY + drawRadius *
                             (float) Math.sin(theta + Math.PI)) - flavors[i].getHeight() / 2));
         }
-    }
-
-    public void geomatize(Flavor[] primaryFlavors) {
-
     }
 }

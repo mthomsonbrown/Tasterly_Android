@@ -28,10 +28,6 @@ public class AddBeerFragment extends Fragment {
     Button seeBeerButton;
     EditText beerNameText;
 
-    // Flavor Buttons
-    Button flavorButtonsPrimary[];
-    String flavorButtonNamesPrimary[];
-
     SeekBar mSeekBar;
     RelativeLayout rl;
     Resources res;
@@ -39,6 +35,7 @@ public class AddBeerFragment extends Fragment {
     FlavorButtonHandler mFlavorButtonHandler;
     ButtonHandler mButtonHandler;
     LayoutListener mLayoutListener;
+    TouchListener mTouchListener;
     Beer mBeer;
     BeerDB beerDB;
 
@@ -82,27 +79,8 @@ public class AddBeerFragment extends Fragment {
         // Declare Flavor Button Junk!
         flavors = new BeerFlavorHandler(getActivity(), rl);
 
-        flavorButtonNamesPrimary = res.getStringArray(R.array.primary_flavors);
-        flavorButtonsPrimary = new Button[flavorButtonNamesPrimary.length];
-
-        for (int i = 0; i < flavorButtonsPrimary.length; ++i) {
-            flavorButtonsPrimary[i] = new Button(getActivity());
-            flavorButtonsPrimary[i].setLayoutParams(new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT));
-            flavorButtonsPrimary[i].setId(View.generateViewId());
-
-            // Add resources to flavor buttons
-            flavorButtonsPrimary[i].setText(flavorButtonNamesPrimary[i]);
-            flavorButtonsPrimary[i].setBackgroundResource(R.drawable.test_icon);
-            //flavorButtonsPrimary[i].setBackgroundColor(getResources().getColor(R.color.primary_1));
-
-            flavorButtonsPrimary[i].setOnClickListener(mFlavorButtonHandler);
-            flavorButtonsPrimary[i].setOnLongClickListener(mFlavorButtonHandler);
-            rl.addView(flavorButtonsPrimary[i]);
-        }
-
-        rl.setOnTouchListener(new mTouchListener());
+        mTouchListener = new TouchListener();
+        rl.setOnTouchListener(mTouchListener);
         rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
 
         mSeekBar = (SeekBar) rl.findViewById((R.id.addBeerSeekBar));
@@ -115,12 +93,10 @@ public class AddBeerFragment extends Fragment {
         @Override
         public void onGlobalLayout() {
             rl.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            int buttonRadius;
-            double drawRadius;
 
             flavors.showContent();
 
-            //Getting view measurements
+            //Getting view measurements (for objects that are not "flavors")
             rlHeight = rl.getHeight();
             rlWidth = rl.getWidth();
             originX = rlWidth / 2;
@@ -128,29 +104,6 @@ public class AddBeerFragment extends Fragment {
 
             beerButton.setX(originX - beerButton.getWidth() / 2);
             beerButton.setY(originY - beerButton.getHeight() / 2);
-
-            // Geomancy begins here.
-            if(rlHeight < rlWidth)
-                viewDiameter = rlHeight;
-            else
-                viewDiameter = rlWidth;
-
-            // Setting max distance a button can be placed from origin, assuming all buttons
-            // are the same size
-            buttonRadius = viewDiameter / 2  - flavorButtonsPrimary[0].getHeight();
-
-            drawRadius = buttonRadius / 1.5;
-
-            // arrange in circle
-            for(int i = 0; i < flavorButtonsPrimary.length; ++i) {
-                double theta = ((2 * Math.PI) / flavorButtonsPrimary.length) * i;
-                flavorButtonsPrimary[i].
-                        setX((float)((originX + drawRadius * Math.cos(theta + Math.PI)) -
-                                flavorButtonsPrimary[i].getHeight() / 2));
-                flavorButtonsPrimary[i].
-                        setY((float)((originY + drawRadius *
-                                (float)Math.sin(theta + Math.PI)) - flavorButtonsPrimary[i].getHeight() / 2));
-            }
 
         }
     }
@@ -230,11 +183,9 @@ public class AddBeerFragment extends Fragment {
         }
     }
 
-    class mTouchListener implements View.OnTouchListener {
+    class TouchListener implements View.OnTouchListener {
 
         float beerButtonOriginX, beerButtonOriginY;
-        float testOriginX[] = new float[flavorButtonsPrimary.length];
-        float testOriginY[] = new float[flavorButtonsPrimary.length];
 
         float touchOriginX, touchOriginY, dY, dX = 0;
 
@@ -244,27 +195,23 @@ public class AddBeerFragment extends Fragment {
 
                 beerButtonOriginX = beerButton.getX();
                 beerButtonOriginY = beerButton.getY();
-                for(int i = 0; i < flavorButtonsPrimary.length; ++i) {
-                    testOriginX[i] = flavorButtonsPrimary[i].getX();
-                    testOriginY[i] = flavorButtonsPrimary[i].getY();
-                }
 
                 touchOriginX = event.getRawX();
                 touchOriginY = event.getRawY();
+
+                flavors.saveOrigin();
                 return true;
             }
 
             if (event.getAction() == MotionEvent.ACTION_MOVE) {
+
                 dY = touchOriginY - event.getRawY();
                 dX = touchOriginX - event.getRawX();
 
                 beerButton.setX(beerButtonOriginX - dX);
                 beerButton.setY(beerButtonOriginY - dY);
-                for(int i = 0; i < flavorButtonsPrimary.length; ++i) {
-                    flavorButtonsPrimary[i].setX(testOriginX[i] - dX);
-                    flavorButtonsPrimary[i].setY(testOriginY[i] - dY);
-                }
 
+                flavors.moveOrigin(dX, dY);
                 return true;
             }
 
