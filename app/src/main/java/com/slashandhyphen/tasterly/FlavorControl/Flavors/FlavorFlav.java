@@ -15,4 +15,9 @@ public class FlavorFlav extends Flavor {
 
         flavorButton.setText("FLAVA FLAV!!!1!");
     }
+
+    @Override
+    public void initializeFlavorButton() {
+        flavorButton.setText("FAULTSASF ASF");
+    }
 }

@@ -5,8 +5,6 @@ import android.widget.RelativeLayout;
 
 import com.slashandhyphen.tasterly.FlavorControl.Flavors.*;
 
-import java.util.Iterator;
-
 
 /**
  * Created by ookamijin on 6/9/2015.

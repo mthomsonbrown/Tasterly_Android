@@ -11,4 +11,9 @@ public class FlavorAlcohol extends Flavor {
         super(context, pLayout);
     }
 
+    @Override
+    public void initializeFlavorButton() {
+        flavorButton.setText("A");
+    }
+
 }

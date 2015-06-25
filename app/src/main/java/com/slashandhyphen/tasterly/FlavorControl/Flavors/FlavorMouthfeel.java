@@ -11,4 +11,8 @@ public class FlavorMouthfeel extends Flavor {
         super(context, pLayout);
     }
 
+    @Override
+    public void initializeFlavorButton() {
+        flavorButton.setText("MO");
+    }
 }

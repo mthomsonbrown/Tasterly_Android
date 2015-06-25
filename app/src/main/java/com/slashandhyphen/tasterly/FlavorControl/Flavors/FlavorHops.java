@@ -11,4 +11,8 @@ public class FlavorHops extends Flavor {
         super(context, pLayout);
     }
 
+    @Override
+    public void initializeFlavorButton() {
+        flavorButton.setText("H");
+    }
 }

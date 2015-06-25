@@ -10,5 +10,9 @@ public class FlavorFaults extends Flavor {
     public FlavorFaults(Context context, RelativeLayout pLayout) {
         super(context, pLayout);
     }
-    
+
+    @Override
+    public void initializeFlavorButton() {
+        flavorButton.setText("F");
+    }
 }

@@ -1,10 +1,12 @@
 package com.slashandhyphen.tasterly.FlavorControl.Flavors;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.slashandhyphen.tasterly.R;
@@ -18,6 +20,7 @@ public abstract class Flavor {
     RelativeLayout pLayout, mLayout;
     FlavorButtonHandler mFlavorButtonHandler;
     Button flavorButton;
+
     float savedX, savedY;
 
     public Flavor(Context context, RelativeLayout pLayout) {
@@ -43,13 +46,19 @@ public abstract class Flavor {
         flavorButton.setOnClickListener(mFlavorButtonHandler);
 
         // prototype values
-        flavorButton.setText("D");
+        flavorButton.setText("DEFAULT TEXT!");
         flavorButton.setBackgroundResource(R.drawable.test_icon);
+
+        initializeFlavorButton();
     }
+
+    public abstract void initializeFlavorButton();
 
     public void showContent() {
         pLayout.addView(mLayout);
+
         mLayout.addView(flavorButton);
+
     }
 
     public int getHeight() {
@@ -75,10 +84,26 @@ public abstract class Flavor {
     }
 
     class FlavorButtonHandler implements View.OnLongClickListener, View.OnClickListener {
+
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "Button Clicked...");
-            Toast.makeText(context, "Touched a separate class", Toast.LENGTH_SHORT).show();
+            Button mView = (Button) v;
+            Log.d(TAG, "In a thing i knew i was in...");
+            Toast.makeText(context, "View is " + mView.getText().toString(),
+                    Toast.LENGTH_SHORT).show();
+
+
+            // TODO this isn't working very well.  should maybe add seekbar to an xml file and load it programmatically?  issues with over nesting layouts?
+            SeekBar mSeekBar = new SeekBar(context);
+            mSeekBar.setMax(100);
+            mSeekBar.setProgress(1);
+            mSeekBar.setX(flavorButton.getX() + flavorButton.getWidth());
+            mSeekBar.setY(flavorButton.getY() + flavorButton.getHeight() / 2 - mSeekBar.getHeight() / 2);
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(300, 50);
+            mSeekBar.setLayoutParams(lp);
+            mSeekBar.setVisibility(View.VISIBLE);
+            mLayout.addView(mSeekBar);
+
         }
 
         @Override

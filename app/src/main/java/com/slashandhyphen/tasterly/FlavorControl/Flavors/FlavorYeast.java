@@ -11,4 +11,8 @@ public class FlavorYeast extends Flavor {
         super(context, pLayout);
     }
 
+    @Override
+    public void initializeFlavorButton() {
+        flavorButton.setText("Y");
+    }
 }
