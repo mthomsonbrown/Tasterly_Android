@@ -92,7 +92,6 @@ public abstract class Flavor {
             Toast.makeText(context, "View is " + mView.getText().toString(),
                     Toast.LENGTH_SHORT).show();
 
-
             // TODO this isn't working very well.  should maybe add seekbar to an xml file and load it programmatically?  issues with over nesting layouts?
             SeekBar mSeekBar = new SeekBar(context);
             mSeekBar.setMax(100);

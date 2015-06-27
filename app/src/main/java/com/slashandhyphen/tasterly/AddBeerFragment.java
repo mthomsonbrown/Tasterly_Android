@@ -44,7 +44,7 @@ public class AddBeerFragment extends Fragment {
     int rlHeight, rlWidth;
     int viewDiameter;
 
-    FlavorHandler flavors;
+    //FlavorHandler flavors;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,7 +77,7 @@ public class AddBeerFragment extends Fragment {
         beerNameText = (EditText) rl.findViewById(R.id.edit_text_test);
 
         // Declare Flavor Button Junk!
-        flavors = new BeerFlavorHandler(getActivity(), rl);
+        //flavors = new BeerFlavorHandler(getActivity(), rl);
 
         mTouchListener = new TouchListener();
         rl.setOnTouchListener(mTouchListener);
@@ -94,7 +94,7 @@ public class AddBeerFragment extends Fragment {
         public void onGlobalLayout() {
             rl.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-            flavors.showContent();
+            //flavors.showContent();
 
             //Getting view measurements (for objects that are not "flavors")
             rlHeight = rl.getHeight();
@@ -199,7 +199,7 @@ public class AddBeerFragment extends Fragment {
                 touchOriginX = event.getRawX();
                 touchOriginY = event.getRawY();
 
-                flavors.saveOrigin();
+                //flavors.saveOrigin();
                 return true;
             }
 
@@ -211,7 +211,7 @@ public class AddBeerFragment extends Fragment {
                 beerButton.setX(beerButtonOriginX - dX);
                 beerButton.setY(beerButtonOriginY - dY);
 
-                flavors.moveOrigin(dX, dY);
+                //flavors.moveOrigin(dX, dY);
                 return true;
             }
 

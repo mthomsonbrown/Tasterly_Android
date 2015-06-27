@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary_0">#42272D</color>
-    <color name="primary_1">#F75178</color>
-    <color name="primary_2">#030001</color>
-    <color name="primary_3">#000000</color>
-    <color name="primary_4">#000000</color>
+    <color name="primary_0">#312016</color>
+    <color name="primary_1">#FB7730</color>
+    <color name="primary_2">#8F5637</color>
+    <color name="primary_3">#421904</color>
+    <color name="primary_4">#702700</color>
 
-    <color name="secondary_1_0">#000000</color>
-    <color name="secondary_1_1">#FFCCB5</color>
-    <color name="secondary_1_2">#050200</color>
-    <color name="secondary_1_3">#000000</color>
-    <color name="secondary_1_4">#000000</color>
+    <color name="secondary_1_0">#180B4C</color>
+    <color name="secondary_1_1">#110C23</color>
+    <color name="secondary_1_2">#30284E</color>
+    <color name="secondary_1_3">#2403AA</color>
+    <color name="secondary_1_4">#5C34FF</color>
 
-    <color name="secondary_2_0">#007B4C</color>
-    <color name="secondary_2_1">#12FFA5</color>
-    <color name="secondary_2_2">#000000</color>
-    <color name="secondary_2_3">#000201</color>
-    <color name="secondary_2_4">#000201</color>
+    <color name="secondary_2_0">#808372</color>
+    <color name="secondary_2_1">#E7F984</color>
+    <color name="secondary_2_2">#6A6E53</color>
+    <color name="secondary_2_3">#606736</color>
+    <color name="secondary_2_4">#61700D</color>
 
-    <color name="complement_0">#3B9F00</color>
-    <color name="complement_1">#6AFF12</color>
-    <color name="complement_2">#000000</color>
-    <color name="complement_3">#010200</color>
-    <color name="complement_4">#010200</color>
+    <color name="complement_0">#19312A</color>
+    <color name="complement_1">#205D4B</color>
+    <color name="complement_2">#1E4438</color>
+    <color name="complement_3">#091814</color>
+    <color name="complement_4">#010604</color>
 
 
 
