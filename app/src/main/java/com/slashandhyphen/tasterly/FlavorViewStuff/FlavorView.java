@@ -11,16 +11,7 @@ import android.widget.RelativeLayout;
  */
 public class FlavorView extends RelativeLayout {
 
-    Button testButton;
     public FlavorView(Context context) {
         super(context);
-        testButton = new Button(context);
-
-        testButton.setLayoutParams(new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT));
-        testButton.setId(View.generateViewId());
-        testButton.setText("Flavor View Button");
-        addView(testButton);
     }
 }

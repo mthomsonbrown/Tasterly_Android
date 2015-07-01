@@ -18,15 +18,20 @@ import android.widget.Toast;
 import com.slashandhyphen.tasterly.Database.BeerDB;
 import com.slashandhyphen.tasterly.FlavorControl.BeerFlavorHandler;
 import com.slashandhyphen.tasterly.FlavorControl.FlavorHandler;
+import com.slashandhyphen.tasterly.FlavorViewStuff.BeerView;
+import com.slashandhyphen.tasterly.FlavorViewStuff.FlavorView;
+import com.slashandhyphen.tasterly.FlavorViewStuff.OmNomView;
 import com.slashandhyphen.tasterly.Models.Beer;
 
 
 public class AddBeerFragment extends Fragment {
+    String TAG = "AddBeerFragmentZAZZ";
 
     Button beerButton;
     Button addBeerButton;
     Button seeBeerButton;
     EditText beerNameText;
+    BeerView mBeerView;
 
     SeekBar mSeekBar;
     RelativeLayout rl;
@@ -39,7 +44,6 @@ public class AddBeerFragment extends Fragment {
     Beer mBeer;
     BeerDB beerDB;
 
-    String TAG = "AddBeerFragmentZAZZ";
     float originX, originY;
     int rlHeight, rlWidth;
     int viewDiameter;
@@ -61,6 +65,15 @@ public class AddBeerFragment extends Fragment {
         beerDB = new BeerDB(getActivity());
 
         // Declare Non-Flavor Button Junk!
+        addBeerButton = (Button) rl.findViewById(R.id.add_beer_test);
+        addBeerButton.setOnClickListener(mButtonHandler);
+        seeBeerButton = (Button) rl.findViewById(R.id.see_beer_test);
+        seeBeerButton.setOnClickListener((mButtonHandler));
+        beerNameText = (EditText) rl.findViewById(R.id.edit_text_test);
+
+        // Should make beer button differently
+        // It really needs to attach to the flavor view, though...
+        // Possibly make it part of flavor view, but that's a bit cluttered...
         beerButton = new Button(getActivity());
         beerButton.setLayoutParams(new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -70,21 +83,18 @@ public class AddBeerFragment extends Fragment {
         beerButton.setOnClickListener(mButtonHandler);
         rl.addView(beerButton);
 
-        addBeerButton = (Button) rl.findViewById(R.id.add_beer_test);
-        addBeerButton.setOnClickListener(mButtonHandler);
-        seeBeerButton = (Button) rl.findViewById(R.id.see_beer_test);
-        seeBeerButton.setOnClickListener((mButtonHandler));
-        beerNameText = (EditText) rl.findViewById(R.id.edit_text_test);
-
         // Declare Flavor Button Junk!
-        //flavors = new BeerFlavorHandler(getActivity(), rl);
+        mBeerView = (BeerView) rl.findViewById(R.id.beer_view);
 
+        // Declare Listener Junk!
         mTouchListener = new TouchListener();
         rl.setOnTouchListener(mTouchListener);
         rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
 
+        // Declare poorly implemented seekbar placeholder junk!
         mSeekBar = (SeekBar) rl.findViewById((R.id.addBeerSeekBar));
 
+        // Return all the junk!
         return rl;
     }
 
@@ -94,7 +104,9 @@ public class AddBeerFragment extends Fragment {
         public void onGlobalLayout() {
             rl.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-            //flavors.showContent();
+            mBeerView.buildFlavorTree();
+            Log.d(TAG, "Origin X is " + mBeerView.getOriginX());
+            Log.d(TAG, "Origin Y is " + mBeerView.getOriginY());
 
             //Getting view measurements (for objects that are not "flavors")
             rlHeight = rl.getHeight();

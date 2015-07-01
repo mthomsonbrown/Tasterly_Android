@@ -10,25 +10,40 @@ import android.widget.RelativeLayout;
  */
 public class OmNomView extends RelativeLayout {
     Context context;
-    FlavorView testFlavor;
-    // Don't think this will ever be used...
+    FlavorView originView;
+
+    //Programmatic constructor
     public OmNomView(Context context) {
         super(context);
         this.context = context;
     }
 
+    //XML constructor
     public OmNomView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        addFlavorViews();
+    }
+    public void buildFlavorTree() {
+        addOriginView();
     }
 
-    private void addFlavorViews() {
-        testFlavor = new FlavorView(context);
-        testFlavor.setLayoutParams(new RelativeLayout.LayoutParams(
+    private void addOriginView() {
+        originView = new FlavorView(context);
+
+        originView.setId(View.generateViewId());
+        originView.setLayoutParams(new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT));
-        testFlavor.setId(View.generateViewId());
-        addView(testFlavor);
+        addView(originView);
+        originView.setY(this.getHeight() / 2);
+        originView.setX(this.getWidth() / 2);
+    }
+
+    public float getOriginX() {
+        return originView.getX();
+    }
+
+    public float getOriginY() {
+        return originView.getY();
     }
 }

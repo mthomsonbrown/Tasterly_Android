@@ -8,7 +8,8 @@
     xmlns:OmNom="http://schemas.android.com/apk/res-auto"
     >
 
-    <com.slashandhyphen.tasterly.FlavorViewStuff.OmNomView
+    <com.slashandhyphen.tasterly.FlavorViewStuff.BeerView
+        android:id="@+id/beer_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/primary_0"/>
