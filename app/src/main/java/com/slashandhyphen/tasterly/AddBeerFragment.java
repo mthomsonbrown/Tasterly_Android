@@ -16,11 +16,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.slashandhyphen.tasterly.Database.BeerDB;
-import com.slashandhyphen.tasterly.FlavorControl.BeerFlavorHandler;
-import com.slashandhyphen.tasterly.FlavorControl.FlavorHandler;
 import com.slashandhyphen.tasterly.FlavorViewStuff.BeerView;
-import com.slashandhyphen.tasterly.FlavorViewStuff.FlavorView;
-import com.slashandhyphen.tasterly.FlavorViewStuff.OmNomView;
 import com.slashandhyphen.tasterly.Models.Beer;
 
 
@@ -46,9 +42,6 @@ public class AddBeerFragment extends Fragment {
 
     float originX, originY;
     int rlHeight, rlWidth;
-    int viewDiameter;
-
-    //FlavorHandler flavors;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,10 +96,6 @@ public class AddBeerFragment extends Fragment {
         @Override
         public void onGlobalLayout() {
             rl.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-            mBeerView.buildFlavorTree();
-            Log.d(TAG, "Origin X is " + mBeerView.getOriginX());
-            Log.d(TAG, "Origin Y is " + mBeerView.getOriginY());
 
             //Getting view measurements (for objects that are not "flavors")
             rlHeight = rl.getHeight();
