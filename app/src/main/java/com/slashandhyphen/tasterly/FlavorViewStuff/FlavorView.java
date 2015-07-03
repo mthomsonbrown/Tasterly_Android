@@ -2,6 +2,7 @@ package com.slashandhyphen.tasterly.FlavorViewStuff;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ public class FlavorView extends RelativeLayout {
     TextView label;
     SeekBar mSeekBar;
     ImageView icon;
+    OmNomView parent;
 
     ArrayList<View> children;
     FlavorClickListener mClickListener;
@@ -40,6 +42,7 @@ public class FlavorView extends RelativeLayout {
         setId(View.generateViewId());
         mClickListener = new FlavorClickListener();
         setOnClickListener(mClickListener);
+        setBackgroundColor(getResources().getColor(R.color.complement_1));
 
         // Create Icon
         icon = new ImageView(context);
@@ -53,7 +56,7 @@ public class FlavorView extends RelativeLayout {
         // Create Label
         label = new TextView(context);
         label.setLayoutParams(new RelativeLayout.LayoutParams(
-                LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT));
         label.setId(View.generateViewId());
         label.setText("DEFAULT LABEL TEXT FOR SHAME!!!!");
@@ -84,8 +87,15 @@ public class FlavorView extends RelativeLayout {
 
         @Override
         public void onClick(View v) {
+            // TODO should be called in a different listener
+            parent = (OmNomView) getParent();
+
             Toast.makeText(context, "Clicked a view: " + getId(), Toast.LENGTH_SHORT).show();
             mSeekBar.setVisibility(VISIBLE);
+            parent.setBackgroundColor(getResources().getColor(R.color.primary_2));
+
+            // TODO Doesn't seem to get new dimensions immediately.  probably need to call redraw in a listener, possibly onMeasure or some such...
+            parent.buildFlavorTree();
         }
     }
 }

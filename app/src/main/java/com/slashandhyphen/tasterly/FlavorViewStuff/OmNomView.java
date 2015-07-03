@@ -60,17 +60,7 @@ public class OmNomView extends RelativeLayout {
         originView.setY(this.getHeight() / 2);
         originView.setX(this.getWidth() / 2);
 
-        //inflateChildren();
-
         OneRingGeomancy circleMaker = new OneRingGeomancy(originView, this);
         circleMaker.setDimensions();
-
-    }
-
-    public void inflateChildren() {
-        // TODO tree traversal when i have more nodes...
-        for(View child : originView.getChildren()) {
-            addView(child);
-        }
     }
 }

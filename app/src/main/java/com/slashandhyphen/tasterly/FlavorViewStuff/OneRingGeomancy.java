@@ -1,5 +1,6 @@
 package com.slashandhyphen.tasterly.FlavorViewStuff;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * controlled by some central "Geomancer" in order to determine space available, collisions...
  */
 public class OneRingGeomancy extends Geomancy {
-
+    static String TAG = "OneRingGeometry";
     int viewDiameter, maxRadius;
     double drawRadius;
 
@@ -26,7 +27,10 @@ public class OneRingGeomancy extends Geomancy {
             viewDiameter = pLayout.getWidth();
 
         // TODO should find largest child, not just use first...
-        maxRadius = viewDiameter / 2 - children.get(0).getHeight();
+        for(View child : children) {
+            Log.d(TAG, "Child width is " + child.getWidth());
+        }
+        maxRadius = viewDiameter / 2 - children.get(0).getWidth();
         drawRadius = maxRadius / 1.5;
 
         for(View child : children) {
