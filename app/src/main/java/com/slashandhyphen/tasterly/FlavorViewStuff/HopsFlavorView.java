@@ -1,6 +1,8 @@
 package com.slashandhyphen.tasterly.FlavorViewStuff;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.slashandhyphen.tasterly.R;
 
@@ -10,7 +12,7 @@ import com.slashandhyphen.tasterly.R;
 public class HopsFlavorView extends FlavorView {
     public HopsFlavorView(Context context) {
         super(context);
+        //setBackgroundResource(R.drawable.test_icon);
         label.setText("Hops");
-        setBackgroundResource(R.drawable.test_icon);
     }
 }

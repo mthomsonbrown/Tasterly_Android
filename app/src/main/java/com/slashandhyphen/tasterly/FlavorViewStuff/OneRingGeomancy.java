@@ -15,12 +15,6 @@ public class OneRingGeomancy extends Geomancy {
     int viewDiameter, maxRadius;
     double drawRadius;
 
-    public OneRingGeomancy(View origin, ArrayList<View> children, RelativeLayout pLayout) {
-        super(origin, children, pLayout);
-
-        setDimensions();
-    }
-
     public OneRingGeomancy(FlavorView origin, RelativeLayout pLayout) {
         super(origin, origin.getChildren(), pLayout);
     }

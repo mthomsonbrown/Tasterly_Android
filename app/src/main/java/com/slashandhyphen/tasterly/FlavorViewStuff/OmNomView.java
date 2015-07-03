@@ -34,6 +34,7 @@ public class OmNomView extends RelativeLayout {
 
         originView = new FlavorView(context);
         originView.setId(View.generateViewId());
+        originView.setVisibility(INVISIBLE);
         addView(originView);
     }
 
@@ -52,18 +53,14 @@ public class OmNomView extends RelativeLayout {
         public void onGlobalLayout() {
             getViewTreeObserver().removeOnGlobalLayoutListener(this);
             buildFlavorTree();
-
-            Log.d(TAG, "Origin X is " + getOriginX());
-            Log.d(TAG, "Origin Y is " + getOriginY());
         }
     }
 
     public void buildFlavorTree() {
         originView.setY(this.getHeight() / 2);
         originView.setX(this.getWidth() / 2);
-        Log.d(TAG, "Origin height unt width are: " + originView.getHeight() + " & " + originView.getWidth());
 
-        inflateChildren();
+        //inflateChildren();
 
         OneRingGeomancy circleMaker = new OneRingGeomancy(originView, this);
         circleMaker.setDimensions();
@@ -71,13 +68,8 @@ public class OmNomView extends RelativeLayout {
     }
 
     public void inflateChildren() {
-
+        // TODO tree traversal when i have more nodes...
         for(View child : originView.getChildren()) {
-            child.setLayoutParams(new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT));
-            child.setId(View.generateViewId());
-            child.setBackgroundResource(R.drawable.test_icon);
             addView(child);
         }
     }
