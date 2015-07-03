@@ -3,6 +3,8 @@ package com.slashandhyphen.tasterly.FlavorViewStuff;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.slashandhyphen.tasterly.FlavorControl.Flavors.Flavor;
+
 import java.util.ArrayList;
 
 /**
@@ -11,9 +13,9 @@ import java.util.ArrayList;
 public abstract class Geomancy {
     RelativeLayout pLayout;
     View origin;
-    ArrayList<View> children;
+    ArrayList<FlavorView> children;
 
-    public Geomancy(View origin, ArrayList<View> children, RelativeLayout pLayout) {
+    public Geomancy(View origin, ArrayList<FlavorView> children, RelativeLayout pLayout) {
         this.origin = origin;
         this.children = children;
         this.pLayout = pLayout;

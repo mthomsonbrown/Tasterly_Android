@@ -52,6 +52,7 @@ public class OmNomView extends RelativeLayout {
         @Override
         public void onGlobalLayout() {
             getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            Log.d(TAG, "In global layout listener");
             buildFlavorTree();
         }
     }

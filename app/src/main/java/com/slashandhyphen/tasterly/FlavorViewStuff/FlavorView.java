@@ -25,11 +25,11 @@ public class FlavorView extends RelativeLayout {
     ImageView icon;
     OmNomView parent;
 
-    ArrayList<View> children;
+    ArrayList<FlavorView> children;
     FlavorClickListener mClickListener;
     Context context;
 
-    static final int SEEK_BAR_LENGTH = 560;
+    static final int SEEK_BAR_LENGTH = 250;
 
     public FlavorView(Context context) {
         super(context);
@@ -75,11 +75,11 @@ public class FlavorView extends RelativeLayout {
         children = new ArrayList<>();
     }
 
-    public void addChild(View view) {
+    public void addChild(FlavorView view) {
         children.add(view);
     }
 
-    public ArrayList<View> getChildren() {
+    public ArrayList<FlavorView> getChildren() {
         return children;
     }
 
@@ -93,9 +93,9 @@ public class FlavorView extends RelativeLayout {
             Toast.makeText(context, "Clicked a view: " + getId(), Toast.LENGTH_SHORT).show();
             mSeekBar.setVisibility(VISIBLE);
             parent.setBackgroundColor(getResources().getColor(R.color.primary_2));
+            getViewTreeObserver().addOnGlobalLayoutListener(parent.mLayoutListener);
 
-            // TODO Doesn't seem to get new dimensions immediately.  probably need to call redraw in a listener, possibly onMeasure or some such...
-            parent.buildFlavorTree();
         }
     }
+
 }
