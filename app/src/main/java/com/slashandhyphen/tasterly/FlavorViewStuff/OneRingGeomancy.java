@@ -1,6 +1,5 @@
 package com.slashandhyphen.tasterly.FlavorViewStuff;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -21,26 +20,62 @@ public class OneRingGeomancy extends Geomancy {
     }
 
     public void setDimensions() {
-        if(pLayout.getHeight() < pLayout.getWidth())
-            viewDiameter = pLayout.getHeight();
-        else
-            viewDiameter = pLayout.getWidth();
+        viewDiameter = getMaxSquare(pLayout);
+        double minCirc = 0;
 
-        // TODO should find largest child, not just use first...
-        for(View child : children) {
-            Log.d(TAG, "Child width is " + child.getWidth());
+        double theta[] = getChildThetaArray(children);
+
+        for(int i = 0; i < children.size(); ++i) {
+            minCirc += getTangentLength(children.get(i), theta[i]);
         }
+
+        double radius = minCirc / (2 * Math.PI);
+
         maxRadius = viewDiameter / 2 - children.get(0).getWidth();
         drawRadius = maxRadius / 1.5;
 
         for(View child : children) {
-            double theta = ((2 * Math.PI) / children.size()) * children.indexOf(child);
             child.
-                    setX((float)((origin.getX() + drawRadius * Math.cos(theta + Math.PI)) -
+                    setX((float) ((origin.getX() + radius *
+                            Math.cos(theta[children.indexOf(child)] + Math.PI)) -
                             child.getHeight() / 2));
             child.
-                    setY((float) ((origin.getY() + drawRadius *
-                            (float) Math.sin(theta + Math.PI)) - child.getHeight() / 2));
+                    setY((float) ((origin.getY() + radius *
+                            (float) Math.sin(theta[children.indexOf(child)] + Math.PI)) -
+                            child.getHeight() / 2));
         }
+    }
+
+    private int getMaxSquare(View v) {
+        if(v.getHeight() < v.getWidth())
+            return v.getWidth();
+        else
+            return v.getHeight();
+    }
+
+    private double[] getChildThetaArray(ArrayList<FlavorView> v) {
+        double theta[] = new double[v.size()];
+        for(int i = 0; i < v.size(); ++i) {
+            theta[i] = ((2 * Math.PI) / v.size()) * i;
+        }
+        return theta;
+    }
+
+    private double getTangentLength(View v, double theta) {
+        double tanRad = theta + Math.PI / 2;
+
+        double m = Math.tan(tanRad);
+        double lX, lY;
+        if (v.getHeight() / m > v.getWidth()) {
+            lX = v.getWidth();
+            lY = m * v.getWidth();
+        }
+        else {
+            lY = v.getHeight();
+            lX = v.getHeight() / m;
+        }
+
+        return Math.sqrt(Math.pow(lX, 2) + Math.pow(lY, 2));
+
     }
 }
