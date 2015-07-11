@@ -38,7 +38,7 @@ public class OneRingGeomancy extends Geomancy {
             child.
                     setX((float) ((origin.getX() + radius *
                             Math.cos(theta[children.indexOf(child)] + Math.PI)) -
-                            child.getHeight() / 2));
+                            child.getWidth() / 2));
             child.
                     setY((float) ((origin.getY() + radius *
                             (float) Math.sin(theta[children.indexOf(child)] + Math.PI)) -
