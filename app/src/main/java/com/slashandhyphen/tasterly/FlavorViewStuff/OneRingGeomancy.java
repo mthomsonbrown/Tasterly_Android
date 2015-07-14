@@ -1,5 +1,6 @@
 package com.slashandhyphen.tasterly.FlavorViewStuff;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -78,4 +79,5 @@ public class OneRingGeomancy extends Geomancy {
         return Math.sqrt(Math.pow(lX, 2) + Math.pow(lY, 2));
 
     }
+
 }

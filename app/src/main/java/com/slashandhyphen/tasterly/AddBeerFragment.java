@@ -80,6 +80,7 @@ public class AddBeerFragment extends Fragment {
         mBeerView = (BeerView) rl.findViewById(R.id.beer_view);
 
         // Declare Listener Junk!
+        // TODO isn't called because custom view covers parent rl
         mTouchListener = new TouchListener();
         rl.setOnTouchListener(mTouchListener);
         rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);

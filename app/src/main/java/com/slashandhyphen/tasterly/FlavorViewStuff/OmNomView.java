@@ -3,6 +3,7 @@ package com.slashandhyphen.tasterly.FlavorViewStuff;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
