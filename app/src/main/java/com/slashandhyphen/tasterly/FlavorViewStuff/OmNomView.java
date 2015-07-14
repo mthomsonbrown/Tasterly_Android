@@ -3,12 +3,11 @@ package com.slashandhyphen.tasterly.FlavorViewStuff;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
-import com.slashandhyphen.tasterly.R;
+import com.slashandhyphen.tasterly.FlavorControl.Flavors.Flavor;
 
 
 /**
@@ -19,6 +18,7 @@ public class OmNomView extends RelativeLayout {
     Context context;
     FlavorView originView;
     LayoutListener mLayoutListener;
+
 
     //Programmatic constructor
     public OmNomView(Context context) {
@@ -64,5 +64,17 @@ public class OmNomView extends RelativeLayout {
 
         OneRingGeomancy circleMaker = new OneRingGeomancy(originView, this);
         circleMaker.setDimensions();
+    }
+
+    public void saveCoords() {
+        for(FlavorView child : originView.getChildren()) {
+            child.saveCoords();
+        }
+    }
+
+    public void moveCoords(float dX, float dY) {
+        for(FlavorView child : originView.getChildren()) {
+            child.moveCoords(dX, dY);
+        }
     }
 }

@@ -24,6 +24,7 @@ public class FlavorView extends RelativeLayout {
     SeekBar mSeekBar;
     ImageView icon;
     OmNomView parent;
+    float savedX, savedY;
 
     ArrayList<FlavorView> children;
     FlavorClickListener mClickListener;
@@ -96,6 +97,16 @@ public class FlavorView extends RelativeLayout {
             getViewTreeObserver().addOnGlobalLayoutListener(parent.mLayoutListener);
 
         }
+    }
+
+    public void saveCoords() {
+        savedX = getX();
+        savedY = getY();
+    }
+
+    public void moveCoords(float dX, float dY) {
+        setX(savedX - dX);
+        setY(savedY - dY);
     }
 
 }

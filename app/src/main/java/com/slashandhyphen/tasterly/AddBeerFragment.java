@@ -82,7 +82,7 @@ public class AddBeerFragment extends Fragment {
         // Declare Listener Junk!
         // TODO isn't called because custom view covers parent rl
         mTouchListener = new TouchListener();
-        rl.setOnTouchListener(mTouchListener);
+        mBeerView.setOnTouchListener(mTouchListener);
         rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
 
         // Declare poorly implemented seekbar placeholder junk!
@@ -201,7 +201,7 @@ public class AddBeerFragment extends Fragment {
                 touchOriginX = event.getRawX();
                 touchOriginY = event.getRawY();
 
-                //flavors.saveOrigin();
+                mBeerView.saveCoords();
                 return true;
             }
 
@@ -213,7 +213,7 @@ public class AddBeerFragment extends Fragment {
                 beerButton.setX(beerButtonOriginX - dX);
                 beerButton.setY(beerButtonOriginY - dY);
 
-                //flavors.moveOrigin(dX, dY);
+                mBeerView.moveCoords(dX, dY);
                 return true;
             }
 
