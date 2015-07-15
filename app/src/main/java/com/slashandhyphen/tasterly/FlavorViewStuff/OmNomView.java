@@ -22,7 +22,6 @@ public class OmNomView extends RelativeLayout {
     FlavorView originView;
     Button controlButton;
     LayoutListener mLayoutListener;
-    TouchListener mTouchListener;
 
     //Programmatic constructor
     public OmNomView(Context context) {
@@ -34,13 +33,11 @@ public class OmNomView extends RelativeLayout {
     public OmNomView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        mLayoutListener = new LayoutListener();
-        mTouchListener = new TouchListener();
         originView = new FlavorView(context);
         controlButton = new Button(context);
 
-        getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
-        setOnTouchListener(mTouchListener);
+        getViewTreeObserver().addOnGlobalLayoutListener(new LayoutListener());
+        setOnTouchListener(new TouchListener());
         originView.setId(View.generateViewId());
         originView.setVisibility(INVISIBLE);
 
@@ -62,6 +59,9 @@ public class OmNomView extends RelativeLayout {
             getViewTreeObserver().removeOnGlobalLayoutListener(this);
             Log.d(TAG, "In global layout listener");
             buildFlavorTree();
+
+            controlButton.setX(originView.getX() - controlButton.getWidth() / 2);
+            controlButton.setY(originView.getY() - controlButton.getHeight() / 2);
         }
     }
 
@@ -71,9 +71,6 @@ public class OmNomView extends RelativeLayout {
 
         OneRingGeomancy circleMaker = new OneRingGeomancy(originView, this);
         circleMaker.setDimensions();
-
-        controlButton.setX(originView.getX() - controlButton.getWidth() / 2);
-        controlButton.setY(originView.getY() - controlButton.getHeight() / 2);
     }
 
     public void saveCoords() {
@@ -100,7 +97,7 @@ public class OmNomView extends RelativeLayout {
     class TouchListener implements View.OnTouchListener {
 
         float touchOriginX, touchOriginY, dY, dX = 0;
-        float controlX, controlY;
+        float controlX, controlY = 0;
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -131,7 +128,7 @@ public class OmNomView extends RelativeLayout {
             }
 
             if (event.getAction() == MotionEvent.ACTION_UP) {
-
+                Log.d(TAG, "In ACTION_UP...I'll probably need this at some point");
             }
 
             return false;
