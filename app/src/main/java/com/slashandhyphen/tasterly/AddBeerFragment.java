@@ -12,7 +12,6 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.slashandhyphen.tasterly.Database.BeerDB;
@@ -23,7 +22,6 @@ import com.slashandhyphen.tasterly.Models.Beer;
 public class AddBeerFragment extends Fragment {
     String TAG = "AddBeerFragmentZAZZ";
 
-    Button beerButton;
     Button addBeerButton;
     Button seeBeerButton;
     EditText beerNameText;
@@ -51,6 +49,7 @@ public class AddBeerFragment extends Fragment {
         mButtonHandler = new ButtonHandler();
         mFlavorButtonHandler = new FlavorButtonHandler();
         mLayoutListener = new LayoutListener();
+        mTouchListener = new TouchListener();
         mBeer = new Beer();
 
         // Declare Database!
@@ -63,25 +62,10 @@ public class AddBeerFragment extends Fragment {
         seeBeerButton.setOnClickListener((mButtonHandler));
         beerNameText = (EditText) rl.findViewById(R.id.edit_text_test);
 
-        // Should make beer button differently
-        // It really needs to attach to the flavor view, though...
-        // Possibly make it part of flavor view, but that's a bit cluttered...
-        beerButton = new Button(getActivity());
-        beerButton.setLayoutParams(new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT));
-        beerButton.setId(View.generateViewId());
-        beerButton.setBackgroundResource(R.drawable.beer_icon);
-        beerButton.setOnClickListener(mButtonHandler);
-        rl.addView(beerButton);
-
         // Declare Flavor Button Junk!
         mBeerView = (BeerView) rl.findViewById(R.id.beer_view);
-
-        // Declare Listener Junk!
-        // TODO isn't called because custom view covers parent rl
-        mTouchListener = new TouchListener();
         mBeerView.setOnTouchListener(mTouchListener);
+
         rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
 
         // Return all the junk!
@@ -99,9 +83,6 @@ public class AddBeerFragment extends Fragment {
             rlWidth = rl.getWidth();
             originX = rlWidth / 2;
             originY = rlHeight / 2;
-
-            beerButton.setX(originX - beerButton.getWidth() / 2);
-            beerButton.setY(originY - beerButton.getHeight() / 2);
 
         }
     }
@@ -123,11 +104,6 @@ public class AddBeerFragment extends Fragment {
     class ButtonHandler implements  View.OnClickListener {
         @Override
         public void onClick(View mButton) {
-            if(mButton.getId() == beerButton.getId()) {
-                Toast.makeText(getActivity(), "You've added Rainier...hope you're happy",
-                        Toast.LENGTH_SHORT).show();
-                mBeer.setName("Rainier");
-            }
             if(mButton.getId() == addBeerButton.getId()) {
                 if(beerNameText.getText().toString().isEmpty()) {
                     Toast.makeText(getActivity(), "Need to enter a name",
@@ -147,16 +123,11 @@ public class AddBeerFragment extends Fragment {
 
     class TouchListener implements View.OnTouchListener {
 
-        float beerButtonOriginX, beerButtonOriginY;
-
         float touchOriginX, touchOriginY, dY, dX = 0;
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                beerButtonOriginX = beerButton.getX();
-                beerButtonOriginY = beerButton.getY();
 
                 touchOriginX = event.getRawX();
                 touchOriginY = event.getRawY();
@@ -169,9 +140,6 @@ public class AddBeerFragment extends Fragment {
 
                 dY = touchOriginY - event.getRawY();
                 dX = touchOriginX - event.getRawX();
-
-                beerButton.setX(beerButtonOriginX - dX);
-                beerButton.setY(beerButtonOriginY - dY);
 
                 mBeerView.moveCoords(dX, dY);
                 return true;

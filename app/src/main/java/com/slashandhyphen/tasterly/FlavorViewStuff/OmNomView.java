@@ -5,7 +5,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.slashandhyphen.tasterly.R;
 
 
 /**
@@ -15,8 +19,8 @@ public class OmNomView extends RelativeLayout {
     static String TAG = "OmDomView";
     Context context;
     FlavorView originView;
+    Button controlButton;
     LayoutListener mLayoutListener;
-
 
     //Programmatic constructor
     public OmNomView(Context context) {
@@ -53,6 +57,18 @@ public class OmNomView extends RelativeLayout {
 
         OneRingGeomancy circleMaker = new OneRingGeomancy(originView, this);
         circleMaker.setDimensions();
+
+        // Add controlButton
+        controlButton = new Button(context);
+        controlButton.setBackgroundResource(R.drawable.beer_icon);
+        controlButton.setLayoutParams(new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT));
+        controlButton.setId(View.generateViewId());
+        controlButton.setOnClickListener(new ControlButtonHandler());
+        controlButton.setX(originView.getX() - controlButton.getWidth() / 2);
+        controlButton.setY(originView.getY() - controlButton.getHeight() / 2);
+        addView(controlButton);
     }
 
     public void saveCoords() {
@@ -64,6 +80,15 @@ public class OmNomView extends RelativeLayout {
     public void moveCoords(float dX, float dY) {
         for(FlavorView child : originView.getChildren()) {
             child.moveCoords(dX, dY);
+        }
+    }
+
+    class ControlButtonHandler implements  View.OnClickListener {
+        @Override
+        public void onClick(View mButton) {
+                Toast.makeText(context, "This will give you some options probably at some point, " +
+                        "maybe the same as the yet to be created menu...",
+                        Toast.LENGTH_SHORT).show();
         }
     }
 }
