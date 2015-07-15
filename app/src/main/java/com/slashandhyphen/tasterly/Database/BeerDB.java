@@ -18,6 +18,7 @@ import java.util.Map;
 public class BeerDB extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Beer.db";
+    private static final String TAG = "BeerDB";
 
     // Beer Data Table
     private static final String TABLE_BEER = "Beers";
@@ -41,8 +42,6 @@ public class BeerDB extends SQLiteOpenHelper {
             + BEER_NAME + " text not null, "
             + FLAVOR_NAME + " text not null, "
             + FLAVOR_VALUE + " int);";
-
-    String TAG = "BeerDB";
 
     public BeerDB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -88,8 +87,6 @@ public class BeerDB extends SQLiteOpenHelper {
 
             cv.clear();
         }
-
-
     }
 
     public Cursor getAllBeers() {

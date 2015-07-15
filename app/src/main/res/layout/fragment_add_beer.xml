@@ -14,13 +14,6 @@
         android:layout_height="fill_parent"
         android:background="@color/primary_0"/>
 
-    <SeekBar
-        android:id="@+id/addBeerSeekBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="300dp"
-        android:visibility="gone"/>
-
     <Button
         android:id="@+id/add_beer_test"
         android:layout_width="wrap_content"

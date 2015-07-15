@@ -14,7 +14,6 @@ import com.slashandhyphen.tasterly.Models.Beer;
 
 public class ViewBeersActivity extends ActionBarActivity {
 
-    Beer mBeer;
     BeerDB beerDB;
     SimpleCursorAdapter curseAdapter;
 
@@ -23,7 +22,6 @@ public class ViewBeersActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_beers);
 
-        mBeer = new Beer();
         beerDB = new BeerDB(this);
         displayListView();
     }

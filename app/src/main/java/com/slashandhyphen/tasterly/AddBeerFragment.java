@@ -29,7 +29,6 @@ public class AddBeerFragment extends Fragment {
     EditText beerNameText;
     BeerView mBeerView;
 
-    SeekBar mSeekBar;
     RelativeLayout rl;
     Resources res;
 
@@ -85,9 +84,6 @@ public class AddBeerFragment extends Fragment {
         mBeerView.setOnTouchListener(mTouchListener);
         rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
 
-        // Declare poorly implemented seekbar placeholder junk!
-        mSeekBar = (SeekBar) rl.findViewById((R.id.addBeerSeekBar));
-
         // Return all the junk!
         return rl;
     }
@@ -112,16 +108,9 @@ public class AddBeerFragment extends Fragment {
 
     class FlavorButtonHandler implements View.OnLongClickListener, View.OnClickListener {
 
-        int initialSeekProgress = 0;
-
         @Override
         public void onClick(View mButton) {
-            SeekBarListener mListener = new SeekBarListener(mButton);
-            mSeekBar.setOnSeekBarChangeListener(mListener);
-            mSeekBar.setProgress(initialSeekProgress);
-            mSeekBar.setX(mButton.getX() + mButton.getWidth());
-            mSeekBar.setY(mButton.getY() + mButton.getHeight() / 3);
-            mSeekBar.setVisibility(View.VISIBLE);
+
         }
 
         @Override
@@ -153,35 +142,6 @@ public class AddBeerFragment extends Fragment {
             if(mButton.getId() == seeBeerButton.getId()) {
                 Toast.makeText(getActivity(), beerDB.expose(), Toast.LENGTH_SHORT).show();
             }
-        }
-    }
-
-    class SeekBarListener implements SeekBar.OnSeekBarChangeListener {
-
-        View v;
-
-        SeekBarListener(View v) {
-            this.v = v;
-        }
-
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-            Log.d(TAG, "Seek Bar Changed to " + seekBar.getProgress());
-            Log.d(TAG, "View was " + v.getId());
-
-            Button button = (Button) v;
-            mBeer.addFlavor(button.getText().toString(), seekBar.getProgress());
-            Log.d(TAG, "HASHMAP: " + mBeer.listFlavors());
         }
     }
 
@@ -219,7 +179,6 @@ public class AddBeerFragment extends Fragment {
 
             if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                mSeekBar.setVisibility(View.GONE);
             }
 
             return false;
