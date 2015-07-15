@@ -3,6 +3,7 @@ package com.slashandhyphen.tasterly.FlavorViewStuff;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -21,6 +22,7 @@ public class OmNomView extends RelativeLayout {
     FlavorView originView;
     Button controlButton;
     LayoutListener mLayoutListener;
+    TouchListener mTouchListener;
 
     //Programmatic constructor
     public OmNomView(Context context) {
@@ -33,9 +35,11 @@ public class OmNomView extends RelativeLayout {
         super(context, attrs);
         this.context = context;
         mLayoutListener = new LayoutListener();
-        getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
-
+        mTouchListener = new TouchListener();
         originView = new FlavorView(context);
+
+        getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
+        setOnTouchListener(mTouchListener);
         originView.setId(View.generateViewId());
         originView.setVisibility(INVISIBLE);
         addView(originView);
@@ -89,6 +93,47 @@ public class OmNomView extends RelativeLayout {
                 Toast.makeText(context, "This will give you some options probably at some point, " +
                         "maybe the same as the yet to be created menu...",
                         Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    class TouchListener implements View.OnTouchListener {
+
+        float touchOriginX, touchOriginY, dY, dX = 0;
+        float controlX, controlY;
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                touchOriginX = event.getRawX();
+                touchOriginY = event.getRawY();
+
+                saveCoords();
+
+                // should be held somewhere else
+                controlX = controlButton.getX();
+                controlY = controlButton.getY();
+                return true;
+            }
+
+            if (event.getAction() == MotionEvent.ACTION_MOVE) {
+
+                dY = touchOriginY - event.getRawY();
+                dX = touchOriginX - event.getRawX();
+
+                controlButton.setX(controlX - dX);
+                controlButton.setY(controlY - dY);
+
+                moveCoords(dX, dY);
+                return true;
+            }
+
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+
+            }
+
+            return false;
         }
     }
 }

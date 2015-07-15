@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -33,7 +32,6 @@ public class AddBeerFragment extends Fragment {
     FlavorButtonHandler mFlavorButtonHandler;
     ButtonHandler mButtonHandler;
     LayoutListener mLayoutListener;
-    TouchListener mTouchListener;
     Beer mBeer;
     BeerDB beerDB;
 
@@ -49,7 +47,6 @@ public class AddBeerFragment extends Fragment {
         mButtonHandler = new ButtonHandler();
         mFlavorButtonHandler = new FlavorButtonHandler();
         mLayoutListener = new LayoutListener();
-        mTouchListener = new TouchListener();
         mBeer = new Beer();
 
         // Declare Database!
@@ -64,7 +61,7 @@ public class AddBeerFragment extends Fragment {
 
         // Declare Flavor Button Junk!
         mBeerView = (BeerView) rl.findViewById(R.id.beer_view);
-        mBeerView.setOnTouchListener(mTouchListener);
+       // mBeerView.setOnTouchListener(mTouchListener);
 
         rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
 
@@ -120,37 +117,4 @@ public class AddBeerFragment extends Fragment {
             }
         }
     }
-
-    class TouchListener implements View.OnTouchListener {
-
-        float touchOriginX, touchOriginY, dY, dX = 0;
-
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                touchOriginX = event.getRawX();
-                touchOriginY = event.getRawY();
-
-                mBeerView.saveCoords();
-                return true;
-            }
-
-            if (event.getAction() == MotionEvent.ACTION_MOVE) {
-
-                dY = touchOriginY - event.getRawY();
-                dX = touchOriginX - event.getRawX();
-
-                mBeerView.moveCoords(dX, dY);
-                return true;
-            }
-
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-
-            }
-
-            return false;
-        }
-    }
-
 }
