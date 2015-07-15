@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
-import com.slashandhyphen.tasterly.FlavorControl.Flavors.Flavor;
-
 
 /**
  * Created by ookamijin on 6/26/2015.
@@ -37,15 +35,6 @@ public class OmNomView extends RelativeLayout {
         originView.setId(View.generateViewId());
         originView.setVisibility(INVISIBLE);
         addView(originView);
-    }
-
-
-    public float getOriginX() {
-        return originView.getX();
-    }
-
-    public float getOriginY() {
-        return originView.getY();
     }
 
     class LayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {

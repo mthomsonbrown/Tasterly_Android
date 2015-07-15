@@ -3,8 +3,6 @@ package com.slashandhyphen.tasterly.FlavorViewStuff;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.slashandhyphen.tasterly.FlavorControl.Flavors.Flavor;
-
 import java.util.ArrayList;
 
 /**
