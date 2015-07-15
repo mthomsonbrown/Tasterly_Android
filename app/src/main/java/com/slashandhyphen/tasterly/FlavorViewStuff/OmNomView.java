@@ -37,12 +37,22 @@ public class OmNomView extends RelativeLayout {
         mLayoutListener = new LayoutListener();
         mTouchListener = new TouchListener();
         originView = new FlavorView(context);
+        controlButton = new Button(context);
 
         getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
         setOnTouchListener(mTouchListener);
         originView.setId(View.generateViewId());
         originView.setVisibility(INVISIBLE);
+
+        controlButton.setBackgroundResource(R.drawable.beer_icon);
+        controlButton.setLayoutParams(new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT));
+        controlButton.setId(View.generateViewId());
+        controlButton.setOnClickListener(new ControlButtonHandler());
+
         addView(originView);
+        addView(controlButton);
     }
 
     class LayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
@@ -62,17 +72,8 @@ public class OmNomView extends RelativeLayout {
         OneRingGeomancy circleMaker = new OneRingGeomancy(originView, this);
         circleMaker.setDimensions();
 
-        // Add controlButton
-        controlButton = new Button(context);
-        controlButton.setBackgroundResource(R.drawable.beer_icon);
-        controlButton.setLayoutParams(new LayoutParams(
-                LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT));
-        controlButton.setId(View.generateViewId());
-        controlButton.setOnClickListener(new ControlButtonHandler());
         controlButton.setX(originView.getX() - controlButton.getWidth() / 2);
         controlButton.setY(originView.getY() - controlButton.getHeight() / 2);
-        addView(controlButton);
     }
 
     public void saveCoords() {
