@@ -33,10 +33,11 @@ public class OmNomView extends RelativeLayout {
     public OmNomView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
+        mLayoutListener = new LayoutListener();
         originView = new FlavorView(context);
         controlButton = new Button(context);
 
-        getViewTreeObserver().addOnGlobalLayoutListener(new LayoutListener());
+        getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
         setOnTouchListener(new TouchListener());
         originView.setId(View.generateViewId());
         originView.setVisibility(INVISIBLE);

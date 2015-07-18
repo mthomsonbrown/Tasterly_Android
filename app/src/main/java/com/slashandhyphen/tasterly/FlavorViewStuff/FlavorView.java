@@ -92,9 +92,8 @@ public class FlavorView extends RelativeLayout {
             parent = (OmNomView) getParent();
 
             Toast.makeText(context, "Clicked a view: " + getId(), Toast.LENGTH_SHORT).show();
-
-            // TODO apparently seekbars are bugged in lollipop, need to build in XML, which means i need to make an XML layout for FlavorView...
-            //mSeekBar.setVisibility(VISIBLE);
+            
+            mSeekBar.setVisibility(VISIBLE);
             parent.setBackgroundColor(getResources().getColor(R.color.primary_2));
             getViewTreeObserver().addOnGlobalLayoutListener(parent.mLayoutListener);
 
