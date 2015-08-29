@@ -53,7 +53,7 @@ public class FlavorView extends RelativeLayout {
                 RelativeLayout.LayoutParams.WRAP_CONTENT));
         label.setId(View.generateViewId());
         label.setText("DEFAULT LABEL TEXT FOR SHAME!!!!");
-        //label.setVisibility(INVISIBLE);
+        label.setVisibility(GONE);
         addView(label);
 
         // Create Expand Button
