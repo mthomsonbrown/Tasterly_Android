@@ -20,12 +20,10 @@ public class BeerView extends OmNomView {
         super(context, attrs);
 
         originView.addChild(new HopsFlavorView(context));
-        originView.addChild(new HopsFlavorView(context));
-        originView.addChild(new HopsFlavorView(context));
-        originView.addChild(new HopsFlavorView(context));
-        originView.addChild(new HopsFlavorView(context));
-        originView.addChild(new HopsFlavorView(context));
-        originView.addChild(new HopsFlavorView(context));
+        originView.addChild(new MaltFlavorView(context));
+        originView.addChild(new SmokyFlavorView(context));
+        originView.addChild(new SourFlavorView(context));
+        originView.addChild(new FruityFlavorView(context));
         for(FlavorView child : originView.getChildren()) {
             child.label.setText(child.label.getText().toString() + originView.getChildren().indexOf(child));
         }
