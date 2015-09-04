@@ -1,10 +1,7 @@
 package com.slashandhyphen.tasterly.FlavorViewStuff;
 
 import android.content.Context;
-import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -14,15 +11,14 @@ import android.widget.Toast;
 import com.slashandhyphen.tasterly.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ookamijin on 6/26/2015.
  */
 public class FlavorView extends RelativeLayout {
-    TextView label;
+    protected TextView label;
+    protected ImageView icon;
     SeekBar mSeekBar;
-    ImageView icon;
     ImageView mExpandButton;
     OmNomView parent;
     float savedX, savedY;

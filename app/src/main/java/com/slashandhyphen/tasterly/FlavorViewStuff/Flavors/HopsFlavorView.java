@@ -1,9 +1,10 @@
-package com.slashandhyphen.tasterly.FlavorViewStuff;
+package com.slashandhyphen.tasterly.FlavorViewStuff.Flavors;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.slashandhyphen.tasterly.FlavorViewStuff.FlavorView;
 import com.slashandhyphen.tasterly.R;
 
 /**

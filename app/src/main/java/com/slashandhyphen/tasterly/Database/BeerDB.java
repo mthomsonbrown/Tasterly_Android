@@ -14,11 +14,18 @@ import java.util.Map;
 
 /**
  * Created by ookamijin on 4/6/2015.
+ *
+ * This class creates a database holding a list of beers along with their objective
+ * characteristics i.e. ABV, brewery, etc.  It also holds subjective information the user records
+ * about their tasting experience.
+ *
+ * This class also contains the API for other classes to interact with the
+ * database by inserting new beers, and adding subjective user input on flavor, pictures, etc.
  */
 public class BeerDB extends SQLiteOpenHelper {
+    private static final String TAG = "BeerDB";
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Beer.db";
-    private static final String TAG = "BeerDB";
 
     // Beer Data Table
     private static final String TABLE_BEER = "Beers";
@@ -31,6 +38,13 @@ public class BeerDB extends SQLiteOpenHelper {
     private static final String FLAVOR_NAME = "flavor_name";
     private static final String FLAVOR_VALUE = "flavor_value";
 
+    /**
+     * These are setting up relationships between the different tables, as well as describing the
+     * contents of each table.
+     *
+     * (This may serve as a table diagram, but it might be good to create a separate document
+     * illustrating how these tables are interrelated)
+     */
     private static final String CREATE_BEER_TABLE = "create table "
             + TABLE_BEER + "("
             + BEER_ID + " integer primary key autoincrement, "
@@ -43,11 +57,21 @@ public class BeerDB extends SQLiteOpenHelper {
             + FLAVOR_NAME + " text not null, "
             + FLAVOR_VALUE + " int);";
 
+    /**
+     * Constructor for the BeerDB
+     *
+     * @param context handle to calling application's (activity's) resources
+     */
     public BeerDB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         Log.d(TAG, "++BEER CONSTRUCTOR++");
     }
 
+    /**
+     * This creates a new database and the tables described in this class' TABLE strings
+     *
+     * @param db magic somehow? #MLEARN
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "++ON CREATE++");
@@ -57,52 +81,94 @@ public class BeerDB extends SQLiteOpenHelper {
 
         // Flavor Table
         db.execSQL(CREATE_FLAVOR_TABLE);
-
     }
 
+    /**
+     * This class won't be implemented unless absolutely necessary.
+     *
+     * It creates a merge file for different schemas of this database, but hopefully because
+     * I'm Batman, I'll never have to refactor the live database.
+     *
+     * @param db magic somehow? #MLEARN
+     * @param oldVersion previous version of the DB #MLEARN
+     * @param newVersion new version of the DB #MLEARN
+     */
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
-    }
-
+    /**
+     * This inserts a new beer into the beer table and fills out a flavor table entry associated
+     * with that beer in the flavor table.  It looks like a massive source of bugs, and should
+     * probably contain a lot of exception handling.
+     *
+     * @param mBeer This is a SugarRecord object, and definitely needs to be refactored.
+     *              SugarRecord needs to be removed from this project, but this method doesn't
+     *              use its functionality.  Its merely obtaining data members from the mBeer object
+     *              and assigning them to the database.
+     */
     public void add(Beer mBeer) {
         Log.d(TAG, "++ADD BEER++");
         Log.d(TAG, "What you're trying to add is " + mBeer.getName());
 
         SQLiteDatabase db = getWritableDatabase();
-
         ContentValues cv = new ContentValues();
+
+        // TODO figure out what this does
         HashMap<String, Integer> flavors = mBeer.getFlavors();
 
-        // Beer Table Add
+        // This adds a new row to the beer table and assigns the name of the beer to it
         cv.put(BEER_NAME, mBeer.getName());
         db.insert(TABLE_BEER, null, cv);
 
+        // Safety first? #MLEARN
         cv.clear();
+
+        // Iterate over a map of flavors to insert them in the DB
+        // TODO Does this actually work at this point?
         for(Map.Entry<String, Integer> flavor : flavors.entrySet()) {
             cv.put(BEER_NAME, mBeer.getName());
             cv.put(FLAVOR_NAME, flavor.getKey());
             cv.put(FLAVOR_VALUE, flavor.getValue());
             db.insert(TABLE_FLAVOR, null, cv);
 
+            // Why is this here? #MLEARN
             cv.clear();
         }
     }
 
+    /**
+     * Returns a cursor to a list of all beer ids and names in the database. #VERIFY
+     * TODO rename or add all available fields to the returned cursor
+     *
+     * @return Cursor A list of all beer names and ids in the DB
+     */
     public Cursor getAllBeers() {
         Cursor curse;
         SQLiteDatabase db = getReadableDatabase();
 
-        curse = db.query(TABLE_BEER, new String[] {BEER_ID, BEER_NAME}, null, null, null, null, null);
+        // Build a cursor containing a list of all beer names and beer ids in the beer table
+        curse = db.query(TABLE_BEER, new String[] {BEER_ID, BEER_NAME},
+                null, null, null, null, null);
         if(curse != null) {
             curse.moveToFirst();
         }
         return curse;
     }
 
+
+    /**
+     * Returns some garbled string of beer names and flavors in the form of a string.
+     * Extravagant sanity check I believe.
+     *
+     * TODO rename because expose is very vague and this doesn't do what that word suggests it does
+     * TODO after that, also delete this method because it's not useful really, save for debugging
+     *
+     * @return String A list of all the names and flavors of beers in the DB
+     */
     public String expose() {
         Log.d(TAG, "++EXPOSE++");
 
+        // Select every entry in TABLE_BEER
         SQLiteDatabase db = getReadableDatabase();
         Cursor bCur = db.rawQuery("select * from " + TABLE_BEER, null);
         Cursor fCur;
