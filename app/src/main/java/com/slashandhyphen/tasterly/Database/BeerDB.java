@@ -41,9 +41,6 @@ public class BeerDB extends SQLiteOpenHelper {
     /**
      * These are setting up relationships between the different tables, as well as describing the
      * contents of each table.
-     *
-     * (This may serve as a table diagram, but it might be good to create a separate document
-     * illustrating how these tables are interrelated)
      */
     private static final String CREATE_BEER_TABLE = "create table "
             + TABLE_BEER + "("
@@ -70,7 +67,7 @@ public class BeerDB extends SQLiteOpenHelper {
     /**
      * This creates a new database and the tables described in this class' TABLE strings
      *
-     * @param db magic somehow? #MLEARN
+     * @param db Database to create tables in
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -89,9 +86,9 @@ public class BeerDB extends SQLiteOpenHelper {
      * It creates a merge file for different schemas of this database, but hopefully because
      * I'm Batman, I'll never have to refactor the live database.
      *
-     * @param db magic somehow? #MLEARN
-     * @param oldVersion previous version of the DB #MLEARN
-     * @param newVersion new version of the DB #MLEARN
+     * @param db Database to merge
+     * @param oldVersion version number to upgrade from
+     * @param newVersion version number to upgrade to
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
@@ -120,24 +117,25 @@ public class BeerDB extends SQLiteOpenHelper {
         cv.put(BEER_NAME, mBeer.getName());
         db.insert(TABLE_BEER, null, cv);
 
-        // Safety first? #MLEARN
+        // Clear CV in order to reuse for flavor table entry
         cv.clear();
 
-        // Iterate over a map of flavors to insert them in the DB
-        // TODO Does this actually work at this point?
+        /**
+         * This iterates over a map of flavors and inserts each flavor as a new entry to
+         * the flavor table associated with a beer
+         */
         for(Map.Entry<String, Integer> flavor : flavors.entrySet()) {
             cv.put(BEER_NAME, mBeer.getName());
             cv.put(FLAVOR_NAME, flavor.getKey());
             cv.put(FLAVOR_VALUE, flavor.getValue());
             db.insert(TABLE_FLAVOR, null, cv);
 
-            // Why is this here? #MLEARN
             cv.clear();
         }
     }
 
     /**
-     * Returns a cursor to a list of all beer ids and names in the database. #VERIFY
+     * Returns a cursor to a list of all beer ids and names in the database.
      * TODO rename or add all available fields to the returned cursor
      *
      * @return Cursor A list of all beer names and ids in the DB
