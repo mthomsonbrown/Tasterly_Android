@@ -9,6 +9,8 @@ import com.slashandhyphen.tasterly.R;
 
 /**
  * Created by ookamijin on 7/1/2015.
+ *
+ * Extension of FlavorView for adding flavor-specific assets and possibly behavior/functionality
  */
 public class HopsFlavorView extends FlavorView {
     public HopsFlavorView(Context context) {
