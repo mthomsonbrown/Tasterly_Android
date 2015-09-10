@@ -12,6 +12,11 @@ import com.slashandhyphen.tasterly.FlavorViewStuff.Flavors.SourFlavorView;
 
 /**
  * Created by ookamijin on 6/26/2015.
+ *
+ * <P>
+ *     This is a description of the view that manages the different flavor objects relating to beer.
+ *     It sets up the hierarchy of flavors, ???, profit
+ * </P>
  */
 public class BeerView extends OmNomView {
     static String TAG = "BeerView";
@@ -30,8 +35,10 @@ public class BeerView extends OmNomView {
         originView.addChild(new FloralFlavorView(context));
         originView.addChild(new SourFlavorView(context));
         originView.addChild(new FruityFlavorView(context));
+
         for(FlavorView child : originView.getChildren()) {
-            child.label.setText(child.label.getText().toString() + originView.getChildren().indexOf(child));
+            child.label.setText(child.label.getText().toString() +
+                    originView.getChildren().indexOf(child));
         }
 
         addChildren(originView);

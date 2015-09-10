@@ -15,7 +15,15 @@ import com.slashandhyphen.tasterly.R;
 
 /**
  * Created by ookamijin on 6/26/2015.
+ *
+ * <P>
+ *     OmNomView is a base class used to create geometric relationships between different
+ *     {@link com.slashandhyphen.tasterly.FlavorViewStuff.FlavorView} objects.
+ * </P>
  */
+// TODO This class handles way too much.  OriginView's coordinates should be set by geomancy.
+// TODO The icon used for the origin should be set by the child class, and its implementation
+// TODO should be decided by the child class as well...
 public class OmNomView extends RelativeLayout {
     static String TAG = "OmDomView";
     Context context;
@@ -23,13 +31,21 @@ public class OmNomView extends RelativeLayout {
     Button controlButton;
     LayoutListener mLayoutListener;
 
-    //Programmatic constructor
+    /**
+     * Programmatic constructor
+     */
     public OmNomView(Context context) {
         super(context);
         this.context = context;
     }
 
-    //XML constructor
+    /**
+     * XML Constructor.  This is the default constructor of OmNomView.  It creates an origin that
+     * subclasses can use as a starting point to add a flavorView hierarchy.
+     *
+     * @param context Reference to the calling activity's base layout
+     * @param attrs XML attributes set for this instance of OmNomView
+     */
     public OmNomView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -53,8 +69,16 @@ public class OmNomView extends RelativeLayout {
         addView(controlButton);
     }
 
+    /**
+     * When the layout is constructed, this class sets the coordinates of the views it controls
+     */
     class LayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
 
+        /**
+         * This is the only method of the LayoutListener class, and sets the coordinates
+         * for the control button.  It also calls Geomancy to set other things using
+         * {@link com.slashandhyphen.tasterly.FlavorViewStuff.OneRingGeomancy}...
+         */
         @Override
         public void onGlobalLayout() {
             getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -66,6 +90,12 @@ public class OmNomView extends RelativeLayout {
         }
     }
 
+    /**
+     * Sets a central coordinate for the originView so that other views can reference the origin
+     * as an independent point rather than the corner of an expanded view.  It then creates a
+     * Geomancy object and the setDimensions function of that object:
+     * {@link OneRingGeomancy#setDimensions()}
+     */
     public void buildFlavorTree() {
         originView.setY(this.getHeight() / 2);
         originView.setX(this.getWidth() / 2);
@@ -74,19 +104,40 @@ public class OmNomView extends RelativeLayout {
         circleMaker.setDimensions();
     }
 
+    /**
+     * Tells all FlavorView objects managed by this instance of OmNomView to set their x and y
+     * coordinates.
+     */
     public void saveCoords() {
         for(FlavorView child : originView.getChildren()) {
             child.saveCoords();
         }
     }
 
+    /**
+     * Gives every FlavorView object a value to change their coordinates for movement.
+     *
+     * @param dX Amount to move in the X axis
+     * @param dY Amount to move in the Y axis
+     */
     public void moveCoords(float dX, float dY) {
         for(FlavorView child : originView.getChildren()) {
             child.moveCoords(dX, dY);
         }
     }
 
+    /**
+     * Responds to clicks on the control button.  Default behavior may be good, but this should
+     * probably be overridden by children.
+     */
     class ControlButtonHandler implements  View.OnClickListener {
+
+
+        /**
+         * Responds to clicks on the control button.
+         *
+         * @param mButton The control button, the only button attached to this listener
+        */
         @Override
         public void onClick(View mButton) {
                 Toast.makeText(context, "This will give you some options probably at some point, " +
@@ -95,11 +146,22 @@ public class OmNomView extends RelativeLayout {
         }
     }
 
+    /**
+     * Responds to touch events on the background RelativeLayout of OmNomView.  This calculates
+     * the delta of swipes and sends that data to the FlavorViews managed by this OmNomView.
+     */
     class TouchListener implements View.OnTouchListener {
 
         float touchOriginX, touchOriginY, dY, dX = 0;
         float controlX, controlY = 0;
 
+        /**
+         * Called when the background RelativeLayout is interacted with.
+         *
+         * @param v Reference to the RelativeLayout background of OmNomView.
+         * @param event Touch event to interact with.
+         * @return True I believe invalidates the specific touch action.
+         */
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 

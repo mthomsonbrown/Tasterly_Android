@@ -75,7 +75,7 @@ public class AddBeerFragment extends Fragment {
         public void onGlobalLayout() {
             rl.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-            //Getting view measurements (for objects that are not "flavors")
+            // Getting view measurements (for objects that are not "flavors")
             rlHeight = rl.getHeight();
             rlWidth = rl.getWidth();
             originX = rlWidth / 2;

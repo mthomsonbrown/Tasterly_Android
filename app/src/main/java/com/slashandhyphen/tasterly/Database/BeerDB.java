@@ -15,22 +15,24 @@ import java.util.Map;
 /**
  * Created by ookamijin on 4/6/2015.
  *
+ * <P>
  * This class creates a database holding a list of beers along with their objective
  * characteristics i.e. ABV, brewery, etc.  It also holds subjective information the user records
  * about their tasting experience.
  *
  * This class also contains the API for other classes to interact with the
  * database by inserting new beers, and adding subjective user input on flavor, pictures, etc.
+ * </P>
  */
 public class BeerDB extends SQLiteOpenHelper {
-    private static final String TAG = "BeerDB";
+    public static final String TAG = "BeerDB";
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Beer.db";
 
     // Beer Data Table
     private static final String TABLE_BEER = "Beers";
     private static final String BEER_ID = "_id";
-    public static final String BEER_NAME = "beer_name";
+    private static final String BEER_NAME = "beer_name";
 
     // Flavor Data Table
     private static final String TABLE_FLAVOR = "Flavors";
@@ -38,7 +40,7 @@ public class BeerDB extends SQLiteOpenHelper {
     private static final String FLAVOR_NAME = "flavor_name";
     private static final String FLAVOR_VALUE = "flavor_value";
 
-    /**
+    /*
      * These are setting up relationships between the different tables, as well as describing the
      * contents of each table.
      */
@@ -120,7 +122,7 @@ public class BeerDB extends SQLiteOpenHelper {
         // Clear CV in order to reuse for flavor table entry
         cv.clear();
 
-        /**
+        /*
          * This iterates over a map of flavors and inserts each flavor as a new entry to
          * the flavor table associated with a beer
          */

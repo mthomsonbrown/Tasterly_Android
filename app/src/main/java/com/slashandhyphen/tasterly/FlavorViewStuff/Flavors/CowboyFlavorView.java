@@ -9,8 +9,8 @@ import com.slashandhyphen.tasterly.FlavorViewStuff.FlavorView;
  *
  * Extension of FlavorView for adding flavor-specific assets and possibly behavior/functionality
  */
-public class OverpoweringSmokeFlavorView extends FlavorView {
-    public OverpoweringSmokeFlavorView(Context context) {
+public class CowboyFlavorView extends FlavorView {
+    public CowboyFlavorView(Context context) {
         super(context);
         label.setText("Overpowering");
     }

@@ -26,9 +26,15 @@ public class ViewBeersActivity extends ActionBarActivity {
         displayListView();
     }
 
+    /**
+     * I have no idea what this does, but it does it poorly.  I'm calling a DB field in order to
+     * generate a cursor to data, rather than having a function inside the DB class that uses
+     * the BEER_NAME to generate a cursor
+     */
     private void displayListView() {
         String[] columns = new String[] {
-                BeerDB.BEER_NAME
+                // TODO this is bad
+                // BeerDB.BEER_NAME
         };
 
         int[] views = new int[] {
