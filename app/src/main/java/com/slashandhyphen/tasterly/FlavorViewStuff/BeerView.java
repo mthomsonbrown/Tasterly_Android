@@ -15,18 +15,29 @@ import com.slashandhyphen.tasterly.FlavorViewStuff.Flavors.SourFlavorView;
  *
  * <P>
  *     This is a description of the view that manages the different flavor objects relating to beer.
- *     It sets up the hierarchy of flavors, ???, profit
+ *     It sets up the hierarchy of flavors, and <I>should</I> choose what type of geometry to
+ *     assign, manage the control button icon, click listener, etc...  This is all currently handled
+ *     by OmNomView, so refactoring shouldn't be too difficult.
  * </P>
  */
 public class BeerView extends OmNomView {
     static String TAG = "BeerView";
 
-    //Programmatic constructor
+    /**
+     * Programmatic constructor
+     */
     public BeerView(Context context) {
         super(context);
     }
 
-    //XML constructor
+    /**
+     * XML Constructor.  This is the default constructor for classes extending OmNomView.
+     * It uses an origin view created by OmNomView to setup a hierarchy for the individual
+     * FlavorView objects.
+     *
+     * @param context Reference to the calling activity's base layout
+     * @param attrs XML attributes set for this instance of OmNomView
+     */
     public BeerView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -45,6 +56,12 @@ public class BeerView extends OmNomView {
 
     }
 
+
+    /**
+     * Add Children adds all declared FlavorViews to the base OmNomView RelativeLayout
+     *
+     * @param originView The origin FlavorView containing a reference to all child views
+     */
     private void addChildren(FlavorView originView) {
         for(View child : originView.getChildren()) {
             addView(child);
