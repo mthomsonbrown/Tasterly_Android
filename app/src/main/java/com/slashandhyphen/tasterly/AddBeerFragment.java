@@ -17,7 +17,14 @@ import com.slashandhyphen.tasterly.Database.BeerDB;
 import com.slashandhyphen.tasterly.FlavorViewStuff.BeerView;
 import com.slashandhyphen.tasterly.Models.Beer;
 
-
+/**
+ * Created by ookamijin on 3/8/2015
+ *
+ * This fragment displays the {@link com.slashandhyphen.tasterly.FlavorViewStuff.BeerView},
+ * interacts with the {@link com.slashandhyphen.tasterly.Database.BeerDB} database, and provides
+ * some extra buttons for naming the beer, eventually taking a picture, extra notes, and for testing
+ * at least will contain a save and sync button.
+ */
 public class AddBeerFragment extends Fragment {
     String TAG = "AddBeerFragmentZAZZ";
 
@@ -29,7 +36,6 @@ public class AddBeerFragment extends Fragment {
     RelativeLayout rl;
     Resources res;
 
-    FlavorButtonHandler mFlavorButtonHandler;
     ButtonHandler mButtonHandler;
     LayoutListener mLayoutListener;
     Beer mBeer;
@@ -38,6 +44,15 @@ public class AddBeerFragment extends Fragment {
     float originX, originY;
     int rlHeight, rlWidth;
 
+    /**
+     * Creates references to the different elements in the AddBeerFragment, then attaches a
+     * GlobalLayoutListener
+     *
+     * @param inflater Used to add the fragment XML to the calling activity
+     * @param container The ViewGroup object that contains this fragment
+     * @param savedInstanceState State of user input if any has been added to the bundle
+     * @return A representation of this fragment as a view for the calling activity to show
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,7 +60,6 @@ public class AddBeerFragment extends Fragment {
         res = getResources();
         rl = (RelativeLayout) inflater.inflate(R.layout.fragment_add_beer, container, false);
         mButtonHandler = new ButtonHandler();
-        mFlavorButtonHandler = new FlavorButtonHandler();
         mLayoutListener = new LayoutListener();
         mBeer = new Beer();
 
@@ -69,8 +83,18 @@ public class AddBeerFragment extends Fragment {
         return rl;
     }
 
+
+    /**
+     * This is called when the layout dimensions are set, and is the first opportunity to set and
+     * get dimension information from views that were not defined previously i.e. in XML
+     */
     class LayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
 
+        /**
+         * This is the main function of interest to set and get dimensions of views created outside
+         * of XML when they are available, as well as the dimensions of the fragment, as that is
+         * inflated at runtime.
+         */
         @Override
         public void onGlobalLayout() {
             rl.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -81,20 +105,6 @@ public class AddBeerFragment extends Fragment {
             originX = rlWidth / 2;
             originY = rlHeight / 2;
 
-        }
-    }
-
-    class FlavorButtonHandler implements View.OnLongClickListener, View.OnClickListener {
-
-        @Override
-        public void onClick(View mButton) {
-
-        }
-
-        @Override
-        public boolean onLongClick(View mButton) {
-            Toast.makeText(getActivity(), "Button Really Clicked", Toast.LENGTH_SHORT).show();
-            return true;
         }
     }
 
@@ -117,4 +127,5 @@ public class AddBeerFragment extends Fragment {
             }
         }
     }
+
 }
