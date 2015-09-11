@@ -46,7 +46,7 @@ public class AddBeerFragment extends Fragment {
      *
      * @param inflater Used to add the fragment XML to the calling activity
      * @param container The ViewGroup object that contains this fragment
-     * @param savedInstanceState State of user input if any has been added to the bundle
+     * @param savedInstanceState State of user input if any has been saved to the bundle
      * @return A representation of this fragment as a view for the calling activity to show
      */
     @Override
@@ -88,14 +88,22 @@ public class AddBeerFragment extends Fragment {
         @Override
         public void onClick(View mButton) {
             if(mButton.getId() == addBeerButton.getId()) {
+
+                // Add beer name to the beer object
                 if(beerNameText.getText().toString().isEmpty()) {
                     Toast.makeText(getActivity(), "Need to enter a name",
                             Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 else {
                     mBeer.setName(beerNameText.getText().toString());
-                    beerDB.add(mBeer);
                 }
+
+                // Add flavor data to the beer object
+                // TODO Add flavor data to the beer object
+
+                // Add beer to the DB
+                beerDB.add(mBeer);
             }
             if(mButton.getId() == seeBeerButton.getId()) {
                 Toast.makeText(getActivity(), beerDB.expose(), Toast.LENGTH_SHORT).show();

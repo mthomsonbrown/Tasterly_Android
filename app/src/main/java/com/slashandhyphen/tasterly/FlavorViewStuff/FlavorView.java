@@ -26,10 +26,11 @@ public class FlavorView extends RelativeLayout {
     protected TextView label;
     protected ImageView icon;
     private SeekBar mSeekBar;
+    private FlavorSeekBarListener mFlavorSeekBarListener;
+    private int flavorRating;
     private ImageView mExpandButton;
     private OmNomView parent;
     private float savedX, savedY;
-
     private ArrayList<FlavorView> children;
     private FlavorClickListener mClickListener;
     private Context context;
@@ -98,6 +99,8 @@ public class FlavorView extends RelativeLayout {
         mSeekBar.setLayoutParams(seekParams);
         mSeekBar.setId(View.generateViewId());
         mSeekBar.setVisibility(GONE);
+        mFlavorSeekBarListener = new FlavorSeekBarListener();
+        mSeekBar.setOnSeekBarChangeListener(mFlavorSeekBarListener);
         addView(mSeekBar);
 
         // Set expand button params based on new seekbar...
@@ -116,6 +119,27 @@ public class FlavorView extends RelativeLayout {
      */
     public void addChild(FlavorView view) {
         children.add(view);
+    }
+
+    /**
+     * Sets a temporary X and Y value that can be changed by the
+     * {@link com.slashandhyphen.tasterly.FlavorViewStuff.FlavorView#moveCoords(float, float)}
+     * function.
+     */
+    public void saveCoords() {
+        savedX = getX();
+        savedY = getY();
+    }
+
+    /**
+     * Moves this FlavorView by the amount supplied in the arguments.
+     *
+     * @param dX Delta X
+     * @param dY Delta Y
+     */
+    public void moveCoords(float dX, float dY) {
+        setX(savedX - dX);
+        setY(savedY - dY);
     }
 
     /**
@@ -149,29 +173,46 @@ public class FlavorView extends RelativeLayout {
             mExpandButton.setVisibility(VISIBLE);
             parent.setBackgroundColor(getResources().getColor(R.color.primary_2));
             getViewTreeObserver().addOnGlobalLayoutListener(parent.mLayoutListener);
-
         }
     }
 
     /**
-     * Sets a temporary X and Y value that can be changed by the
-     * {@link com.slashandhyphen.tasterly.FlavorViewStuff.FlavorView#moveCoords(float, float)}
-     * function.
+     * Responds to flavor seekbar events
      */
-    public void saveCoords() {
-        savedX = getX();
-        savedY = getY();
-    }
+    class FlavorSeekBarListener implements SeekBar.OnSeekBarChangeListener {
 
-    /**
-     * Moves this FlavorView by the amount supplied in the arguments.
-     *
-     * @param dX Delta X
-     * @param dY Delta Y
-     */
-    public void moveCoords(float dX, float dY) {
-        setX(savedX - dX);
-        setY(savedY - dY);
-    }
+        /**
+         * Stores the value entered by user for the flavor rating
+         *
+         * @param seekBar The seekbar being interacted with
+         */
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            flavorRating = seekBar.getProgress();
 
+
+            Toast.makeText(context, "Seek bar was moved and rating was " + flavorRating,
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        /**
+         * Not used
+         *
+         * @param seekBar The seekbar being  interacted with
+         */
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+        }
+
+        /**
+         * Not used
+         *
+         * @param seekBar The seekbar being  interacted with
+         */
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+    }
 }

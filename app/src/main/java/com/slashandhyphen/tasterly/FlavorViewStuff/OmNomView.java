@@ -132,7 +132,6 @@ public class OmNomView extends RelativeLayout {
      */
     class ControlButtonHandler implements  View.OnClickListener {
 
-
         /**
          * Responds to clicks on the control button.
          *

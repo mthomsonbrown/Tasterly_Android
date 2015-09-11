@@ -53,7 +53,6 @@ public class BeerView extends OmNomView {
         }
 
         addChildren(originView);
-
     }
 
 
@@ -67,5 +66,4 @@ public class BeerView extends OmNomView {
             addView(child);
         }
     }
-
 }

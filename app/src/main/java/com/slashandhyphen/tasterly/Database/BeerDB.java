@@ -109,9 +109,6 @@ public class BeerDB extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        // TODO figure out what this does
-        HashMap<String, Integer> flavors = mBeer.getFlavors();
-
         // This adds a new row to the beer table and assigns the name of the beer to it
         cv.put(BEER_NAME, mBeer.getName());
         db.insert(TABLE_BEER, null, cv);
@@ -123,7 +120,7 @@ public class BeerDB extends SQLiteOpenHelper {
          * This iterates over a map of flavors and inserts each flavor as a new entry to
          * the flavor table associated with a beer
          */
-        for(Map.Entry<String, Integer> flavor : flavors.entrySet()) {
+        for(Map.Entry<String, Integer> flavor : mBeer.getFlavors().entrySet()) {
             cv.put(BEER_NAME, mBeer.getName());
             cv.put(FLAVOR_NAME, flavor.getKey());
             cv.put(FLAVOR_VALUE, flavor.getValue());
