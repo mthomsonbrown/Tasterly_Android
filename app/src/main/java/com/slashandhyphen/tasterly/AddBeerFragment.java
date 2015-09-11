@@ -37,12 +37,8 @@ public class AddBeerFragment extends Fragment {
     Resources res;
 
     ButtonHandler mButtonHandler;
-    LayoutListener mLayoutListener;
     Beer mBeer;
     BeerDB beerDB;
-
-    float originX, originY;
-    int rlHeight, rlWidth;
 
     /**
      * Creates references to the different elements in the AddBeerFragment, then attaches a
@@ -60,7 +56,6 @@ public class AddBeerFragment extends Fragment {
         res = getResources();
         rl = (RelativeLayout) inflater.inflate(R.layout.fragment_add_beer, container, false);
         mButtonHandler = new ButtonHandler();
-        mLayoutListener = new LayoutListener();
         mBeer = new Beer();
 
         // Declare Database!
@@ -75,40 +70,21 @@ public class AddBeerFragment extends Fragment {
 
         // Declare Flavor Button Junk!
         mBeerView = (BeerView) rl.findViewById(R.id.beer_view);
-       // mBeerView.setOnTouchListener(mTouchListener);
-
-        rl.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
 
         // Return all the junk!
         return rl;
     }
 
-
     /**
-     * This is called when the layout dimensions are set, and is the first opportunity to set and
-     * get dimension information from views that were not defined previously i.e. in XML
+     * Handles click events of buttons controlled directly by the fragment
      */
-    class LayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
+    class ButtonHandler implements  View.OnClickListener {
 
         /**
-         * This is the main function of interest to set and get dimensions of views created outside
-         * of XML when they are available, as well as the dimensions of the fragment, as that is
-         * inflated at runtime.
+         * Determines what button was clicked and responds appropriately
+         *
+         * @param mButton A reference to the view that was clicked
          */
-        @Override
-        public void onGlobalLayout() {
-            rl.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-            // Getting view measurements (for objects that are not "flavors")
-            rlHeight = rl.getHeight();
-            rlWidth = rl.getWidth();
-            originX = rlWidth / 2;
-            originY = rlHeight / 2;
-
-        }
-    }
-
-    class ButtonHandler implements  View.OnClickListener {
         @Override
         public void onClick(View mButton) {
             if(mButton.getId() == addBeerButton.getId()) {
@@ -118,7 +94,6 @@ public class AddBeerFragment extends Fragment {
                 }
                 else {
                     mBeer.setName(beerNameText.getText().toString());
-
                     beerDB.add(mBeer);
                 }
             }

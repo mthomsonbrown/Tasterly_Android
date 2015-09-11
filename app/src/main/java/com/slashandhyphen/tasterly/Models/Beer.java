@@ -1,13 +1,11 @@
 package com.slashandhyphen.tasterly.Models;
 
-import com.orm.SugarRecord;
-
 import java.util.HashMap;
 
 /**
  * Created by ookamijin on 3/6/2015.
  */
-public class Beer  extends SugarRecord<Beer> {
+public class Beer {
     private String name;
     private HashMap<String, Integer> flavors;
 

@@ -100,10 +100,7 @@ public class BeerDB extends SQLiteOpenHelper {
      * with that beer in the flavor table.  It looks like a massive source of bugs, and should
      * probably contain a lot of exception handling.
      *
-     * @param mBeer This is a SugarRecord object, and definitely needs to be refactored.
-     *              SugarRecord needs to be removed from this project, but this method doesn't
-     *              use its functionality.  Its merely obtaining data members from the mBeer object
-     *              and assigning them to the database.
+     * @param mBeer A storage class for aspects of the beer to be pushed to the database
      */
     public void add(Beer mBeer) {
         Log.d(TAG, "++ADD BEER++");
