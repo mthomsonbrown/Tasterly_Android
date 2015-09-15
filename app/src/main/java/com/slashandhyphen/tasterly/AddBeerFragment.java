@@ -100,7 +100,7 @@ public class AddBeerFragment extends Fragment {
                 }
 
                 // Add flavor data to the beer object
-                // TODO Add flavor data to the beer object
+                mBeer.addFlavors(mBeerView.getFlavorHash());
 
                 // Add beer to the DB
                 beerDB.add(mBeer);

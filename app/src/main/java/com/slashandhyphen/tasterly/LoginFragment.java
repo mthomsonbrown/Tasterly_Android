@@ -89,7 +89,7 @@ public class LoginFragment extends Fragment {
                     Toast.LENGTH_LONG);
             toast.show();
         } else {
-            mUser.setmData(mData);
+            mUser.setData(mData);
 
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint("http://192.168.1.100:3000")

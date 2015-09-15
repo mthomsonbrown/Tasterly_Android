@@ -174,8 +174,9 @@ public class BeerDB extends SQLiteOpenHelper {
             while(bCur.moveToNext()) {
                 data += (bCur.getString(bCur.getColumnIndex(BEER_NAME))) + "\n";
 
-                fCur = db.rawQuery("select * from " + TABLE_FLAVOR
-                        + " where " + BEER_NAME + "=\'" + data + "\';", null);
+                fCur = db.rawQuery("select * from " + TABLE_FLAVOR +
+                        " where " + BEER_NAME + "=\'" +
+                        bCur.getString(bCur.getColumnIndex(BEER_NAME)) + "\';", null);
 
                 while (fCur.moveToNext()) {
                     data += (fCur.getString((fCur.getColumnIndex(FLAVOR_NAME)))

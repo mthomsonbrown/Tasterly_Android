@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.slashandhyphen.tasterly.R;
 
+import java.util.HashMap;
+
 
 /**
  * Created by ookamijin on 6/26/2015.
@@ -70,27 +72,6 @@ public class OmNomView extends RelativeLayout {
     }
 
     /**
-     * When the layout is constructed, this class sets the coordinates of the views it controls
-     */
-    class LayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
-
-        /**
-         * This is the only method of the LayoutListener class, and sets the coordinates
-         * for the control button.  It also calls Geomancy to set other things using
-         * {@link com.slashandhyphen.tasterly.FlavorViewStuff.OneRingGeomancy}...
-         */
-        @Override
-        public void onGlobalLayout() {
-            getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            Log.d(TAG, "In global layout listener");
-            buildFlavorTree();
-
-            controlButton.setX(originView.getX() - controlButton.getWidth() / 2);
-            controlButton.setY(originView.getY() - controlButton.getHeight() / 2);
-        }
-    }
-
-    /**
      * Sets a central coordinate for the originView so that other views can reference the origin
      * as an independent point rather than the corner of an expanded view.  It then creates a
      * Geomancy object and the setDimensions function of that object:
@@ -123,6 +104,43 @@ public class OmNomView extends RelativeLayout {
     public void moveCoords(float dX, float dY) {
         for(FlavorView child : originView.getChildren()) {
             child.moveCoords(dX, dY);
+        }
+    }
+
+    /**
+     * Creates a HashMap of flavor names and ratings to pass to the calling application.
+     *
+     * @return HashMap<String, Integer> A HashMap whose key is flavor names and value is flavor ratings
+     */
+    public HashMap<String, Integer> getFlavorHash() {
+        HashMap<String, Integer> mHash = new HashMap<>();
+
+        for(FlavorView flav : originView.getChildren()) {
+            mHash.put(flav.getName(), flav.getRating());
+        }
+
+        return mHash;
+
+    }
+
+    /**
+     * When the layout is constructed, this class sets the coordinates of the views it controls
+     */
+    class LayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
+
+        /**
+         * This is the only method of the LayoutListener class, and sets the coordinates
+         * for the control button.  It also calls Geomancy to set other things using
+         * {@link com.slashandhyphen.tasterly.FlavorViewStuff.OneRingGeomancy}...
+         */
+        @Override
+        public void onGlobalLayout() {
+            getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            Log.d(TAG, "In global layout listener");
+            buildFlavorTree();
+
+            controlButton.setX(originView.getX() - controlButton.getWidth() / 2);
+            controlButton.setY(originView.getY() - controlButton.getHeight() / 2);
         }
     }
 
@@ -197,3 +215,4 @@ public class OmNomView extends RelativeLayout {
         }
     }
 }
+

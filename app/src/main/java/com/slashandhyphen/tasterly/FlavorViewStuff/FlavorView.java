@@ -151,6 +151,14 @@ public class FlavorView extends RelativeLayout {
         return children;
     }
 
+    public String getName() {
+        return label.getText().toString();
+    }
+
+    public Integer getRating() {
+        return mSeekBar.getProgress();
+    }
+
     /**
      * Handles click events on FlavorView objects.
      */

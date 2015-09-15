@@ -66,8 +66,8 @@ public class HomeActivity extends ActionBarActivity implements View.OnClickListe
 
         } else {
 
-           // Intent intent = new Intent(HomeActivity.this, AuthenticationActivity.class);
-          //  startActivityForResult(intent, 0);
+            Intent intent = new Intent(HomeActivity.this, AuthenticationActivity.class);
+            startActivityForResult(intent, 0);
         }
     }
 

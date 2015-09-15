@@ -5,11 +5,11 @@ public class User
 
     private UserData user;
 
-    public UserData getmData() {
+    public UserData getData() {
         return user;
     }
 
-    public void setmData(UserData mData) {
+    public void setData(UserData mData) {
         this.user = mData;
     }
 }

@@ -47,17 +47,12 @@ public class BeerView extends OmNomView {
         originView.addChild(new SourFlavorView(context));
         originView.addChild(new FruityFlavorView(context));
 
-        for(FlavorView child : originView.getChildren()) {
-            child.label.setText(child.label.getText().toString() +
-                    originView.getChildren().indexOf(child));
-        }
-
         addChildren(originView);
     }
 
 
     /**
-     * Add Children adds all declared FlavorViews to the base OmNomView RelativeLayout
+     * Adds all declared FlavorViews to the base OmNomView RelativeLayout
      *
      * @param originView The origin FlavorView containing a reference to all child views
      */

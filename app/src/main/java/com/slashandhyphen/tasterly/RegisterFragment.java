@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +26,7 @@ import retrofit.client.Response;
 
 
 public class RegisterFragment extends Fragment {
-
+    protected String TAG = "RegisterFragment Log";
     private SharedPreferences mPreferences;
     Button mRegisterButton;
 
@@ -128,10 +129,10 @@ public class RegisterFragment extends Fragment {
         }
         else {
             // everything is ok!
-            mUser.setmData(mData);
+            mUser.setData(mData);
 
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint("http://192.168.1.100:3000")
+                    .setEndpoint("http://www.slashandhyphen.com")
                     .build();
             AuthenticationService service =
                     restAdapter.create(AuthenticationService.class);
@@ -152,6 +153,8 @@ public class RegisterFragment extends Fragment {
                 @Override
                 public void failure(RetrofitError retrofitError) {
                     Toast.makeText(getActivity(), "Probably a 401...", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Retrofit threw error: " + retrofitError.getMessage());
+                    Log.d(TAG, "Just printed the error");
                 }
             });
         }

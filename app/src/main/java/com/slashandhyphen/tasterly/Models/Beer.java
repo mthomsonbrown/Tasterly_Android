@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 /**
  * Created by ookamijin on 3/6/2015.
+ *
+ * Container for data relating to one beer entry by one user.
  */
 public class Beer {
     private String name;
@@ -21,17 +23,11 @@ public class Beer {
         this.name = name;
     }
 
-    public String listFlavors() {
-
-        return flavors.toString();
-    }
-
     public HashMap<String, Integer> getFlavors() {
         return flavors;
     }
 
-    public void addFlavor(String flavorName, int flavorRating) {
-
-        flavors.put(flavorName, flavorRating);
+    public void addFlavors(HashMap<String, Integer> flavorHash) {
+        flavors = flavorHash;
     }
 }
