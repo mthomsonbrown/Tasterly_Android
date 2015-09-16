@@ -1,5 +1,6 @@
 package com.slashandhyphen.tasterly;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 
 import com.slashandhyphen.tasterly.Database.BeerDB;
 
-public class HomeActivity extends ActionBarActivity implements View.OnClickListener {
+public class HomeActivity extends Activity implements View.OnClickListener {
 
     private SharedPreferences mPreferences;
     Button mAddBeerButton;

@@ -1,5 +1,6 @@
 package com.slashandhyphen.tasterly;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -13,7 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 
-public class AddBeerActivity extends ActionBarActivity {
+public class AddBeerActivity extends Activity {
 
     FragmentManager fm = getFragmentManager();
     Fragment fragment1 = fm.findFragmentById(R.id.fragment_content_1);
