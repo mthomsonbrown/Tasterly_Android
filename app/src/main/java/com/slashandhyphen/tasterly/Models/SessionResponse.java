@@ -5,10 +5,9 @@ package com.slashandhyphen.tasterly.Models;
  */
 public class SessionResponse {
     private Data data;
-
     private String success;
-
     private String info;
+    private String auth_token;
 
     public Data getData ()
     {
@@ -38,5 +37,9 @@ public class SessionResponse {
     public void setInfo (String info)
     {
         this.info = info;
+    }
+
+    public String getAuth_token() {
+        return auth_token;
     }
 }

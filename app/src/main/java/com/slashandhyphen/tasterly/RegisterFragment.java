@@ -3,8 +3,8 @@ package com.slashandhyphen.tasterly;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -78,7 +78,7 @@ public class RegisterFragment extends Fragment {
         EditText userEmailField = (EditText) ll.findViewById(R.id.userEmail);
         mData.setEmail(userEmailField.getText().toString());
         EditText userNameField = (EditText) ll.findViewById(R.id.userName);
-        mData.setName(userNameField.getText().toString());
+        mData.setUsername(userNameField.getText().toString());
         EditText userPasswordField = (EditText) ll.findViewById(R.id.userPassword);
         mData.setPassword(userPasswordField.getText().toString());
         EditText userPasswordConfirmationField = (EditText) ll.findViewById(R.id.userPasswordConfirmation);
@@ -92,8 +92,8 @@ public class RegisterFragment extends Fragment {
             }
         }
 
-        for (int i = 0; i < mData.getName().length(); ++i) {
-            if((int) mData.getName().charAt(i) > 0x7E) {
+        for (int i = 0; i < mData.getUsername().length(); ++i) {
+            if((int) mData.getUsername().charAt(i) > 0x7E) {
                 freaky = true;
             }
         }
@@ -105,13 +105,13 @@ public class RegisterFragment extends Fragment {
         }
 
         //remove Test Params
-        mData.setName("Mike");
+        mData.setUsername("Mike");
         mData.setEmail("mikeTest@brown.com");
         mData.setPassword("qwertyui");
         mData.setPasswordConfirmation("qwertyui");
 
         // User input error checking junk
-        if (mData.getEmail().length() == 0 || mData.getName().length() == 0 ||
+        if (mData.getEmail().length() == 0 || mData.getUsername().length() == 0 ||
                 mData.getPassword().length() == 0 || mData.getPasswordConfirmation().length() == 0) {
             // input fields are empty
             Toast.makeText(getActivity().getApplicationContext(),
@@ -132,7 +132,7 @@ public class RegisterFragment extends Fragment {
             mUser.setData(mData);
 
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint("http://www.slashandhyphen.com")
+                    .setEndpoint(getString(R.string.railsEndpoint))
                     .build();
             AuthenticationService service =
                     restAdapter.create(AuthenticationService.class);

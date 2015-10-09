@@ -8,7 +8,7 @@ public class UserData {
 
     private String password_confirmation;
 
-    private String name;
+    private String username;
 
     public UserData() {}
 
@@ -42,13 +42,13 @@ public class UserData {
         this.password_confirmation = password_confirmation;
     }
 
-    public String getName ()
+    public String getUsername()
     {
-        return name;
+        return username;
     }
 
-    public void setName (String name)
+    public void setUsername(String username)
     {
-        this.name = name;
+        this.username = username;
     }
 }

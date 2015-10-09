@@ -5,13 +5,15 @@ import com.slashandhyphen.tasterly.Models.User;
 
 import retrofit.Callback;
 import retrofit.http.Body;
+import retrofit.http.GET;
 import retrofit.http.POST;
 
 
 public interface AuthenticationService {
-    @POST("/api/v1/sessions.json")
+
+    @POST("/sign_in")
     void loginUser(@Body User user, Callback<SessionResponse> result);
 
-    @POST("/api/v1/registrations")
+    @POST("/users")
     void registerUser(@Body User user, Callback<SessionResponse> result);
 }

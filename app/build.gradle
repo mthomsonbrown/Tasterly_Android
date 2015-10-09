@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 repositories {
-   // mavenCentral()
+    // mavenCentral()
     //maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 

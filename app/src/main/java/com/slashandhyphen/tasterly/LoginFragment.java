@@ -92,7 +92,7 @@ public class LoginFragment extends Fragment {
             mUser.setData(mData);
 
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint("http://192.168.1.100:3000")
+                    .setEndpoint(getString(R.string.railsEndpoint))
                     .build();
             AuthenticationService service =
                     restAdapter.create(AuthenticationService.class);
