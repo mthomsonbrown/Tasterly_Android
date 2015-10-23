@@ -3,6 +3,7 @@ package com.slashandhyphen.tasterly;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -13,7 +14,7 @@ import com.slashandhyphen.tasterly.Models.Beer;
 
 
 public class ViewBeersActivity extends ActionBarActivity {
-
+    String TAG = "ViewBeersActivity";
     BeerDB beerDB;
     SimpleCursorAdapter curseAdapter;
 
@@ -23,6 +24,7 @@ public class ViewBeersActivity extends ActionBarActivity {
         setContentView(R.layout.activity_view_beers);
 
         beerDB = new BeerDB(this);
+        Log.d(TAG, "Did it fuck up there?");
         displayListView();
     }
 
@@ -34,7 +36,7 @@ public class ViewBeersActivity extends ActionBarActivity {
     private void displayListView() {
         String[] columns = new String[] {
                 // TODO this is bad
-                // BeerDB.BEER_NAME
+                BeerDB.getBeerName()
         };
 
         int[] views = new int[] {
@@ -42,6 +44,7 @@ public class ViewBeersActivity extends ActionBarActivity {
         };
 
         Cursor curse = beerDB.getAllBeers();
+
         curseAdapter = new SimpleCursorAdapter(
                 this, R.layout.list_item_beer,
                 curse,
@@ -51,6 +54,7 @@ public class ViewBeersActivity extends ActionBarActivity {
         );
 
         ListView listView = (ListView) findViewById(R.id.beer_list);
+
         listView.setAdapter(curseAdapter);
 
     }

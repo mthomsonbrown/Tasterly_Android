@@ -66,6 +66,14 @@ public class BeerDB extends SQLiteOpenHelper {
         Log.d(TAG, "++BEER CONSTRUCTOR++");
     }
 
+    public static String getBeerName() {
+        return BEER_NAME;
+    }
+
+    public static String getFlavorName() {
+        return FLAVOR_NAME;
+    }
+
     /**
      * This creates a new database and the tables described in this class' TABLE strings
      *
@@ -172,6 +180,7 @@ public class BeerDB extends SQLiteOpenHelper {
 
 
             while(bCur.moveToNext()) {
+                Log.d(TAG, "In while loop");
                 data += (bCur.getString(bCur.getColumnIndex(BEER_NAME))) + "\n";
 
                 fCur = db.rawQuery("select * from " + TABLE_FLAVOR +
@@ -185,6 +194,7 @@ public class BeerDB extends SQLiteOpenHelper {
                 fCur.close();
             }
         bCur.close();
+        Log.d(TAG, "About to return from exposing myself");
         return data;
     }
 }
