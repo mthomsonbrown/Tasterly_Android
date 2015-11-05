@@ -56,6 +56,7 @@ public class BeerDB extends SQLiteOpenHelper {
             + FLAVOR_NAME + " text not null, "
             + FLAVOR_VALUE + " int);";
 
+
     /**
      * Constructor for the BeerDB
      *
@@ -140,23 +141,39 @@ public class BeerDB extends SQLiteOpenHelper {
 
     /**
      * Returns a cursor to a list of all beer ids and names in the database.
-     * TODO rename or add all available fields to the returned cursor
      *
      * @return Cursor A list of all beer names and ids in the DB
      */
     public Cursor getAllBeers() {
-        Cursor curse;
         SQLiteDatabase db = getReadableDatabase();
 
         // Build a cursor containing a list of all beer names and beer ids in the beer table
-        curse = db.query(TABLE_BEER, new String[] {BEER_ID, BEER_NAME},
+        Cursor beerCurse = db.query(TABLE_BEER, new String[] {BEER_ID, BEER_NAME},
                 null, null, null, null, null);
-        if(curse != null) {
-            curse.moveToFirst();
+        if(beerCurse != null) {
+            beerCurse.moveToFirst();
         }
-        return curse;
+
+        return beerCurse;
     }
 
+    /**
+     * Returns a cursor containing all flavor names and values associated with a beer
+     *
+     * @param beerName string for the beer name in the BEER_NAME column
+     * @return a cursor containing all flavor names and values associated with the beer
+     */
+    public Cursor getAllFlavors(String beerName) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor flavorCurse = db.rawQuery("select * from " + TABLE_FLAVOR +
+                " where " + BEER_NAME + "=\'" + beerName + "\';", null);
+        if(flavorCurse != null) {
+            flavorCurse.moveToFirst();
+        }
+
+        return flavorCurse;
+    }
 
     /**
      * Returns some garbled string of beer names and flavors in the form of a string.
@@ -178,7 +195,7 @@ public class BeerDB extends SQLiteOpenHelper {
 
         Log.d(TAG, "Beer cursor has this many entries: " + bCur.getCount());
 
-
+            // Cursors initialize at -1 index, so the first call to moveToNext will put us at zero
             while(bCur.moveToNext()) {
                 Log.d(TAG, "In while loop");
                 data += (bCur.getString(bCur.getColumnIndex(BEER_NAME))) + "\n";
@@ -196,6 +213,27 @@ public class BeerDB extends SQLiteOpenHelper {
         bCur.close();
         Log.d(TAG, "About to return from exposing myself");
         return data;
+    }
+
+    /**
+     * adds a specific beer entry's data in the database to a beer object
+     * @param index the beer to add to the beer object
+     * @return a beer object
+     */
+    public Beer getBeer(int index) {
+        Beer beer = new Beer();
+
+        /**
+         * TODO
+         * get a cursor to the beer table
+         * Put beer name at index into the beer object
+         * get a cursor to the flavor table associated with that beer
+         * put the flavor names and ratings into a hashmap
+         * add the hashmap to the beer object
+         * return the beer object
+         */
+
+        return beer;
     }
 }
 

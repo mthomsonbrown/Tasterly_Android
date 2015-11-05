@@ -1,22 +1,33 @@
 package com.slashandhyphen.tasterly;
 
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import com.slashandhyphen.tasterly.Database.BeerDB;
 import com.slashandhyphen.tasterly.Models.Beer;
+import com.slashandhyphen.tasterly.Models.SessionResponse;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
-public class ViewBeersActivity extends ActionBarActivity {
+public class ViewBeersActivity extends ActionBarActivity implements View.OnClickListener {
     String TAG = "ViewBeersActivity";
     BeerDB beerDB;
     SimpleCursorAdapter curseAdapter;
+    Button uploadButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +35,10 @@ public class ViewBeersActivity extends ActionBarActivity {
         setContentView(R.layout.activity_view_beers);
 
         beerDB = new BeerDB(this);
-        Log.d(TAG, "Did it fuck up there?");
         displayListView();
+
+        uploadButton = (Button) findViewById(R.id.upload);
+        uploadButton.setOnClickListener(this);
     }
 
     /**
@@ -80,5 +93,39 @@ public class ViewBeersActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Right now, this is just uploading the first beer in the database.
+     * @param v The button I clicked
+     */
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(this, "Hit the button", Toast.LENGTH_SHORT).show();
+
+        // Hardcoded sanity check
+        Beer mBeer = beerDB.getBeer(0);
+
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(getString(R.string.railsEndpoint))
+                .build();
+        AuthenticationService service =
+                restAdapter.create(AuthenticationService.class);
+
+        service.addBeer(mBeer, new Callback<SessionResponse>() {
+            @Override
+            public void success(SessionResponse result, Response response){
+
+                Toast.makeText(getApplicationContext(),
+                        "Looks like you did it, buddy!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Toast.makeText(getApplicationContext(),
+                        "Probably a 401...", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
