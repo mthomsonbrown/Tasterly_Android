@@ -1,12 +1,17 @@
 package com.slashandhyphen.tasterly;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.slashandhyphen.tasterly.Models.Beer;
+import com.slashandhyphen.tasterly.Models.BeerTest;
 import com.slashandhyphen.tasterly.Models.SessionResponse;
 import com.slashandhyphen.tasterly.Models.User;
 
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.POST;
 
 
@@ -19,5 +24,5 @@ public interface AuthenticationService {
     void registerUser(@Body User user, Callback<SessionResponse> result);
 
     @POST("/beers")
-    void addBeer(@Body Beer beer, Callback<SessionResponse> result);
+    void addBeer(@Body BeerTest beer, Callback<SessionResponse> result);
 }

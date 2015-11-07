@@ -9,7 +9,6 @@ import android.util.Log;
 
 import com.slashandhyphen.tasterly.Models.Beer;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -232,7 +231,7 @@ public class BeerDB extends SQLiteOpenHelper {
          * add the hashmap to the beer object
          * return the beer object
          */
-
+        beer.setName("A New Beer Entry");
         return beer;
     }
 }

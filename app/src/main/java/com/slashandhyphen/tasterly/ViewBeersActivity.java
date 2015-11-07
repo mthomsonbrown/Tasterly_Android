@@ -2,9 +2,9 @@ package com.slashandhyphen.tasterly;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,9 +15,11 @@ import android.widget.Toast;
 
 import com.slashandhyphen.tasterly.Database.BeerDB;
 import com.slashandhyphen.tasterly.Models.Beer;
+import com.slashandhyphen.tasterly.Models.BeerTest;
 import com.slashandhyphen.tasterly.Models.SessionResponse;
 
 import retrofit.Callback;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -96,27 +98,37 @@ public class ViewBeersActivity extends ActionBarActivity implements View.OnClick
     }
 
     /**
-     * Right now, this is just uploading the first beer in the database.
+     * Right now, this is just uploading a test beer object.
      * @param v The button I clicked
      */
     @Override
     public void onClick(View v) {
         Toast.makeText(this, "Hit the button", Toast.LENGTH_SHORT).show();
 
-        // Hardcoded sanity check
-        Beer mBeer = beerDB.getBeer(0);
+        Beer beer = beerDB.getBeer(0);         // Hardcoded sanity check
+        BeerTest beerTest = new BeerTest();    // Hardercoded sanity check
 
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
+        RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(getString(R.string.railsEndpoint))
-                .build();
+                .setRequestInterceptor(new RequestInterceptor() {
+                    @Override
+                    public void intercept(RequestInterceptor.RequestFacade request) {
+                        String token = getSharedPreferences("CurrentUser", MODE_PRIVATE)
+                                .getString("AuthToken", null);
+
+                        request.addHeader("Authorization", "Token token=" + token);
+                    }
+                });
+
+        RestAdapter restAdapter = builder.build();
+
         AuthenticationService service =
                 restAdapter.create(AuthenticationService.class);
 
-        service.addBeer(mBeer, new Callback<SessionResponse>() {
+        service.addBeer(beerTest, new Callback<SessionResponse>() {
             @Override
             public void success(SessionResponse result, Response response){
-
                 Toast.makeText(getApplicationContext(),
                         "Looks like you did it, buddy!", Toast.LENGTH_SHORT).show();
             }

@@ -1,7 +1,6 @@
 package com.slashandhyphen.tasterly.Models;
 
-public class User
-{
+public class User {
 
     private UserData user;
 

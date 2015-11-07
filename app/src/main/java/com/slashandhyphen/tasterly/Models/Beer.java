@@ -8,7 +8,9 @@ import java.util.HashMap;
  * Container for data relating to one beer entry by one user.
  */
 public class Beer {
+
     private String name;
+    private String beer = "What the hell";
     private HashMap<String, Integer> flavors;
 
     public Beer() {
@@ -30,4 +32,5 @@ public class Beer {
     public void addFlavors(HashMap<String, Integer> flavorHash) {
         flavors = flavorHash;
     }
+
 }
