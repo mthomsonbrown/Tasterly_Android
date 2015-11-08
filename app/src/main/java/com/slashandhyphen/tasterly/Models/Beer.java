@@ -1,6 +1,8 @@
 package com.slashandhyphen.tasterly.Models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ookamijin on 3/6/2015.
@@ -8,13 +10,12 @@ import java.util.HashMap;
  * Container for data relating to one beer entry by one user.
  */
 public class Beer {
-
     private String name;
-    private String beer = "What the hell";
-    private HashMap<String, Integer> flavors;
+    private float abv;
+    ArrayList<Flavor> flavors;
 
     public Beer() {
-        flavors = new HashMap<>();
+        flavors = new ArrayList<>();
     }
 
     public String getName() {
@@ -25,12 +26,26 @@ public class Beer {
         this.name = name;
     }
 
-    public HashMap<String, Integer> getFlavors() {
+    public float getAbv() {
+        return abv;
+    }
+
+    public void setAbv(float abv) {
+        this.abv = abv;
+    }
+
+    public ArrayList<Flavor> getFlavors() {
         return flavors;
     }
 
     public void addFlavors(HashMap<String, Integer> flavorHash) {
-        flavors = flavorHash;
+        for(Map.Entry<String, Integer> flavor : flavorHash.entrySet()) {
+            this.flavors.add(new Flavor(flavor.getKey(), flavor.getValue()));
+        }
+    }
+
+    public void addFlavor(Flavor flav) {
+        flavors.add(flav);
     }
 
 }

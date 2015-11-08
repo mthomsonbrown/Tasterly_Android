@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by ookamijin on 6/26/2015.
  *
  * <P>
- *      This is the base class for flavor objects.  It contains many different view objects such as
+ *      This is the base class for flavor view objects.  It contains many different view objects such as
  *      icon and seek bar, that can be displayed or hidden in different circumstances.  This
  *      causes the FlavorView to expand and contract its dimensions, requiring geometry to be
  *      redrawn.

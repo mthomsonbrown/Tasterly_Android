@@ -1,10 +1,9 @@
 package com.slashandhyphen.tasterly;
 
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import com.slashandhyphen.tasterly.Database.BeerDB;
 import com.slashandhyphen.tasterly.Models.Beer;
-import com.slashandhyphen.tasterly.Models.BeerTest;
 import com.slashandhyphen.tasterly.Models.SessionResponse;
 
 import retrofit.Callback;
@@ -98,16 +96,14 @@ public class ViewBeersActivity extends ActionBarActivity implements View.OnClick
     }
 
     /**
-     * Right now, this is just uploading a test beer object.
+     * Right now, this is just uploading beer 1 in the database
      * @param v The button I clicked
      */
     @Override
     public void onClick(View v) {
         Toast.makeText(this, "Hit the button", Toast.LENGTH_SHORT).show();
 
-        Beer beer = beerDB.getBeer(0);         // Hardcoded sanity check
-        BeerTest beerTest = new BeerTest();    // Hardercoded sanity check
-
+        Beer beer = beerDB.getBeer(1);         // Hardcoded sanity check
 
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(getString(R.string.railsEndpoint))
@@ -126,9 +122,11 @@ public class ViewBeersActivity extends ActionBarActivity implements View.OnClick
         AuthenticationService service =
                 restAdapter.create(AuthenticationService.class);
 
-        service.addBeer(beerTest, new Callback<SessionResponse>() {
+        Log.d(TAG, "Flavor array is this big: " + beer.getFlavors().size());
+        service.addBeer(beer, new Callback<SessionResponse>() {
             @Override
             public void success(SessionResponse result, Response response){
+                Log.d(TAG, result.getSuccess());
                 Toast.makeText(getApplicationContext(),
                         "Looks like you did it, buddy!", Toast.LENGTH_SHORT).show();
             }

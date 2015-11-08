@@ -1,18 +1,16 @@
 package com.slashandhyphen.tasterly.Models;
 
 /**
- * Created by ookamijin on 11/6/2015.
+ * Created by ookamijin on 11/7/2015.
  */
-public class FlavorTest {
+public class Flavor {
+    private String name;
+    private Integer rating;
 
-    String name;
-    int rating;
-
-    FlavorTest(String name, int rating) {
+    public Flavor(String name, Integer rating) {
         this.name = name;
         this.rating = rating;
     }
-
 
     public String getName() {
         return name;
@@ -22,12 +20,11 @@ public class FlavorTest {
         this.name = name;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
-
 }

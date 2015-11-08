@@ -8,8 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.slashandhyphen.tasterly.Models.Beer;
-
-import java.util.Map;
+import com.slashandhyphen.tasterly.Models.Flavor;
 
 /**
  * Created by ookamijin on 4/6/2015.
@@ -32,6 +31,7 @@ public class BeerDB extends SQLiteOpenHelper {
     private static final String TABLE_BEER = "Beers";
     private static final String BEER_ID = "_id";
     private static final String BEER_NAME = "beer_name";
+    private static final String BEER_ABV = "beer_abv";
 
     // Flavor Data Table
     private static final String TABLE_FLAVOR = "Flavors";
@@ -43,10 +43,12 @@ public class BeerDB extends SQLiteOpenHelper {
      * These are setting up relationships between the different tables, as well as describing the
      * contents of each table.
      */
+    // TODO add abv column (don't know if i can say "float" or "REAL"  have to play around
     private static final String CREATE_BEER_TABLE = "create table "
             + TABLE_BEER + "("
             + BEER_ID + " integer primary key autoincrement, "
-            + BEER_NAME + " text not null);";
+            + BEER_NAME + " text not null, "
+            + BEER_ABV + " real);";
 
     private static final String CREATE_FLAVOR_TABLE = "create table "
             + TABLE_FLAVOR + "("
@@ -108,30 +110,30 @@ public class BeerDB extends SQLiteOpenHelper {
      * with that beer in the flavor table.  It looks like a massive source of bugs, and should
      * probably contain a lot of exception handling.
      *
-     * @param mBeer A storage class for aspects of the beer to be pushed to the database
+     * @param beer A storage class for aspects of the beer to be pushed to the database
      */
-    public void add(Beer mBeer) {
+    public void add(Beer beer) {
         Log.d(TAG, "++ADD BEER++");
-        Log.d(TAG, "What you're trying to add is " + mBeer.getName());
+        Log.d(TAG, "What you're trying to add is " + beer.getName());
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         // This adds a new row to the beer table and assigns the name of the beer to it
-        cv.put(BEER_NAME, mBeer.getName());
+        cv.put(BEER_NAME, beer.getName());
+        cv.put(BEER_ABV, beer.getAbv());
         db.insert(TABLE_BEER, null, cv);
 
         // Clear CV in order to reuse for flavor table entry
         cv.clear();
 
-        /*
-         * This iterates over a map of flavors and inserts each flavor as a new entry to
-         * the flavor table associated with a beer
-         */
-        for(Map.Entry<String, Integer> flavor : mBeer.getFlavors().entrySet()) {
-            cv.put(BEER_NAME, mBeer.getName());
-            cv.put(FLAVOR_NAME, flavor.getKey());
-            cv.put(FLAVOR_VALUE, flavor.getValue());
+
+        // This iterates over a list of flavors and inserts each flavor as a new entry to
+        // the flavor table associated with a beer
+        for(Flavor flav : beer.getFlavors()) {
+            cv.put(BEER_NAME, beer.getName());
+            cv.put(FLAVOR_NAME, flav.getName());
+            cv.put(FLAVOR_VALUE, flav.getRating());
             db.insert(TABLE_FLAVOR, null, cv);
 
             cv.clear();
@@ -210,28 +212,51 @@ public class BeerDB extends SQLiteOpenHelper {
                 fCur.close();
             }
         bCur.close();
-        Log.d(TAG, "About to return from exposing myself");
         return data;
     }
 
     /**
-     * adds a specific beer entry's data in the database to a beer object
+     * Adds a specific beer entry's data in the database to a beer object
      * @param index the beer to add to the beer object
      * @return a beer object
      */
     public Beer getBeer(int index) {
         Beer beer = new Beer();
+        Cursor curse;
+        SQLiteDatabase db = getReadableDatabase();
 
-        /**
-         * TODO
-         * get a cursor to the beer table
-         * Put beer name at index into the beer object
-         * get a cursor to the flavor table associated with that beer
-         * put the flavor names and ratings into a hashmap
-         * add the hashmap to the beer object
-         * return the beer object
-         */
-        beer.setName("A New Beer Entry");
+        // Database is not zero based
+        if(index < 1) {
+            Log.d(TAG, "Database ID is not base 0");
+            beer.setName("Database ID is not base 0");
+            return beer;
+        }
+
+        curse = db.query(
+                TABLE_BEER,
+                new String[]{BEER_NAME, BEER_ABV},
+                BEER_ID + "=\'" + index + "\';",
+                null, null, null, null, null
+        );
+
+        curse.moveToFirst();
+        beer.setName(curse.getString(curse.getColumnIndex(BEER_NAME)));
+        beer.setAbv(curse.getFloat(curse.getColumnIndex(BEER_ABV)));
+
+        curse = db.query(
+                TABLE_FLAVOR,
+                new String[]{FLAVOR_NAME, FLAVOR_VALUE},
+                BEER_NAME + "=\'" + curse.getString(curse.getColumnIndex(BEER_NAME)) + "\';",
+                null, null, null, null, null
+        );
+
+        while (curse.moveToNext()) {
+            beer.addFlavor(new Flavor(
+                    curse.getString(curse.getColumnIndex(FLAVOR_NAME)),
+                    curse.getInt(curse.getColumnIndex(FLAVOR_VALUE))));
+        }
+
+        curse.close();
         return beer;
     }
 }

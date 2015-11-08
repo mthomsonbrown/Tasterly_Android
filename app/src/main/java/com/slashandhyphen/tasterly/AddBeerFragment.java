@@ -3,11 +3,9 @@ package com.slashandhyphen.tasterly;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -31,13 +29,13 @@ public class AddBeerFragment extends Fragment {
     Button addBeerButton;
     Button seeBeerButton;
     EditText beerNameText;
-    BeerView mBeerView;
+    BeerView beerView;
 
     RelativeLayout rl;
     Resources res;
 
-    ButtonHandler mButtonHandler;
-    Beer mBeer;
+    ButtonHandler buttonHandler;
+    Beer beer;
     BeerDB beerDB;
 
     /**
@@ -55,21 +53,21 @@ public class AddBeerFragment extends Fragment {
         // Declare Variables!
         res = getResources();
         rl = (RelativeLayout) inflater.inflate(R.layout.fragment_add_beer, container, false);
-        mButtonHandler = new ButtonHandler();
-        mBeer = new Beer();
+        buttonHandler = new ButtonHandler();
+        beer = new Beer();
 
         // Declare Database!
         beerDB = new BeerDB(getActivity());
 
         // Declare Non-Flavor Button Junk!
         addBeerButton = (Button) rl.findViewById(R.id.add_beer_test);
-        addBeerButton.setOnClickListener(mButtonHandler);
+        addBeerButton.setOnClickListener(buttonHandler);
         seeBeerButton = (Button) rl.findViewById(R.id.see_beer_test);
-        seeBeerButton.setOnClickListener((mButtonHandler));
+        seeBeerButton.setOnClickListener((buttonHandler));
         beerNameText = (EditText) rl.findViewById(R.id.edit_text_test);
 
         // Declare Flavor Button Junk!
-        mBeerView = (BeerView) rl.findViewById(R.id.beer_view);
+        beerView = (BeerView) rl.findViewById(R.id.beer_view);
 
         // Return all the junk!
         return rl;
@@ -96,14 +94,14 @@ public class AddBeerFragment extends Fragment {
                     return;
                 }
                 else {
-                    mBeer.setName(beerNameText.getText().toString());
+                    beer.setName(beerNameText.getText().toString());
                 }
 
                 // Add flavor data to the beer object
-                mBeer.addFlavors(mBeerView.getFlavorHash());
+                beer.addFlavors(beerView.getFlavorHash());
 
                 // Add beer to the DB
-                beerDB.add(mBeer);
+                beerDB.add(beer);
             }
             if(mButton.getId() == seeBeerButton.getId()) {
                 Toast.makeText(getActivity(), beerDB.expose(), Toast.LENGTH_SHORT).show();
