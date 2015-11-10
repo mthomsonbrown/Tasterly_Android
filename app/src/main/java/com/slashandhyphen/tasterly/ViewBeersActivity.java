@@ -1,139 +1,39 @@
 package com.slashandhyphen.tasterly;
 
-import android.database.Cursor;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
-
-import com.slashandhyphen.tasterly.Database.BeerDB;
-import com.slashandhyphen.tasterly.Models.Beer;
-import com.slashandhyphen.tasterly.Models.SessionResponse;
-
-import retrofit.Callback;
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 
-public class ViewBeersActivity extends ActionBarActivity implements View.OnClickListener {
-    String TAG = "ViewBeersActivity";
-    BeerDB beerDB;
-    SimpleCursorAdapter curseAdapter;
-    Button uploadButton;
+public class ViewBeersActivity extends ActionBarActivity {
+    String TAG = "ViewBeersFragment";
+    FragmentManager fm = getFragmentManager();
+    Fragment fragment1 = fm.findFragmentById(R.id.fragment_view_beers);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_beers);
 
-        beerDB = new BeerDB(this);
-        displayListView();
+        // Make Activity fullscreen
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-        uploadButton = (Button) findViewById(R.id.upload);
-        uploadButton.setOnClickListener(this);
-    }
-
-    /**
-     * I have no idea what this does, but it does it poorly.  I'm calling a DB field in order to
-     * generate a cursor to data, rather than having a function inside the DB class that uses
-     * the BEER_NAME to generate a cursor
-     */
-    private void displayListView() {
-        String[] columns = new String[] {
-                // TODO this is bad
-                BeerDB.getBeerName()
-        };
-
-        int[] views = new int[] {
-            R.id.text_beer_name
-        };
-
-        Cursor curse = beerDB.getAllBeers();
-
-        curseAdapter = new SimpleCursorAdapter(
-                this, R.layout.list_item_beer,
-                curse,
-                columns,
-                views,
-                0
-        );
-
-        ListView listView = (ListView) findViewById(R.id.beer_list);
-
-        listView.setAdapter(curseAdapter);
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_view_beers, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        FragmentTransaction ft = fm.beginTransaction();
+        if (fragment1 == null) {
+            ft.add(R.id.fragment_view_beers, new ViewBeersFragment());
         }
 
-        return super.onOptionsItemSelected(item);
+        ft.commit();
     }
 
-    /**
-     * Right now, this is just uploading beer 1 in the database
-     * @param v The button I clicked
-     */
-    @Override
-    public void onClick(View v) {
-        Toast.makeText(this, "Hit the button", Toast.LENGTH_SHORT).show();
 
-        Beer beer = beerDB.getBeer(1);         // Hardcoded sanity check
-
-        RestAdapter.Builder builder = new RestAdapter.Builder()
-                .setEndpoint(getString(R.string.railsEndpoint))
-                .setRequestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void intercept(RequestInterceptor.RequestFacade request) {
-                        String token = getSharedPreferences("CurrentUser", MODE_PRIVATE)
-                                .getString("AuthToken", null);
-
-                        request.addHeader("Authorization", "Token token=" + token);
-                    }
-                });
-
-        RestAdapter restAdapter = builder.build();
-
-        AuthenticationService service =
-                restAdapter.create(AuthenticationService.class);
-
-        service.addBeer(beer, new Callback<SessionResponse>() {
-            @Override
-            public void success(SessionResponse result, Response response){
-                Toast.makeText(getApplicationContext(),
-                        result.getSuccess(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                Toast.makeText(getApplicationContext(),
-                        retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }

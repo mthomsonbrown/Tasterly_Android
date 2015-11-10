@@ -7,7 +7,7 @@
     android:weightSum="1">
 
     <FrameLayout
-        android:id="@+id/fragment_content_1"
+        android:id="@+id/fragment_add_beer_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

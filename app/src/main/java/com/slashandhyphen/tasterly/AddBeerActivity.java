@@ -5,9 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +15,7 @@ import android.widget.Toast;
 public class AddBeerActivity extends Activity {
 
     FragmentManager fm = getFragmentManager();
-    Fragment fragment1 = fm.findFragmentById(R.id.fragment_content_1);
+    Fragment fragment1 = fm.findFragmentById(R.id.fragment_add_beer_1);
     //Fragment fragment2 = fm.findFragmentById(R.id.fragment_content_2);
 
     @Override
@@ -36,7 +34,7 @@ public class AddBeerActivity extends Activity {
 
         FragmentTransaction ft = fm.beginTransaction();
         if (fragment1 == null) {
-            ft.add(R.id.fragment_content_1, new AddBeerFragment());
+            ft.add(R.id.fragment_add_beer_1, new AddBeerFragment());
         }
 
         ft.commit();
