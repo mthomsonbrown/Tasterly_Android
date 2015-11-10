@@ -122,19 +122,17 @@ public class ViewBeersActivity extends ActionBarActivity implements View.OnClick
         AuthenticationService service =
                 restAdapter.create(AuthenticationService.class);
 
-        Log.d(TAG, "Flavor array is this big: " + beer.getFlavors().size());
         service.addBeer(beer, new Callback<SessionResponse>() {
             @Override
             public void success(SessionResponse result, Response response){
-                Log.d(TAG, result.getSuccess());
                 Toast.makeText(getApplicationContext(),
-                        "Looks like you did it, buddy!", Toast.LENGTH_SHORT).show();
+                        result.getSuccess(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
                 Toast.makeText(getApplicationContext(),
-                        "Probably a 401...", Toast.LENGTH_SHORT).show();
+                        retrofitError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
