@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="NOTrailsEndpoint">http://www.slashandhyphen.com/api/v1</string>
-    <string name="railsEndpoint">https://slash-and-hyphen-ookamijin.c9.io/api/v1</string>
+    <string name="OldrailsEndpoint">https://slash-and-hyphen-ookamijin.c9.io/api/v1</string>
+    <string name="railsEndpoint">https://tasterly-ookamijin.c9users.io/api/v1</string>
 </resources>

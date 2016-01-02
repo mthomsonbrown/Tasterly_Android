@@ -5,18 +5,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertNotNull;
-//import static org.assertj.android.api.Assertions.assertThat;
+import static org.assertj.android.api.Assertions.assertThat;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 /**
  * Created by ookamijin on 9/15/2015.
- *
- * Trying to create an initial test to get the bugs worked out with testing.
  */
+
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 18, manifest = "app/src/main/AndroidManifest.xml")
+@Config(constants = BuildConfig.class, sdk = TestConfig.roboSdk, manifest = "app/src/main/AndroidManifest.xml")
 public class AddBeerActivityTest {
     AddBeerActivity addBeerActivity;
 
@@ -26,7 +25,8 @@ public class AddBeerActivityTest {
     }
 
     @Test
-    public void AddBeerActivityShouldExist() {
-        assertNotNull(addBeerActivity);
+    public void AddBeerActivityShouldExistAndHaveATitle() {
+        assertThat(addBeerActivity).isNotNull();
+        assertThat(addBeerActivity).hasTitle("AddBeerActivity");
     }
 }

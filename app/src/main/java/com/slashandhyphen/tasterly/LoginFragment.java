@@ -2,6 +2,7 @@ package com.slashandhyphen.tasterly;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -32,7 +33,7 @@ public class LoginFragment extends Fragment {
     onLoginSuccessfulListener loginSuccessful;
 
     public interface onLoginSuccessfulListener {
-        public void onLoginSuccessful();
+        void onLoginSuccessful();
     }
 
     @Override
@@ -41,7 +42,7 @@ public class LoginFragment extends Fragment {
         fa = (FragmentActivity) super.getActivity();
         ll = (LinearLayout) inflater.inflate(R.layout.fragment_login, container, false);
 
-        mPreferences = getActivity().getSharedPreferences("CurrentUser", getActivity().MODE_PRIVATE);
+        mPreferences = getActivity().getSharedPreferences("CurrentUser", AuthenticationActivity.MODE_PRIVATE);
 
         mLoginButton = (Button) ll.findViewById(R.id.loginButton);
 
@@ -56,13 +57,13 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-           loginSuccessful = (onLoginSuccessfulListener) activity;
+           loginSuccessful = (onLoginSuccessfulListener) context;
 
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(context.toString()
                     + " must implement onLoginSuccessfulListener");
         }
     }
@@ -76,12 +77,6 @@ public class LoginFragment extends Fragment {
         mData.setEmail(userEmailField.getText().toString());
         EditText userPasswordField = (EditText) ll.findViewById(R.id.userPassword);
         mData.setPassword(userPasswordField.getText().toString());
-
-        //Test data...
-        if(mData.getEmail().length() == 0) {
-            mData.setEmail("mikeTest@brown.com");
-            mData.setPassword("qwertyui");
-        }
 
         if (mData.getEmail().length() == 0 || mData.getPassword().length() == 0) {
             // input fields are empty
@@ -111,7 +106,9 @@ public class LoginFragment extends Fragment {
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-                    Toast.makeText(getActivity(), "Probably a 401...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),
+                            "Got Error from Server: " + retrofitError.toString(),
+                            Toast.LENGTH_SHORT).show();
                 }
             });
         }

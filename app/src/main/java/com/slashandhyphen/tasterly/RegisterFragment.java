@@ -1,7 +1,7 @@
 package com.slashandhyphen.tasterly;
 
-import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.app.Activity;
 
 import com.slashandhyphen.tasterly.Models.SessionResponse;
 import com.slashandhyphen.tasterly.Models.User;
@@ -28,7 +29,12 @@ import retrofit.client.Response;
 public class RegisterFragment extends Fragment {
     protected String TAG = "RegisterFragment Log";
     private SharedPreferences mPreferences;
-    Button mRegisterButton;
+    Button registerButton;
+
+    EditText userEmailField;
+    EditText userNameField;
+    EditText userPasswordField;
+    EditText userPasswordConfirmationField;
 
     LinearLayout ll;
     FragmentActivity fa;
@@ -44,17 +50,23 @@ public class RegisterFragment extends Fragment {
         fa = (FragmentActivity) super.getActivity();
         ll = (LinearLayout) inflater.inflate(R.layout.fragment_register, container, false);
 
-        mPreferences = getActivity().getSharedPreferences("CurrentUser", getActivity().MODE_PRIVATE);
+        mPreferences = getActivity().getSharedPreferences("CurrentUser", AuthenticationActivity.MODE_PRIVATE);
 
-        mRegisterButton = (Button) ll.findViewById(R.id.registerButton);
+        registerButton = (Button) ll.findViewById(R.id.registerButton);
 
-        mRegisterButton.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                registerNewAccount(mRegisterButton);
+                registerNewAccount(registerButton);
             }
         });
+
+        userEmailField = (EditText) ll.findViewById(R.id.userEmail);
+        userNameField = (EditText) ll.findViewById(R.id.userName);
+        userPasswordField = (EditText) ll.findViewById(R.id.userPassword);
+        userPasswordConfirmationField = (EditText) ll.findViewById(R.id.userPasswordConfirmation);
+
         return ll;
     }
 
@@ -75,13 +87,9 @@ public class RegisterFragment extends Fragment {
         User mUser = new User();
         UserData mData = new UserData();
 
-        EditText userEmailField = (EditText) ll.findViewById(R.id.userEmail);
         mData.setEmail(userEmailField.getText().toString());
-        EditText userNameField = (EditText) ll.findViewById(R.id.userName);
         mData.setUsername(userNameField.getText().toString());
-        EditText userPasswordField = (EditText) ll.findViewById(R.id.userPassword);
         mData.setPassword(userPasswordField.getText().toString());
-        EditText userPasswordConfirmationField = (EditText) ll.findViewById(R.id.userPasswordConfirmation);
         mData.setPasswordConfirmation(userPasswordConfirmationField.getText().toString());
 
         boolean freaky = false;
@@ -103,12 +111,6 @@ public class RegisterFragment extends Fragment {
                 freaky = true;
             }
         }
-
-        //remove Test Params
-        mData.setUsername("Mike");
-        mData.setEmail("mikeTest@brown.com");
-        mData.setPassword("qwertyui");
-        mData.setPasswordConfirmation("qwertyui");
 
         // User input error checking junk
         if (mData.getEmail().length() == 0 || mData.getUsername().length() == 0 ||
