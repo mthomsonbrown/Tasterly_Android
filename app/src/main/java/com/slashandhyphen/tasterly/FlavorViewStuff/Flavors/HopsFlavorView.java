@@ -15,7 +15,7 @@ import com.slashandhyphen.tasterly.R;
 public class HopsFlavorView extends FlavorView {
     public HopsFlavorView(Context context) {
         super(context);
-        //setBackgroundResource(R.drawable.test_icon);
+        icon.setBackgroundResource(R.drawable.flavor_icon_acidic);
         label.setText("Hops");
     }
 }
