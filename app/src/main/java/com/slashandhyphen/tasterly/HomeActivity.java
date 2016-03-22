@@ -1,19 +1,20 @@
 package com.slashandhyphen.tasterly;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.slashandhyphen.tasterly.Database.BeerDB;
 
-public class HomeActivity extends Activity implements View.OnClickListener {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     String TAG = "++Home Activity++";
     private SharedPreferences mPreferences;
@@ -62,15 +63,11 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    // Authentication asserted before this activity can be viewed
     @Override
     public void onResume() {
         super.onResume();
-
-        if (mPreferences.contains("AuthToken")) {
-
-        } else {
-
+        // Check if user already authenticated
+        if (!mPreferences.contains("AuthToken")) {
             Intent intent = new Intent(HomeActivity.this, AuthenticationActivity.class);
             startActivityForResult(intent, 0);
         }
@@ -79,8 +76,21 @@ public class HomeActivity extends Activity implements View.OnClickListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_home, menu);
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.change_add_beer_fragment:
+                Toast.makeText(getApplicationContext(),
+                        "Clicked the change add beer option", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

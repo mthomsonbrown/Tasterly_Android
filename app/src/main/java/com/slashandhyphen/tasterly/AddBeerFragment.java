@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -85,15 +87,14 @@ public class AddBeerFragment extends Fragment {
          */
         @Override
         public void onClick(View mButton) {
-            if(mButton.getId() == addBeerButton.getId()) {
+            if (mButton.getId() == addBeerButton.getId()) {
 
                 // Add beer name to the beer object
-                if(beerNameText.getText().toString().isEmpty()) {
+                if (beerNameText.getText().toString().isEmpty()) {
                     Toast.makeText(getActivity(), "Need to enter a name",
                             Toast.LENGTH_SHORT).show();
                     return;
-                }
-                else {
+                } else {
                     beer.setName(beerNameText.getText().toString());
                 }
 
@@ -103,7 +104,7 @@ public class AddBeerFragment extends Fragment {
                 // Add beer to the DB
                 beerDB.add(beer);
             }
-            if(mButton.getId() == seeBeerButton.getId()) {
+            if (mButton.getId() == seeBeerButton.getId()) {
                 Toast.makeText(getActivity(), beerDB.expose(), Toast.LENGTH_SHORT).show();
             }
         }
