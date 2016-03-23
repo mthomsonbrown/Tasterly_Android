@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/add_beer_layout"
+    android:id="@+id/fragment_add_beer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_1"
     android:clickable="true"
-    xmlns:OmNom="http://schemas.android.com/apk/res-auto"
     >
 
     <com.slashandhyphen.tasterly.FlavorViewStuff.BeerView

@@ -17,7 +17,7 @@ import com.slashandhyphen.tasterly.Database.BeerDB;
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     String TAG = "++Home Activity++";
-    private SharedPreferences mPreferences;
+    private SharedPreferences preferences;
     Button mAddBeerButton;
     Button mViewBeerButton;
     BeerDB dbTest;
@@ -27,7 +27,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
+        preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
+
+        // Add default fragment for adding beers
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("AddBeerFragment", R.id.fragment_add_beer);
+        editor.apply();
+
 
         mAddBeerButton = (Button) this.findViewById(R.id.addBeerButton);
         mViewBeerButton = (Button) this.findViewById(R.id.viewBeerButton);
@@ -67,7 +73,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onResume() {
         super.onResume();
         // Check if user already authenticated
-        if (!mPreferences.contains("AuthToken")) {
+        if (!preferences.contains("AuthToken")) {
             Intent intent = new Intent(HomeActivity.this, AuthenticationActivity.class);
             startActivityForResult(intent, 0);
         }
