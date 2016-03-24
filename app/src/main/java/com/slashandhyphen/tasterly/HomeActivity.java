@@ -1,5 +1,10 @@
 package com.slashandhyphen.tasterly;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,11 +21,12 @@ import com.slashandhyphen.tasterly.Database.BeerDB;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    String TAG = "++Home Activity++";
-    private SharedPreferences preferences;
+    static String TAG = "++Home Activity++";
+    private static SharedPreferences preferences;
     Button mAddBeerButton;
     Button mViewBeerButton;
     BeerDB dbTest;
+    static SharedPreferences.Editor prefsEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +34,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home);
 
         preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
-
+        prefsEditor = preferences.edit();
         // Add default fragment for adding beers
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("AddBeerFragment", R.id.fragment_add_beer);
-        editor.apply();
+        prefsEditor.putInt("AddBeerFragment", R.id.fragment_add_beer);
+        prefsEditor.apply();
 
 
         mAddBeerButton = (Button) this.findViewById(R.id.addBeerButton);
@@ -65,7 +70,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(getApplicationContext(), ViewBeersActivity.class);
             startActivity(intent);
             finish();
-
         }
     }
 
@@ -81,19 +85,50 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_home, menu);
         return true;
     }
 
+    // TODO Should probably be added to its own file for use in different activities
+    public static class ChangeAddBeerViewDialog extends DialogFragment {
+        final CharSequence[] items = {" alpha "," Geomancy mk. 1 "};
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Select The Difficulty Level");
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    switch (item) {
+                        case 0:
+                            prefsEditor.putInt("AddBeerFragment", R.id.fragment_add_beer_alpha);
+                            break;
+                        case 1:
+                            prefsEditor.putInt("AddBeerFragment", R.id.fragment_add_beer);
+                            break;
+                        default:
+                            Toast.makeText(getActivity(),
+                                    "Not sure how you got here...Check the " +
+                                            "ChangeAddVeerViewDialog code",
+                                    Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                    prefsEditor.apply();
+                    dismiss();
+                }
+            });
+            return builder.create();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.change_add_beer_fragment:
-                Toast.makeText(getApplicationContext(),
-                        "Clicked the change add beer option", Toast.LENGTH_SHORT).show();
+                ChangeAddBeerViewDialog changeBeerDialog = new ChangeAddBeerViewDialog();
+                FragmentManager fm = this.getFragmentManager();
+                changeBeerDialog.show(fm, "MY FRACKING FRAGMENT!");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
