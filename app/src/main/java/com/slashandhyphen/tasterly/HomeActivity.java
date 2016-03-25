@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
         prefsEditor = preferences.edit();
         // Add default fragment for adding beers
-        prefsEditor.putInt("AddBeerFragment", R.id.fragment_add_beer);
+        prefsEditor.putInt("AddBeerFragment", R.id.fragment_add_beer_alpha);
         prefsEditor.apply();
 
 

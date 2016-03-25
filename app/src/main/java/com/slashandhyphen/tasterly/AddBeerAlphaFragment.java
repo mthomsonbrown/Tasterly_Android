@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
  * Created by ookamijin on 3/21/2016.
  * Development class to support all functionality
  */
-public class AddBeerFragmentAlpha extends Fragment {
+public class AddBeerAlphaFragment extends Fragment {
 
     RelativeLayout rl;
     Resources res;

@@ -2,15 +2,106 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_add_beer_alpha"
-    >
+    android:id="@+id/fragment_add_beer_alpha">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Alpha Add Beer: Hello"
+        android:text="Beer Stats"
         android:id="@+id/fragment_add_beer_alpha_hello_text"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+    />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/fragment_add_beer_alpha_hello_text"
+        android:layout_centerHorizontal="true">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                comment1="This is the ID of the thing"
+                android:id="@+id/TextViewA"
+
+                comment2="This is all the layout data to make a solid two column table"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:padding="7dip"
+                android:layout_gravity="center_vertical"
+
+                comment3="This is for the alignment of the content of the column"
+                android:gravity="end"
+
+                comment4="This is the content of the column"
+                android:text="Name:"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:background="@color/primary_1"
+                android:textColor="#000000"
+                />
+
+            <EditText
+                android:id="@+id/EditTextA"
+
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:padding="7dip"
+                android:layout_gravity="center_vertical"
+
+                android:gravity="start"
+
+                android:hint="A really long hint name to illustrate the accommodation of
+                    wrapping with this layout schema"
+                android:background="@color/primary_2"
+                android:textColor="#000000"
+                />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextViewB"
+
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:padding="7dip"
+                android:layout_gravity="center_vertical"
+
+                android:gravity="end"
+
+                android:text="IDK...Style:"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:background="@color/primary_3"
+                android:textColor="#000000"
+                />
+
+            <EditText
+                android:id="@+id/EditTextB"
+
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:padding="7dip"
+                android:layout_gravity="center_vertical"
+
+                android:gravity="start"
+
+                android:hint="A more modest hint text"
+                android:background="@color/primary_4"
+                android:textColor="#000000"
+                />
+
+        </TableRow>
+
+    </TableLayout>
+
+
 </RelativeLayout>

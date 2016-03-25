@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,7 +48,7 @@ public class AddBeerActivity extends Activity {
                     break;
                 case R.id.fragment_add_beer_alpha:
                     Log.d(TAG, "Trying to add alpha fragment");
-                    ft.add(R.id.add_beer_fragment_container, new AddBeerFragmentAlpha());
+                    ft.add(R.id.add_beer_fragment_container, new AddBeerAlphaFragment());
                     break;
                 default:
                     Log.d(TAG, "Trying to add default fragment in default");
