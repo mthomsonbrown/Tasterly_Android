@@ -9,14 +9,14 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Beer Stats"
-        android:id="@+id/fragment_add_beer_alpha_hello_text"
+        android:id="@+id/fragment_add_beer_alpha_stats"
         android:layout_centerHorizontal="true"
     />
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/fragment_add_beer_alpha_hello_text"
+        android:layout_below="@+id/fragment_add_beer_alpha_stats"
         android:layout_centerHorizontal="true">
 
         <TableRow
@@ -25,7 +25,7 @@
 
             <TextView
                 comment1="This is the ID of the thing"
-                android:id="@+id/TextViewA"
+                android:id="@+id/text_view_beer_name"
 
                 comment2="This is all the layout data to make a solid two column table"
                 android:layout_width="0dip"
@@ -45,7 +45,7 @@
                 />
 
             <EditText
-                android:id="@+id/EditTextA"
+                android:id="@+id/edit_text_beer_name"
 
                 android:layout_width="0dip"
                 android:layout_weight="1"
@@ -55,8 +55,7 @@
 
                 android:gravity="start"
 
-                android:hint="A really long hint name to illustrate the accommodation of
-                    wrapping with this layout schema"
+                android:hint="Name"
                 android:background="@color/primary_2"
                 android:textColor="#000000"
                 />
@@ -67,7 +66,44 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/TextViewB"
+
+                android:id="@+id/text_view_brewery_name"
+
+
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:padding="7dip"
+                android:layout_gravity="center_vertical"
+                android:gravity="end"
+                android:text="Brewery:"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:background="@color/primary_1"
+                android:textColor="#000000"
+                />
+
+            <EditText
+                android:id="@+id/edit_text_brewery_name"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:padding="7dip"
+                android:layout_gravity="center_vertical"
+
+                android:gravity="start"
+
+                android:hint="Name of Brewery"
+                android:background="@color/primary_2"
+                android:textColor="#000000"
+                />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text_view_beer_style"
 
                 android:layout_width="0dip"
                 android:layout_weight="1"
@@ -77,14 +113,14 @@
 
                 android:gravity="end"
 
-                android:text="IDK...Style:"
+                android:text="Style:"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:background="@color/primary_3"
                 android:textColor="#000000"
                 />
 
             <EditText
-                android:id="@+id/EditTextB"
+                android:id="@+id/edit_text_beer_style"
 
                 android:layout_width="0dip"
                 android:layout_weight="1"
@@ -94,7 +130,7 @@
 
                 android:gravity="start"
 
-                android:hint="A more modest hint text"
+                android:hint="Beer Style"
                 android:background="@color/primary_4"
                 android:textColor="#000000"
                 />
