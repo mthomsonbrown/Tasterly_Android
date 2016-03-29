@@ -15,9 +15,10 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/fragment_add_beer_alpha_stats"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tableLayout">
 
         <TableRow
             android:layout_width="match_parent"
@@ -138,6 +139,23 @@
         </TableRow>
 
     </TableLayout>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:layout_marginTop="54dp"
+        android:layout_below="@+id/tableLayout"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/image_button_photo"
+        android:layout_below="@+id/ratingBar"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/flavor_icon_acetic"
+        android:layout_marginTop="74dp" />
 
 
 </RelativeLayout>
