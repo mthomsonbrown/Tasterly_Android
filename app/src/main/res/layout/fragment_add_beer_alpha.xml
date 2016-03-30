@@ -9,6 +9,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Beer Stats"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:id="@+id/fragment_add_beer_alpha_stats"
         android:layout_centerHorizontal="true"
     />
@@ -41,8 +43,6 @@
                 comment4="This is the content of the column"
                 android:text="Name:"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:background="@color/primary_1"
-                android:textColor="#000000"
                 />
 
             <EditText
@@ -53,12 +53,10 @@
                 android:layout_height="wrap_content"
                 android:padding="7dip"
                 android:layout_gravity="center_vertical"
-
                 android:gravity="start"
 
                 android:hint="Name"
-                android:background="@color/primary_2"
-                android:textColor="#000000"
+                android:background="@color/secondary_2_0"
                 />
 
         </TableRow>
@@ -67,9 +65,7 @@
             android:layout_height="match_parent">
 
             <TextView
-
                 android:id="@+id/text_view_brewery_name"
-
 
                 android:layout_width="0dip"
                 android:layout_weight="1"
@@ -79,8 +75,6 @@
                 android:gravity="end"
                 android:text="Brewery:"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:background="@color/primary_1"
-                android:textColor="#000000"
                 />
 
             <EditText
@@ -90,12 +84,10 @@
                 android:layout_height="wrap_content"
                 android:padding="7dip"
                 android:layout_gravity="center_vertical"
-
                 android:gravity="start"
 
                 android:hint="Name of Brewery"
-                android:background="@color/primary_2"
-                android:textColor="#000000"
+                android:background="@color/secondary_2_0"
                 />
 
         </TableRow>
@@ -111,13 +103,10 @@
                 android:layout_height="wrap_content"
                 android:padding="7dip"
                 android:layout_gravity="center_vertical"
-
                 android:gravity="end"
 
                 android:text="Style:"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:background="@color/primary_3"
-                android:textColor="#000000"
                 />
 
             <EditText
@@ -132,8 +121,7 @@
                 android:gravity="start"
 
                 android:hint="Beer Style"
-                android:background="@color/primary_4"
-                android:textColor="#000000"
+                android:background="@color/secondary_2_0"
                 />
 
         </TableRow>
@@ -144,7 +132,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ratingBar"
-        android:layout_marginTop="54dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_below="@+id/tableLayout"
         android:layout_centerHorizontal="true" />
 
@@ -152,10 +140,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/image_button_photo"
-        android:layout_below="@+id/ratingBar"
-        android:layout_centerHorizontal="true"
         android:background="@drawable/flavor_icon_acetic"
-        android:layout_marginTop="74dp" />
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_below="@+id/ratingBar"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/text_view_beer_comment"
+        android:layout_below="@+id/image_button_photo"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:text="Comments:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
+
+    <EditText
+        android:id="@+id/edit_text_beer_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:minLines="5"
+        android:maxLines="5"
+        android:gravity="top|start"
+        android:background="@color/secondary_2_0"
+        android:layout_below="@+id/text_view_beer_comment"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin_label" />
 
 
 </RelativeLayout>
