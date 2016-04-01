@@ -32,15 +32,13 @@ android {
 
 
 
+
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.1.1'
     //androidTestCompile 'com.android.support:support-annotations:21.0.3'
 
     //Card Junk
-    compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'
-    compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.0.1'
-    compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.0.1'
 
     //Async Junk
     compile files('libs/retrofit-1.9.0.jar')
@@ -53,4 +51,9 @@ dependencies {
     }
     testCompile('org.robolectric:robolectric:3.0') {
     }
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'
+    compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.0.1'
+    compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.0.1'
+    compile 'com.android.support:support-v4:23.2.1'
 }
