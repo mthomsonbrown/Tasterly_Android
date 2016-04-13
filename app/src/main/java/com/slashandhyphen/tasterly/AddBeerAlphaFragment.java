@@ -51,7 +51,8 @@ public class AddBeerAlphaFragment extends Fragment implements View.OnClickListen
             case R.id.button_flavor_wheel:
                 FlavorWheelAlphaFragment wheelFrag = new FlavorWheelAlphaFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.add_beer_fragment_container, wheelFrag);
+                ft.replace(R.id.add_beer_fragment_container, wheelFrag,
+                        getString(R.string.FlavorWheelAlphaFragment));
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.addToBackStack(null);
                 ft.commit();

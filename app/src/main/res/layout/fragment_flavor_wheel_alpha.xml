@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.slashandhyphen.tasterly.FlavorWheelAlphaFragment">
+    tools:context="com.slashandhyphen.tasterly.FlavorWheelAlphaFragment"
+    android:id="@+id/fragment_flavor_wheel_alpha">
 
 
     <TextView

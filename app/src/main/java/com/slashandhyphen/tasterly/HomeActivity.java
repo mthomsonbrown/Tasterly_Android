@@ -34,10 +34,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home);
 
         preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
-        prefsEditor = preferences.edit();
+        //prefsEditor = preferences.edit();
         // Add default fragment for adding beers
-        prefsEditor.putInt("AddBeerFragment", R.id.fragment_add_beer_alpha);
-        prefsEditor.apply();
+        //prefsEditor.putInt("AddBeerFragment", R.id.fragment_add_beer_alpha);
+        //prefsEditor.apply();
 
 
         mAddBeerButton = (Button) this.findViewById(R.id.addBeerButton);
@@ -100,6 +100,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             builder.setTitle("Select The Difficulty Level");
             builder.setItems(items, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int item) {
+                    prefsEditor = preferences.edit();
                     switch (item) {
                         case 0:
                             prefsEditor.putInt("AddBeerFragment", R.id.fragment_add_beer_alpha);
