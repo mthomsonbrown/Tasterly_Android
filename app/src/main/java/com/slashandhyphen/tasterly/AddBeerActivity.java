@@ -23,16 +23,19 @@ public class AddBeerActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Toast.makeText(this, "IN ON CREATE", Toast.LENGTH_SHORT).show();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_beer);
 
         preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
         int addBeerFragmentId = preferences.getInt("AddBeerFragment", -1);
-        if(addBeerFragmentId == -1) {
+        if (addBeerFragmentId == -1) {
             addBeerFragmentId = defaultAddBeerFragment;
         }
 
-        if (fragment == null) {
+        int sount = getFragmentManager().getBackStackEntryCount();
+        if (getFragmentManager().getBackStackEntryCount() == 0 && fragment == null) {
             FragmentTransaction ft = fm.beginTransaction();
             switch (addBeerFragmentId) {
                 case R.id.fragment_add_beer:
@@ -47,13 +50,13 @@ public class AddBeerActivity extends Activity {
                     break;
                 default:
                     Log.d(TAG, "Trying to add default fragment in default");
-                    ft.add(R.id.add_beer_fragment_container, new AddBeerFragment(),
+                    ft.add(R.id.add_beer_fragment_container, new AddBeerAlphaFragment(),
                             getString(R.string.AddBeerAlphaFragmentTag));
                     break;
             }
+            ft.addToBackStack("First Fragment");
             ft.commit();
         }
-
 
     }
 
@@ -81,8 +84,15 @@ public class AddBeerActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(this, "Back wer pressed", Toast.LENGTH_SHORT).show();
-        Intent goHome = new Intent(this, HomeActivity.class);
-        startActivity(goHome);
+        // TODO This works okay, but feels a little inelegant.  The backstack bit I guess is fine,
+        // but I shouldn't need to know what activity to navigate to if the backstack is empty.
+        if(getFragmentManager().getBackStackEntryCount() == 1) {
+            Intent goHome = new Intent(this, HomeActivity.class);
+            startActivity(goHome);
+            finish();
+        }
+        else {
+            getFragmentManager().popBackStack();
+        }
     }
 }

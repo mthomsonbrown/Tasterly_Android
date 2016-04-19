@@ -135,4 +135,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "In In Back Presseddd", Toast.LENGTH_SHORT).show();
+        finish();
+    }
 }

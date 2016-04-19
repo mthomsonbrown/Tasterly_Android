@@ -52,24 +52,4 @@ public class AddBeerActivityTest {
         assertThat(addBeerActivity).hasTitle("AddBeerActivity");
     }
 
-    @Test
-    public void shouldBeAbleToGetWheelFragmentFromAddBeerFragmentIGuess() {
-        Fragment fragAddBeer = addBeerActivity.getFragmentManager().
-                findFragmentByTag(addBeerActivity.getString(R.string.AddBeerAlphaFragmentTag));
-        assertThat(fragAddBeer).isNotNull();
-
-        Button buttonFlavorWheel = (Button) addBeerActivity.
-                findViewById(R.id.button_flavor_wheel);
-        assertThat(buttonFlavorWheel).isNotNull();
-
-        Fragment fragFlavorWheel = addBeerActivity.getFragmentManager().
-                findFragmentByTag(addBeerActivity.getString(R.string.FlavorWheelAlphaFragment));
-        assertThat(fragFlavorWheel).isNull();
-
-        buttonFlavorWheel.performClick();
-        fragFlavorWheel = addBeerActivity.getFragmentManager().
-                findFragmentByTag(addBeerActivity.getString(R.string.FlavorWheelAlphaFragment));
-        assertThat(fragFlavorWheel).isNotNull();
-        
-    }
 }

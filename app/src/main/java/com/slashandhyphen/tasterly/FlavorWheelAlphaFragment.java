@@ -26,4 +26,6 @@ public class FlavorWheelAlphaFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_flavor_wheel_alpha, container, false);
     }
 
+
+
 }
