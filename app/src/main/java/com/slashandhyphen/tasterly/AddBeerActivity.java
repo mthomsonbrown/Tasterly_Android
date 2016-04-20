@@ -34,24 +34,20 @@ public class AddBeerActivity extends Activity {
             addBeerFragmentId = defaultAddBeerFragment;
         }
 
-        int sount = getFragmentManager().getBackStackEntryCount();
         if (getFragmentManager().getBackStackEntryCount() == 0 && fragment == null) {
             FragmentTransaction ft = fm.beginTransaction();
             switch (addBeerFragmentId) {
                 case R.id.fragment_add_beer:
                     Log.d(TAG, "Trying to add normal fragment");
-                    ft.add(R.id.add_beer_fragment_container, new AddBeerFragment(),
-                            getString(R.string.AddBeerFragmentTag));
+                    ft.add(R.id.add_beer_fragment_container, new AddBeerFragment());
                     break;
                 case R.id.fragment_add_beer_alpha:
                     Log.d(TAG, "Trying to add alpha fragment");
-                    ft.add(R.id.add_beer_fragment_container, new AddBeerAlphaFragment(),
-                            getString(R.string.AddBeerAlphaFragmentTag));
+                    ft.add(R.id.add_beer_fragment_container, new AddBeerAlphaFragment());
                     break;
                 default:
                     Log.d(TAG, "Trying to add default fragment in default");
-                    ft.add(R.id.add_beer_fragment_container, new AddBeerAlphaFragment(),
-                            getString(R.string.AddBeerAlphaFragmentTag));
+                    ft.add(R.id.add_beer_fragment_container, new AddBeerAlphaFragment());
                     break;
             }
             ft.addToBackStack("First Fragment");
